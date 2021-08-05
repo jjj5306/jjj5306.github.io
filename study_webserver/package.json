@@ -1,0 +1,28 @@
+{
+  "name": "til",
+  "version": "1.0.0",
+  "description": "* 아직은 지식이 너무 적기에 작성 규칙 없이 작성한다.\r * 카테고리를 잘 나누어서 하이퍼링크로 구현 하는 것이 목표이다.\r * 잘 모르는 api나 함수를 이용하면 공식사이트를 이용하거나 ctrl을 누르고 api를 클릭하여 선언을 살펴본다.\r * * *\r JavaScript 참고 사이트   [Link](https://developer.mozilla.org/ko/docs/Web/, 'MDN link')  \r JavaScript Object 정리   [Link](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference)\r #  2021.06.20\r # TIL작성법 숙지 \r ## README.md 파일 작성법\r * [Reference](https://gist.github.com/ihoneymon/652be052a0727ad59601, \"refernece\")\r ***\r ##  글머리 기호 : `*`,` +`, `-` \r ```\r * 1단계\r   - 2단계\r     + 3단계\r       * 4단계\r ```\r * 1단계\r   - 2단계\r     + 3단계\r       * 4단계\r ***\r ## 코드 블럭\r * \" ``` \" 로 묶어서 코드 블럭을 생성한다\r ```\r     ````\r     class Stack \r     {\r         ...\r     }",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "scripts": {
+    "start": "nodemon index.js", 
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjj5306/JavaScript_TIL.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jjj5306/JavaScript_TIL/issues"
+  },
+  "homepage": "https://github.com/jjj5306/JavaScript_TIL#readme"
+}
