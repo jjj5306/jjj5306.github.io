@@ -15,17 +15,34 @@
 ## 약수 찾기
 * 어떤 정수 `n`에 대해 그 약수 `a`는 아래의 등식이 성립한다.
 $$ 1 \leq a \leq \sqrt n $$ 
-* 관련문제
+따라서 아래의 알고리즘과 같이 약수를 찾을 수 있다.
+```
+vector<int> getdivs(int n) {
+  vector<int> ret;
+  for (int i = 1; i * i <= n; i++) {
+    if (n % i == 0) {
+    ret.push_back(n / i);
+    if (i * i != n) ret.push_back(i);
+    }
+  }
+  sort(ret.begin(),ret.end());
+  return ret;
+  }
+```
+* 관련문제  
   * 완전수    
-https://www.acmicpc.net/problem/14563
+https://www.acmicpc.net/problem/14563   
+  소스 코드 : [C++](./BOJ/14563.cpp) 
   * 소수 찾기    
-https://www.acmicpc.net/problem/1978
+https://www.acmicpc.net/problem/1978   
+  소스 코드 : [C++](./BOJ/1978.cpp) 
 ***
 ## 소인수분해
 * `약수 찾기`와 같은 알고리즘으로 약수를 찾되, 소인수가 발견되면 `n`을 그 소인수로 나눈다. 이 과정을 소인수가 $\sqrt n$이 될 때 까지 반복하고 마지막으로 `n`이 1보다 크면 그 때의 n 역시 소인수이다.
 * 관련문제
   * 소인수분해    
-https://www.acmicpc.net/problem/11653
+https://www.acmicpc.net/problem/11653   
+  소스 코드 : [C++](./BOJ/11653.cpp)
 ***
 ## 에라토스테네스의 체
 * $2$이상 $n$이하의 모든 소수를 구하는 알고리즘이다. $2$부터 $\sqrt n$까지 그 수의 모든 배수를 지워내는 알고리즘이다. 
@@ -58,21 +75,29 @@ vector<int> sieve(int n) {
 ```
 * 관련문제  
   * 어려운 소인수분해   
-   https://www.acmicpc.net/problem/16563
+   https://www.acmicpc.net/problem/16563   
+  
   * 수 복원하기    
-   https://www.acmicpc.net/problem/2312
+   https://www.acmicpc.net/problem/2312   
+
   * GCD(n, k) = 1   
-   https://www.acmicpc.net/problem/11689
+   https://www.acmicpc.net/problem/11689   
+
   * 에라토스테네스의 체   
-   https://www.acmicpc.net/problem/2960
+   https://www.acmicpc.net/problem/2960   
+
   * 암호 키   
-   https://www.acmicpc.net/problem/1816
+   https://www.acmicpc.net/problem/1816   
+
   * 골드바흐의 추측   
-   https://www.acmicpc.net/problem/9020
+   https://www.acmicpc.net/problem/9020   
+
   * 베르트랑 공준   
-   https://www.acmicpc.net/problem/4948
+   https://www.acmicpc.net/problem/4948   
+
   * 소수&팰린드롬   
-   https://www.acmicpc.net/problem/16563
+   https://www.acmicpc.net/problem/16563   
+
   
 
 ***
