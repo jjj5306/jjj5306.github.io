@@ -10,4 +10,6 @@
 * [Back-End](./JavaScript/Backend/README.md)
 ***
 ## Algorithm
-* [정수론]
+* [이론](./Algorithm/README.md)
+* [BOJ](./Algorithm/BOJ/README.md)
+* [Codeforce](./Algorithm/Codeforce/README.md)
