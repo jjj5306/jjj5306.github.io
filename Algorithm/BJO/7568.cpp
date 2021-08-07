@@ -1,4 +1,6 @@
 #include <iostream>
+/** 브루트포스 알고리즘 덩치  **/
+
 #include <vector>
 #include <algorithm>
 using namespace std;

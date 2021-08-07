@@ -1,3 +1,5 @@
+/**  브루트포스 알고리즘 한수 **/
+
 #include <iostream>
 #include <vector>
 #include <algorithm>

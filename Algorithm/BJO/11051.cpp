@@ -1,3 +1,5 @@
+/**  정수론 이항 계수2 **/
+//다시 풀어보기
 #include <iostream>
 #include <vector>
 #include <algorithm>
