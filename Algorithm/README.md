@@ -33,6 +33,7 @@ vector<int> getdivs(int n) {
   * 완전수    
 https://www.acmicpc.net/problem/14563   
   소스 코드 : [C++](./BOJ/14563.cpp) 
+
   * 소수 찾기    
 https://www.acmicpc.net/problem/1978   
   소스 코드 : [C++](./BOJ/1978.cpp) 
@@ -76,18 +77,23 @@ vector<int> sieve(int n) {
 * 관련문제  
   * 어려운 소인수분해   
    https://www.acmicpc.net/problem/16563   
-  
+  소스 코드 : [C++](./BOJ/16563.cpp)
+
   * 수 복원하기    
    https://www.acmicpc.net/problem/2312   
+  소스 코드 : [C++](./BOJ/2312.cpp)
 
   * GCD(n, k) = 1   
    https://www.acmicpc.net/problem/11689   
 
+
   * 에라토스테네스의 체   
    https://www.acmicpc.net/problem/2960   
+  소스 코드 : [C++](./BOJ/2960.cpp)
 
   * 암호 키   
    https://www.acmicpc.net/problem/1816   
+  소스 코드 : [C++](./BOJ/1816.cpp)
 
   * 골드바흐의 추측   
    https://www.acmicpc.net/problem/9020   
@@ -96,9 +102,17 @@ vector<int> sieve(int n) {
    https://www.acmicpc.net/problem/4948   
 
   * 소수&팰린드롬   
-   https://www.acmicpc.net/problem/16563   
-
+   https://www.acmicpc.net/problem/1747
+***
+## 모듈러 연산
+* 덧셈
+  - (a + b)%p = (a%p + b%p)%p
+* 뺄셈
+  - (a - b)%p = (a%p - b%p + p)%p
+* 곱셈
+  - (a * b)%p = ((a%p) * (b%p))%p
   
+
 
 ***
 # 자료구조

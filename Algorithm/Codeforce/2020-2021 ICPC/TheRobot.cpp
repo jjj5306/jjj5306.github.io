@@ -57,8 +57,6 @@ int check(coordinates obj, string str) {
 			}
 		}
 	}
-	//cout << obj.x << obj.y << endl;
-	//cout << temp.x << temp.y << endl;
 	if ((temp.x == 0) && (temp.y == 0)) return 1;
 	return 0;
 
