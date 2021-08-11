@@ -89,6 +89,7 @@ __double underscores__
  $\sqrt a$ : `$\sqrt a$`   
  $\frac a b$ : `$\frac a b$`   
  $a^b$ : `$a^b$`   
+ $a^{p-2}$ : `a^{p-2}$`   
  $\therefore$ : `$\therefore$`   
  $\cdot$ : `$\cdot$`   
  공백 한 칸 : `$\,$`   
