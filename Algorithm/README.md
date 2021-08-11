@@ -12,12 +12,7 @@
 * [C++ stl 사용 팁](../C++/stl.md)
 ***
 # 정수론
-* [약수 찾기](#약수-찾기)
-* [소인수분해](#소인수분해)
-* [에라토스테네스의 체](#에라토스테네스의-체)
-* [정수론](#정수론)
-* [모듈러 연산](#모듈러-연산)
-***
+
 ## 약수 찾기
 * 어떤 정수 `n`에 대해 그 약수 `a`는 아래의 등식이 성립한다.
 $$ 1 \leq a \leq \sqrt n $$ 
@@ -122,6 +117,7 @@ vector<int> sieve(int N) {
   - 곱셈의 `역원`을 정의하여 사용한다. 
   - `페르마의 소정리`를 이용하면 `모들러 계`에서 $a \cdot a^{p-2} = 1 $이라는 수식을 얻을 수 있고 따라서 $a$의 역원은  $a^{p-2}$이다.
   - `분할 정복을 통한 거듭제곱`을 이용하여 $x^y$를 $MOD$로 나눈 나머지를 구하면 아래의 코드와 같이 구현할 수 있다.
+
   ```
   using ll = long long;
   const ll MOD = (ll)1e9 + 7ll;
@@ -163,7 +159,6 @@ vector<int> sieve(int N) {
     return (a * b) % MOD;
   }
   ```
-***
 ## 관련문제
   - 괄호    
   https://www.acmicpc.net/problem/10422
@@ -175,6 +170,34 @@ vector<int> sieve(int N) {
   https://www.acmicpc.net/problem/13977
 
 ***
+# 분할정복
+## 매개 변수 탐색
+  * 내용
+## 관련문제
+  - 공유기 설치    
+  https://www.acmicpc.net/problem/2110
+
+  - 공장 컨설턴트 호석    
+  https://www.acmicpc.net/problem/22254
+
+  - 휴게소 세우기    
+  https://www.acmicpc.net/problem/1477
+
+  - 폭탄제조    
+  https://www.acmicpc.net/problem/2977
+
+***
+## 삼분 탐색
+  * 내용
+## 관련문제
+
+***
+## 인터랙티브
+  *
+## 관련문제
+
+***
+
 # 자료구조
 ## 이론 정리
 ## 관련 문제
