@@ -12,7 +12,6 @@
 * [C++ stl 사용 팁](../C++/stl.md)
 ***
 # 정수론
-
 ## 약수 찾기
 * 어떤 정수 `n`에 대해 그 약수 `a`는 아래의 등식이 성립한다.
 $$ 1 \leq a \leq \sqrt n $$ 
@@ -30,6 +29,7 @@ vector<int> getdivs(int n) {
   return ret;
   }
 ```
+
 ## 관련문제  
   * 완전수    
 https://www.acmicpc.net/problem/14563   
@@ -38,13 +38,30 @@ https://www.acmicpc.net/problem/14563
   * 소수 찾기    
 https://www.acmicpc.net/problem/1978   
   소스 코드 : [C++](./BOJ/1978.cpp) 
+
 ***
 ## 소인수분해
 * `약수 찾기`와 같은 알고리즘으로 약수를 찾되, 소인수가 발견되면 `n`을 그 소인수로 나눈다. 이 과정을 소인수가 $\sqrt n$이 될 때 까지 반복하고 마지막으로 `n`이 1보다 크면 그 때의 n 역시 소인수이다.
+```
+  vector<int> factorize(int n) {
+  //여기서 변수 n은 지역 변수, 즉 원래 n의 복사본
+  vector<int> ret;
+  for (int i = 2; i * i <= n; i++) {
+    while (n % i == 0) {
+      n /= i;
+      ret.push_back(i);
+    }
+  }
+  if (n > 1) ret.push_back(n);
+  return ret;
+  }
+```
+
 ## 관련문제
   * 소인수분해    
 https://www.acmicpc.net/problem/11653   
   소스 코드 : [C++](./BOJ/11653.cpp)
+
 ***
 ## 에라토스테네스의 체
 * $2$이상 $n$이하의 모든 소수를 구하는 알고리즘이다. $2$부터 $\sqrt n$까지 그 수의 모든 배수를 지워내는 알고리즘이다. 
@@ -62,7 +79,8 @@ vector<int> sieve(int N) {
     return prime;
 }
 ```
-* 에라토스테네스의 체를 사용한 소인수분해
+
+## 에라토스테네스의 체를 사용한 소인수분해
   * 소수가 아닌 수를 지우는 과정에서 그 수를 지울 때 사용한 소인수를 기록한다. 그렇게되면 `i`번째 index의 값이 i이면 소수이다.
   ```
   vector<int> sieve(int n) {
@@ -74,6 +92,7 @@ vector<int> sieve(int N) {
     return S;
   }
   ```
+
 ## 관련문제  
   * 어려운 소인수분해   
    https://www.acmicpc.net/problem/16563   
@@ -82,10 +101,6 @@ vector<int> sieve(int N) {
   * 수 복원하기    
    https://www.acmicpc.net/problem/2312   
   소스 코드 : [C++](./BOJ/2312.cpp)
-
-  * GCD(n, k) = 1   
-   https://www.acmicpc.net/problem/11689   
-
 
   * 에라토스테네스의 체   
    https://www.acmicpc.net/problem/2960   
@@ -105,6 +120,8 @@ vector<int> sieve(int N) {
 
   * 소수&팰린드롬   
    https://www.acmicpc.net/problem/1747
+
+
 ***
 ## 모듈러 연산
 * 덧셈
@@ -141,7 +158,7 @@ vector<int> sieve(int N) {
     return modpow(x, MOD - 2);
   }
   ```
-***
+
 ## 모듈러 연산의 구현
   - 기초 연산을 함수로 구현하여 사용한다. 
   ```
@@ -159,6 +176,7 @@ vector<int> sieve(int N) {
     return (a * b) % MOD;
   }
   ```
+
 ## 관련문제
   - 괄호    
   https://www.acmicpc.net/problem/10422
@@ -168,7 +186,42 @@ vector<int> sieve(int N) {
 
   - 이항 계수와 쿼리    
   https://www.acmicpc.net/problem/13977
+***
+## 유클리드 호제법
+* 최소공약수 `GCD`를 일반적인 방법으로 2부터 두 자연수 중 작은 자연수까지 모두 나누어보면서 구하면 시간복잡도는 `O(N)`이 된다. 하지만 유클리드 호제법을 이용하면 시간복잡도를 `O(logN)`으로 줄일 수 있다.
+* 2개의 자연수 A, B에 대해서 A와 B의 최대공약수는 B와 A % B 의 최대공약수와 같다. 정리하자면 아래와 같다.
+$$ 
+  GCD(A, B) = GCD(B, A \% B)    
+$$
+$$
+  if A \% B = 0 \Rightarrow GCD = B
+$$
+$$
+  else GCD(B, A\%B)
+$$
+***
 
+## 오일러 파이 함수
+  * $a^{\phi(n)} = 1 \ \ \ \ \ \ \ mod \ n$을 만족하는 $\phi(n)$ 을 `오일러 파이 함수`라고 하고, 이는 $1$부터 $n$까지 $n$과 서로소인 수들의 개수이다.
+  * $p$가 소수이면 $\phi(p) = p-1$이다.
+  * $\phi(m)\phi(n) = \phi(mn)$의 곱셈적성질을 만족한다.
+
+## 오일러 파이 함수의 계산
+  * $p$가 소수일 때 $\phi(p^k)$의 값을 보자. $p$가 소수이므로 $p^k$와 서로소가 아닌 수들은 반드시 $p$를 인수로 가져야 한다. 이런 수들은 $p^{k-1}$개가 있다. 따라서    
+  $$
+  \phi(p^k) = p^k - p^{k-1}
+  $$
+$\;\;\;\;\;\;\;\;\;\,$라는 결론을 얻는다.
+  * 위의 결론에서 모든 수를 소수의 곱으로 소인수분해 한 뒤 오일러 파이 함수가 곱셈적 함수임을 이용해서 계산할 수 있다. 아래의 `GCD(n, k) = 1` 문제의 주석을 잘 참고하면 이해하기 쉽다.
+$\phi(a) = pie(p_1^{k_1}p_2^{k_2}\cdot\cdot\cdot p_n^{k_n})$  
+
+$\;\;\;\;\;\;\;\;\,\;\;\;\;\;\;\;\;= p_1^{k_1}(1 - \frac 1 {p^1})p_2^{k_2}(1 - \frac 1 {p^2})\cdot\cdot\cdot p_n^{k_n}(1 - \frac 1 {p^n})$  
+
+$\;\;\;\;\;\;\;\;\,\;\;\;\;\;\;\;\; = a(1 - \frac 1 {p^1})(1 - \frac 1 {p^2})\cdot\cdot\cdot (1 - \frac 1 {p^n}) $
+
+## 관련문제
+  * GCD(n, k) = 1   
+   https://www.acmicpc.net/problem/11689   
 ***
 # 분할정복
 ## 매개 변수 탐색
