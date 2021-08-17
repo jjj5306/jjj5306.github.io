@@ -5,11 +5,9 @@
 ## md
 * [md파일 작성법](./md/README.md)
 ***
-## JavsScript
+## Web-server
 * [JavaScript 기초](./JavaScript/README.md)
 * [Back-End](./JavaScript/Backend/README.md)
 ***
 ## Algorithm
-* [이론](./Algorithm/README.md)
-* [BOJ](./Algorithm/BOJ/README.md)
-* [Codeforce](./Algorithm/Codeforce/README.md)
+* [Algorithm](./Algorithm/README.md)
