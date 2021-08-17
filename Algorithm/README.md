@@ -59,7 +59,6 @@ https://www.acmicpc.net/problem/1978
 ```
 
 ## 관련문제
-***
   * 소인수분해    
 https://www.acmicpc.net/problem/11653   
   소스 코드 : [C++](./BOJ/11653.cpp)
