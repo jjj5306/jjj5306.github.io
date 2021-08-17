@@ -25,7 +25,6 @@ void prime_f(ll num, vector<ll>& res, vector<ll> S) {
 }
 ***************************************************************************************************/
 
-
 int main() {
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
@@ -39,7 +38,6 @@ int main() {
 
 	if (n == 1) cout << 1;
 	else {
-
 		/**************************************************************************************************
 		//에라토스테네스의 체를 n까지 생성한다.
 		//S[i]에는  소인수가 들어가고 S[i] = [i]이면 소수이다.
@@ -58,22 +56,20 @@ int main() {
 		vector <ll> prime;
 		ll temp = n;
 		for (ll i = 2; i * i <= temp; i++) {
-			int count = 0;
 			while (temp % i == 0) {
 				temp /= i;
-				if(!count) 	prime.push_back(i);
-				count++;
+				prime.push_back(i);
 			}
 		}
 		if (temp > 1) prime.push_back(temp);
 
 		//소인수분해 한 결과에 대해서 오일러 파이 함수를 적용시킨다.
 		ll result = n;
-		vector <ll> temp_v;
-		for (ll i = 0; i < prime.size();i++) {
-				result *= (1.0 - 1.0 / (double)prime[i]);
+		sort(prime.begin(), prime.end());
+		result *= (1.0 - 1.0 / (double)prime[0]);
+		for (ll i = 1; i < prime.size();i++) {
+			if (prime[i] != prime[i - 1]) result *= (1.0 - 1.0 / (double)prime[i]);
 		}
-
 		cout << result ;
 	}
 
