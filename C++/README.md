@@ -63,14 +63,14 @@
 ***
 # STL Container
 ## Vector
-* `Vector declaration`
+* Vector declaration
   * `vector<자료형> 변수명(숫자1, 숫자2)`과 같이 초기화하며 숫자1만큼 벡터를 생성 후 숫자2로 초기화한다.
 
   * `vector<자료형> 변수명[] = {, }`과 같이 2차원 벡터를 선언한다. 이 때 열은 고정이고 행은 변할 수 있다.
 
   * `vector<vector<자료형>> 변수명`과 같이 2차원 벡터를 선언할 수 있고 이 경우는 열과 행 모두 가변하다.
 
-* `Vecotr Iterators`
+* Vecotr Iterators
   * `v.begin()` : 벡터 시작점의 주소 값을 반환한다.
 
   * `v.end()` : 벡터 벡터의 마지막 원소의 주소값을 반환한다.
@@ -83,7 +83,7 @@
 
   * `v.back()` : 벡터의 마지막 값을 리턴한다.
 
-* `Vector Element insert/erase`
+* Vector Element insert/erase
   * `v.push_back()` : 벡터의 복사생성자를 호출하여 새로운 메모리에 모든 값을 복사한 후 마지막에 새로운 요소를 추가한다.
 
   * `v.pop_back()` : 벡터의 마지막 원소를 제거한다.
@@ -100,7 +100,7 @@
 
   * `v.clear()` : 벡터의 모든 요소를 지우고 벡터의 크기를 0으로 만든다.
 
-* `Vector Capacity`
+* Vector Capacity
   * vector의 크기는 `size`와 `capacity` 두 개가 있는데, `size`는 벡터가 생성된 크기이며 `capacity`는 벡터의 최대 할당 크기이다. `push`연산을 통해 벡터의 `size`가 `capacity`를 초과하면 `reallocate`가 발생하여 모든 값들을 새로운 메모리에 복사하는 과정이 일어난다. 이 과정에서 속도 저하가 일어나며 `capacity`를 설정해주는 함수들을 이용하여 `reallocate`를 막을 수 있다.
 
   * `clear()`로 벡터의 값들을 지우면 벡터의 요소들은 없어지지만 `capacity`는 여전히 남아있다. 따라서 `swap`을 이용하여 `capacity`또한 제거해줘야 한다.
