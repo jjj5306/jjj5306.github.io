@@ -1,4 +1,4 @@
-# range based for
+# Range based for
 * 알아서 데이터 리스트를 순회할 수 있다.
   ```
   for (데이터 타입 elem : 데이터 리스트){
@@ -64,7 +64,7 @@
 # STL Container
 ## Vector
 * `Vector declaration`
-  * `vector<자료형> 변수면(숫자1, 숫자2)`과 같이 초기화하며 숫자1만큼 벡터를 생성 후 숫자2로 초기화한다.
+  * `vector<자료형> 변수명(숫자1, 숫자2)`과 같이 초기화하며 숫자1만큼 벡터를 생성 후 숫자2로 초기화한다.
 
   * `vector<자료형> 변수명[] = {, }`과 같이 2차원 벡터를 선언한다. 이 때 열은 고정이고 행은 변할 수 있다.
 
@@ -114,12 +114,68 @@
 
   * `insert()`와 `erase`가 빈번히 일어나는 경우 벡터의 데이터를 하나하나 일일이 이동시킨 후 삽입/ 삭제가 일어나고 `reallocate` 또한 일어날 수 있어서 삽입과 삭제가 빈번한 경우 `list`나 `deque`를 사용하는 것이 낫다.
 
-  * `v.empty()` : 벡터가 빈 공간이면 `true` 아니라면 `flase` 리턴
+  * `v.empty()` : 벡터가 빈 공간이면 `true`를 아니라면 `flase`를 리턴한다.
 
-  * `v.size()` : 벡터의 size 리턴
+  * `v.size()` : 벡터의 size를 리턴한다.
 
-  * `v.capacity()` : 메모리 heap에 할당된 벡터의 최대크기 반환
+  * `v.capacity()` : 메모리 heap에 할당된 벡터의 최대크기를 반환한다.
 
   * `v.shrink_to_fit()` : `capacity`의 크기를 벡터의 실제 크기로 맞춘다.
+***
+## Deque
+* `vector`의 경우 `size`가 `capacity`를 초과하는 경우 `reallocate`가 발생한다는 단점이 있었다. 하지만 `deque`에서는 여러 개의 메모리 블록을 할당하고 이들을 하나의 블록처럼 사용한다. 따라서 메모리가 부족하면 새로운 메모리 블록을 할당하여 `vector`의 단점을 보완하였다.
+
+* `vector`과 같은 방식으로 초기화한다.
+
+* `dq.assign(a, b)` : `b`를 `a`개 만큼 할당한다.
+
+* `dq.push_front(value)` : deque의 제일 앞에 `value`를 삽입한다.
+
+* `dq.pop_front()` : deque의 제일 앞의 원소를 제거한다.
+
+* 나머지 메소드들은 `vector`과 비슷하게 작동한다.
+
+
+***
+## Stack
+* `LIFO(Last In First Out)` 속성을 가진 자료구조이다. 책 쌓기처럼 가장 마지막에 `push`된 데이터가 `pop`된다.
+
+* `front`에서 `push`, `pop` 모두 일어나며 `vector`과 비슷한 메서드를 사용한다.
+## Queue
+* `FIFO(First In First Out)` 속성을 가진 자료구조이다. 줄 서기처럼 먼저 `push`된 데이터가 `pop`된다.
+
+* `front`에서 `pop`, `back`에서 `push`가 일어나며 `vector`과 비슷한 메서드를 사용한다.
+***
+## Priority_queue
+* `Priority_queue`는 들어간 순서에 상관없이 우선순위가 높은 데이터가 먼저 나오는 자료구조이다.
+
+* `priority_queue<자료형, container, compare>`로 정의한다.
+
+* `container`는 디폴트로 `vector`을 사용한다. `deque`로 사용할 수 있다.
+
+* `compare`는 디폴트로 `less`를 사용하며 이는 내림차순을 뜻한다. `greater`을 통해 오름차순으로 변경할 수 있다.
+
+* `priority_queue<T, vector<T>, compare> pq;`와 같이 많이 사용하며 `T`는 구조체를 의미한다. 예를 들어 좌표계를 뜻하는 `coo` 구조체가 있다고 생각해보자.
+  ```
+  typedef struct coo{
+    int x, y;
+  }
+  ```
+  이 때 새로운 `compare`을 사용하기 위해 `compare` 구조체를 만들고 그 구조체에 대해 `()`연산자가 비교 연산자로 작용하게끔 만들자.
+
+  ```
+  typedef struct compare{
+    bool operator()(coo &I, coo &C){
+      if(I.x != C.x) return I.x < C.x;
+      return I.y < C.y;
+    }
+  }
+  ```
+  이제 `compare`구조체에서 `()`연산자를 사용하면 `coo`구조체의 비교가 가능하다. 따라서 `priority_queue <coo, vector<coo>, compare> pq;`와 같이 사용할 수 있다.
+
+* 나머지 메서드들은 `vector`과 비슷한 메서드를 사용하고 있다.
+***
+
+
 
 
