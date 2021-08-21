@@ -6,7 +6,7 @@
   }
   ```
 
-* `range based for`는 `index`정보가 존재하지 않는다. 단, `index`의 `value`의 정보는 존재한다.
+* range based for는 `index`정보가 존재하지 않는다. 단, `index`의 `value`의 정보는 존재한다.
 
 * 자동으로 `elem`에 `arr`의 원소들이 복사되기 때문에 기본적으로 배열의 요소를 변경할 수 없다.
   ```
@@ -16,7 +16,7 @@
   }
   ```
   
-* `range based for`를 `reference`를 이용하여 복사 비용도 줄이고 배열의 원래 값을 변경할 수 있다.
+* range based for를 `reference`를 이용하여 복사 비용도 줄이고 배열의 원래 값을 변경할 수 있다.
   ```
   for(int& elem : arr){
       elem += 1;
@@ -101,7 +101,9 @@
   * `v.clear()` : 벡터의 모든 요소를 지우고 벡터의 크기를 0으로 만든다.
 
 * Vector Capacity
-  * vector의 크기는 `size`와 `capacity` 두 개가 있는데, `size`는 벡터가 생성된 크기이며 `capacity`는 벡터의 최대 할당 크기이다. `push`연산을 통해 벡터의 `size`가 `capacity`를 초과하면 `reallocate`가 발생하여 모든 값들을 새로운 메모리에 복사하는 과정이 일어난다. 이 과정에서 속도 저하가 일어나며 `capacity`를 설정해주는 함수들을 이용하여 `reallocate`를 막을 수 있다.
+  * vector의 크기는 `size`와 `capacity` 두 개가 있는데, `size`는 벡터가 생성된 크기이며 `capacity`는 벡터의 최대 할당 크기이다.  
+
+  * `push`연산을 통해 벡터의 `size`가 `capacity`를 초과하면 `reallocate`가 발생하여 모든 값들을 새로운 메모리에 복사하는 과정이 일어난다. 이 과정에서 속도 저하가 일어나며 `capacity`를 설정해주는 함수들을 이용하여 `reallocate`를 막을 수 있다.
 
   * `clear()`로 벡터의 값들을 지우면 벡터의 요소들은 없어지지만 `capacity`는 여전히 남아있다. 따라서 `swap`을 이용하여 `capacity`또한 제거해줘야 한다.
     ```
@@ -141,13 +143,14 @@
 * `LIFO(Last In First Out)` 속성을 가진 자료구조이다. 책 쌓기처럼 가장 마지막에 `push`된 데이터가 `pop`된다.
 
 * `front`에서 `push`, `pop` 모두 일어나며 `vector`과 비슷한 메서드를 사용한다.
+***
 ## Queue
 * `FIFO(First In First Out)` 속성을 가진 자료구조이다. 줄 서기처럼 먼저 `push`된 데이터가 `pop`된다.
 
 * `front`에서 `pop`, `back`에서 `push`가 일어나며 `vector`과 비슷한 메서드를 사용한다.
 ***
 ## Priority_queue
-* `Priority_queue`는 들어간 순서에 상관없이 우선순위가 높은 데이터가 먼저 나오는 자료구조이다.
+* Priority_queue는 들어간 순서에 상관없이 우선순위가 높은 데이터가 먼저 나오는 자료구조이다.
 
 * `priority_queue<자료형, container, compare>`로 정의한다.
 
@@ -175,7 +178,22 @@
 
 * 나머지 메서드들은 `vector`과 비슷한 메서드를 사용하고 있다.
 ***
+## Pair
+* 두 객체를 하나의 객체로 묶어주는 클래스이다.
 
+* `<utility>` 헤더에 존재한다.
+
+* `pair<[type1], [type2]> p`와 같이 사용한다.
+
+* `p.first` : pair의 `type1` 인자를 리턴한다.
+
+* `p.second` : pair의 `type2` 인자를 리턴한다.
+
+* `make_pair(변수1, 변수2)` : 변수1과 변수2가 들어간 pair를 만든다.
+
+* pair 안에 `type`을 pair로 설정하여 여러 개를 묶을 수 있다.
+***
+##
 
 
 
