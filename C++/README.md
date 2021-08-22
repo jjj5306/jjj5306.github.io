@@ -193,7 +193,81 @@
 
 * pair 안에 `type`을 pair로 설정하여 여러 개를 묶을 수 있다.
 ***
-##
+## List
+* 이중 연결 리스트이다.
 
+* `at`이나 `[]`가 아닌 `iterator`을 통해서 `++`, `--`연산을 통해 원소를 접근한다.
 
+* `lt.assing(a, b)` : `b`로 초기화된 `a`개의 list를 생성한다.
+
+* `lt.insert(iter, k)` : `iter`가 가리키는 위치에 원소 `k`를 삽입한다.
+
+* `lt.erase(iter)` : `iter`가 가리키는 원소를 삭제한다.
+
+* `lt.remove(k)` : `k`와 같은 원소를 모두 삭제한다.
+
+* `lt.remove_if(Predicate)` : 조건자에 해당하는 원소를 모두 제거한다.
+
+* `lt.srot()` : `iterator`로 범위를 지정하여 오름차순으로 정렬한다. 비교자 함수를 정의하여 세 번째 인자로 사용할 수 있다. 이 경우 콜백함수와 비슷하게 사용하며 연산자 재정의를 통해 이루어진다.
+  ```
+  struct _RANKING_INFO_ {
+    int  score;
+    char strUserName[32];
+                  bool operator<  ( const _RANKING_INFO_& rhs ) const
+                  {
+                       return score < rhs.score;
+                   }
+  };
+
+  bool RankComp( const _RANKING_INFO_& lhs, const _RANKING_INFO_& rhs )
+  {
+      return lhs.score < rhs.score;   //오름차순 정렬
+  };
+  ```
+  위의 예시로 보자면 구조체 `_RANKING_INFO_`에 대해 `<` 연산자를 재정의한대로 작동하게 만들고 `RankComp`함수에서 재정의한 연산자를 사용하게 한다. 이 함수를 `sort`의 세 번째 인자로 사용하면 사용자 정의 비교자를 통해 `sort`할 수 있다.
+
+* `lt2.splice(iter, lt1)` : `lt2`에서 `iter`이 가리키는 곳에 `lt1`의 모든 원소를 잘라 붙인다.
+
+* `lt2.splice(iter2, lt1, iter1)` : `lt2`에서 `iter2`가 가리키는 곳에 `lt1`의 `iter1`이 가리키는 원소를 잘라 붙인다. 이 때 네 번째 `iterator` 인자를 추가해서 `lt1`의 원소를 범위로 지정할 수 있다.
+
+* `lt.merge(lt1)` : `lt1`을 `lt2`내부로 `merge sort`한다. 기본은 오름차순이고 두 번째 인자로 `sort`와 비슷하게 사용자 정의 비교자를 지정할 수 있다.
+***
+## Map
+* `key` - `value`로 구성된 `balanced-binary-tree`이다.
+
+* `key`와 `value`는 `pair` 객체 형태로 저장된다.
+
+* `key`의 중복은 허용되지 않는다. `multimap`의 경우 중복 `key`를 허용한다.
+
+* 삽입되면서 자동으로 정렬된다. 디폴트로 오름차순이다.
+
+* `map<key type, value type> 변수이름(pred)`로 선언한다. 이 때 `pred`에 `less`를 주면 오름차순으로, `greater`을 주면 내림차순으로 정렬한다.
+
+* 연산자 `[]`를 사용하여 원소를 추가, 수정이 가능하다.
+  ```
+  m[key] = val;
+  ```
+  `[]`를 사용하여 원소를 추가하는 경우 value가 새로 만들어진건지, 기존 값이 변경된건지 구분할 수 없다.
+
+* `m.insert({1, 2})`와 같이 원소를 삽입할 수 있다.
+  * 이 때 리턴값으로 `pair`을 반환한다.     
+  * 삽입 성공 시 첫 번째 `iterator`는 insert되어진 element의 iterator를 반환하고 두 번째 `iterator`는 true를 반환한다.    
+
+  * 삽입 실패 시 첫 번째 `iterator`는 중복된 key의 element의 iterator를 반환하고 두 번째 `iterator`는 false를 반환한다.    
+
+  * 이를 이용하여 삽입의 성공, 실패를 구분할 수 있다.
+
+  * `m.insert(pair<int, int>(1, 2))`와 같이 insert할 수도있다.
+
+* `m.count(k)` : 원소 `k`의 개수를 반환하며 주로 `multimap`에서 쓰인다.
+
+* `m.erase(iter)` : `iter`이 가리키는 원소를 제거하고 다음 원소를 가리키는 iterator를 리턴한다.
+
+* `m.find(k)` : `k`와 같은 `key`를 가진 원소의 iterator를 리턴한다. 존재하지 않는 경우 `end()`를 리턴한다.
+
+* `m.upper_bound(k)` : `k`보다 큰 `key`들 중 가장 왼쪽에 있는 원소의 iterator를 리턴한다.
+
+* `m.lower_bound(k)` : `k`보다 작은 `key`들 중 가장 오른쪽에 있는 원소의 iterator를 리턴한다.
+
+* `m.equal_range(k)` : `first`로 `upper_bound(k)`를 `second`로 `lower_bound(k)`를 리턴한다.
 
