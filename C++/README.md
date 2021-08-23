@@ -299,3 +299,34 @@
       }
   };
   ```
+
+* 비교 전용 구조체를 만들어 `()`연산자를 오버로딩하여 `set`, `map`에 넣을 구조체의 비교 기준을 정의한다. 그리고 `set` 사용 시 두 번째 파라미터로, `map`은 세 번째 파라미터로 비교 전용 구조체를 넘겨준다.
+  ```
+  struct Student {
+    string name;
+    int grade;
+  };
+
+  struct cmp {
+    bool operator () (const Student& stu1, const Student& stu2) const {
+        if (stu1.name == stu2.name)
+            return stu1.grade < stu2.grade;
+        return stu1.name < stu2.name;
+    }
+  };
+
+  int main()
+  {
+    set<Student, cmp> students; 
+
+    students.insert({ "ryan", 5 });
+    students.insert({ "muzi", 3 });
+    students.insert({ "muzi", 1 });
+    students.insert({ "apeach", 1 });
+    students.insert({ "apeach", 1 });
+
+    for (auto& stu : students)
+        cout << stu.name << " : " << stu.grade << endl;
+  }
+  ```
+  
