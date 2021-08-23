@@ -270,4 +270,32 @@
 * `m.lower_bound(k)` : `k`보다 작은 `key`들 중 가장 오른쪽에 있는 원소의 iterator를 리턴한다.
 
 * `m.equal_range(k)` : `first`로 `upper_bound(k)`를 `second`로 `lower_bound(k)`를 리턴한다.
+***
+## Set
+* `map`과 거의 똑같지만 `value`는 존재하지 않고 `key`만 존재하는 `balanced-binary-tree`이다.
 
+* `map`과 똑같은 메서드를 가진다.
+***
+## Set, Map에 구조체 및 객체 저장
+* `set`과 `map`은 `balanced-binary-tree`이다. 따라서 `key`값은 대소비교가 가능해야한다.
+
+*  클래스나 구조체 내부에 `operator<`를 재정의 하여 구조체 및 객체를 비교 가능하게 정의하면 `set`, `map`에 구조체 및 객체를 저장할 수 있다.
+  ```
+  class Human
+  {
+  private:
+      int age;
+      int height;
+  public:
+      Human(int _age, int _height) : age(_age), height(_height){}
+      bool operator<(const Human& rhs) const    //이게 핵심!
+      {
+          if (age != rhs.age)
+          {
+              return age < rhs.age;
+          }
+ 
+          return height < rhs.height;
+      }
+  };
+  ```
