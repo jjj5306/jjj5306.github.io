@@ -16,20 +16,20 @@
 ## 약수 찾기
 * 어떤 정수 `n`에 대해 그 약수 `a`는 아래의 등식이 성립한다.
 $$ 1 \leq a \leq \sqrt n $$ 
-따라서 아래의 알고리즘과 같이 약수를 찾을 수 있다.
-```
-vector<int> getdivs(int n) {
-  vector<int> ret;
-  for (int i = 1; i * i <= n; i++) {
-    if (n % i == 0) {
-    ret.push_back(n / i);
-    if (i * i != n) ret.push_back(i);
+  따라서 아래의 알고리즘과 같이 약수를 찾을 수 있다.
+  ```
+  vector<int> getdivs(int n) {
+    vector<int> ret;
+    for (int i = 1; i * i <= n; i++) {
+      if (n % i == 0) {
+      ret.push_back(n / i);
+      if (i * i != n) ret.push_back(i);
+      }
     }
-  }
-  sort(ret.begin(),ret.end());
-  return ret;
-  }
-```
+    sort(ret.begin(),ret.end());
+    return ret;
+    }
+  ```
 
 ## 관련문제  
   * 완전수    
@@ -43,7 +43,8 @@ https://www.acmicpc.net/problem/1978
 
 ## 소인수분해
 * `약수 찾기`와 같은 알고리즘으로 약수를 찾되, 소인수가 발견되면 `n`을 그 소인수로 나눈다. 이 과정을 소인수가 $\sqrt n$이 될 때 까지 반복하고 마지막으로 `n`이 1보다 크면 그 때의 n 역시 소인수이다.
-```
+
+  ```
   vector<int> factorize(int n) {
   //여기서 변수 n은 지역 변수, 즉 원래 n의 복사본
   vector<int> ret;
@@ -56,7 +57,7 @@ https://www.acmicpc.net/problem/1978
   if (n > 1) ret.push_back(n);
   return ret;
   }
-```
+  ```
 
 ## 관련문제
   * 소인수분해    
@@ -67,8 +68,9 @@ https://www.acmicpc.net/problem/11653
 
 ## 에라토스테네스의 체
 * $2$이상 $n$이하의 모든 소수를 구하는 알고리즘이다. $2$부터 $\sqrt n$까지 그 수의 모든 배수를 지워내는 알고리즘이다. 
-```
-vector<int> sieve(int N) {
+
+  ```
+  vector<int> sieve(int N) {
     vector<int> prime(N, 1);
     prime[0] = prime[1] = 0;
     for (int i = 0; i < N; i++) {
@@ -79,11 +81,12 @@ vector<int> sieve(int N) {
         }
     }
     return prime;
-}
-```
+  }
+  ```
 
 ## 에라토스테네스의 체를 사용한 소인수분해
   * 소수가 아닌 수를 지우는 과정에서 그 수를 지울 때 사용한 소인수를 기록한다. 그렇게되면 `i`번째 index의 값이 i이면 소수이다.
+
   ```
   vector<int> sieve(int n) {
     vector<int> S(n + 1, 0);
@@ -137,29 +140,29 @@ vector<int> sieve(int N) {
   - `페르마의 소정리`를 이용하면 `모들러 계`에서 $a \cdot a^{p-2} = 1 $이라는 수식을 얻을 수 있고 따라서 $a$의 역원은  $a^{p-2}$이다.
   - `분할 정복을 통한 거듭제곱`을 이용하여 $x^y$를 $MOD$로 나눈 나머지를 구하면 아래의 코드와 같이 구현할 수 있다.
 
-  ```
-  using ll = long long;
-  const ll MOD = (ll)1e9 + 7ll;
-  //문제에서 제시한 소수를 사용
+    ```
+    using ll = long long;
+    const ll MOD = (ll)1e9 + 7ll;
+    //문제에서 제시한 소수를 사용
 
-  ll modpow(ll x, ll y) {
-    ll p = x;
-    ll ret = 1;
-    while (y) {
-      if (y % 2) ret = (ret * p) %   MOD;
-      p = p * p % MOD;
-      y /= 2;
-      }
+    ll modpow(ll x, ll y) {
+      ll p = x;
+      ll ret = 1;
+      while (y) {
+        if (y % 2) ret = (ret * p) %   MOD;
+        p = p * p % MOD;
+        y /= 2;
+        }
 
-      return ret;
-  }
-  ```
+        return ret;
+    }
+    ```
   - 위의 함수를 통해 모듈러 나눗셈을 구현하면 
-  ```
-  ll modinv(ll x) {
-    return modpow(x, MOD - 2);
-  }
-  ```
+    ```
+    ll modinv(ll x) {
+      return modpow(x, MOD - 2);
+     }
+    ```
 
 ## 모듈러 연산의 구현
   - 기초 연산을 함수로 구현하여 사용한다. 
@@ -215,7 +218,7 @@ $$
   \phi(p^k) = p^k - p^{k-1}
   $$
 $\;\;\;\;\;\;\;\;\;\,$라는 결론을 얻는다.
-  * 위의 결론에서 모든 수를 소수의 곱으로 소인수분해 한 뒤 오일러 파이 함수가 곱셈적 함수임을 이용해서 계산할 수 있다. 아래의 `GCD(n, k) = 1` 문제의 주석을 잘 참고하면 이해하기 쉽다.
+  * 위의 결론에서 모든 수를 소수의 곱으로 소인수분해 한 뒤 오일러 파이 함수가 곱셈적 함수임을 이용해서 계산할 수 있다. 아래의 `GCD(n, k) = 1` 문제의 주석을 잘 참고하면 이해하기 쉽다.    
 $\phi(a) = pie(p_1^{k_1}p_2^{k_2}\cdot\cdot\cdot p_n^{k_n})$  
 
 $\;\;\;\;\;\;\;\;\,\;\;\;\;\;\;\;\;= p_1^{k_1}(1 - \frac 1 {p^1})p_2^{k_2}(1 - \frac 1 {p^2})\cdot\cdot\cdot p_n^{k_n}(1 - \frac 1 {p^n})$  
