@@ -10,7 +10,8 @@ long long F(int x) {
     
      if (x == 0) return cache[x] = 0;
      if (x == 1) return cache[x] = 1;
-     else return cache[x] = F(x - 1) + F(x - 2);     }
+     else return cache[x] = F(x - 1) + F(x - 2);
+}
 
 int main() {
     for (int i = 0; i < C_SIZE; i++) cache[i] = -1;
