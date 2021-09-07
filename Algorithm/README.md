@@ -477,6 +477,18 @@ $\;\;\;\;\;\;\;\;\,\;\;\;\;\;\;\;\; = a(1 - \frac 1 {p^1})(1 - \frac 1 {p^2})\cd
   https://www.acmicpc.net/problem/11659    
    소스 코드 : [C++](./BOJ/11659.cpp)
 
+- 구간 합 구하기 5     
+  https://www.acmicpc.net/problem/11660    
+   소스 코드 : [C++](./BOJ/11660.cpp)
+
+- 1로 만들기     
+  https://www.acmicpc.net/problem/1463    
+   소스 코드 : [C++](./BOJ/1463.cpp)
+
+- 1로 만들기 2     
+  https://www.acmicpc.net/problem/12852    
+   소스 코드 : [C++](./BOJ/12852.cpp)
+
 
 ***
 # 자료구조
