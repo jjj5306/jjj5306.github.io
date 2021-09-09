@@ -6,9 +6,9 @@
   }
   ```
 
-* range based for는 `index`정보가 존재하지 않는다. 단, `index`의 `value`의 정보는 존재한다.
+* range based for는 index정보가 존재하지 않는다. 단, index의 value의 정보는 존재한다.
 
-* 자동으로 `elem`에 `arr`의 원소들이 복사되기 때문에 기본적으로 배열의 요소를 변경할 수 없다.
+* 자동으로 `elem`에 arr의 원소들이 복사되기 때문에 기본적으로 배열의 요소를 변경할 수 없다.
   ```
   for(int elem : v){
       elem += 100;
@@ -16,7 +16,7 @@
   }
   ```
   
-* range based for를 `reference`를 이용하여 복사 비용도 줄이고 배열의 원래 값을 변경할 수 있다.
+* range based for를 reference를 이용하여 복사 비용도 줄이고 배열의 원래 값을 변경할 수 있다.
   ```
   for(int& elem : arr){
       elem += 1;
@@ -31,6 +31,7 @@
   ```
   위의 코드에서는 `elem`의 값을 변경하려 했기에 컴파일 에러가 뜬다.
 ***
+
 # Auto
 * 초깃값의 형식에 맞춰 인스턴스의 형식을 자동으로 결정한다.
   ```
