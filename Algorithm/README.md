@@ -164,7 +164,7 @@ https://www.acmicpc.net/problem/11653
     ```
 
 ## 모듈러 연산의 구현
-  - 기초 연산을 함수로 구현하여 사용한다. 
+- 기초 연산을 함수로 구현하여 사용한다. 
   ```
   const long long MOD = 998244353;
 
