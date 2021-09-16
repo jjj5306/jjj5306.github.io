@@ -451,7 +451,7 @@
   처럼 `required`를 `true`로 설정해주면 나중에 `name`이란 필드의 값이 없으면 에러를 발생시킨다.
 
 - trim  
-  `trim`을 `true`로 설정하면 ` abc `라는 입력을 공백을 잘라내고 `abc`로 저장한다.
+  `trim`을 `true`로 설정하면 `abc`라는 입력을 공백을 잘라내고 `abc`로 저장한다.
 
 - index  
   `index`를 `true`로 설정하면 `index`를 설정하여 검색을 할 때 빠르게 검색하게 도와준다.
