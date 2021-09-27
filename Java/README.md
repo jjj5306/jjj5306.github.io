@@ -873,10 +873,219 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 멤버 또는 클래스에 사용되어 해당 멤버, 클래스를 외부에서 접근하지 못하도록 제한한다.
 
-- public : 같은 클래스 내에서만 접근 가능하다.
+- private : 같은 클래스 내에서만 접근 가능하다.
 
 - protected : 같은 패키지 내에서 혹은 다른 패키지의 자손클래스에서 접근이 가능하다.
 
 - default : 접근 제어자를 지정하지 않으면 자동으로 default로 지정된다. 같은 패키지 내에서만 접근이 가능하다.
 
 - public : 어디서든 접근할 수 있다.
+
+## 생성자의 접근 제어자
+
+- 보통 생성자의 접근 제어자는 클래스의 접근 제어자와 같지만, 다르게 지정할 수 있다.
+
+- 생성자의 접근 제어자를 `private`로 지정하면 외부에서 생성자에 접근할 수 없으므로 인스턴스를 생성할 수 없다. 대신 클래스 내부에서는 인스턴스를 생성할 수 있다.
+
+  - 이 경우 인스턴스를 생성해서 반환해주는 `public static`메서드를 제공하여 외부에서 이 클래스의 인스턴스를 생성할 수 있도록 할 수 있다.
+
+  - 또 생성자가 `private`인 클래스는 다른 클래스의 조상 클래스가 될 수 없다. 자손 클래스의 인스턴스가 생성할 때 조상 클래스가 생성자를 호출해야 하는데, `private`이면 생성할 수 없기 때문이다.
+
+## 제어자의 조합
+
+- **메서드에 static과 abstract를 함께 사용할 수 없다.**
+
+  - `static` 메서드는 몸통이 있는 메서드에만 사용할 수 있기 때문이다.
+
+- **클래스에 abstrack와 final을 동시에 사용할 수 없다.**
+
+  - `abstract` 클래스는 상속을 통해 확장되어야만 하고, `final`은 더이상 확장이 불가능 하다는 의미이기 때문이다.
+
+- **abstract메서드의 접근 제어자가 private일 수 없다.**
+
+  - `abstract` 메서드는 자손 클래스에서 반드시 접근해야 하기 때문이다.
+
+- **메서드에 private와 final을 같이 사용할 필요는 없다.**
+
+  - 접근 제어자가 `private`인 메서드는 오버라이딩될 수 없기 때문이다. `private`와 `final`모두 자손 클래스에서 접근할 수 없다.
+
+## 다형성
+
+- 다형성이란 **여러 가지 형태를 가지 수 있는 능력**을 의미하며, 자바에서는 **조상클래스 타입의 참조변수로 자손클래스의 인스턴스를 참조할 수 있도록 하게** 구현하였다.
+
+- 아래의 예시로 살펴보자.
+
+  ```
+  class Tv{
+    boolean power;
+    int channel;
+
+    void power()       {  power = !power; }
+    void channelUp()   {  ++channel;      }
+    void channelDown() {  --channel;      }
+  }
+
+  class CaptionTv extends Tv{
+    String text;
+    void caption{ ... }
+  }
+  ```
+
+  위의 상황에서 조상 클래스 타입의 참조변수로 자손 클래스의 인스턴스를 참조하도록 하는 것이 가능하다.
+
+  ```
+  CaptionTv c = new CaptionTv();
+  Tv        t = new CaptionTv();
+  ```
+
+  위와 같이 참조 변수 `c`, `t`를 선언하였을 때 `t`가 `CaptionTv`타입이라 할지라도, `CaptionTv`클래스의 멤버 중 `CaptionTv`에서 새로 정의한 `text`, `caption()`은 사용할 수 없다.
+
+  - 즉 `t`와 `c` **둘 다 같은 타입의 인스턴스지만 참조변수의 타입에 따라 사용할 수 있는 멤버의 종류가 달라진다.**
+
+  - 반대로 자손타입의 참조변수로 조상타입의 인스턴스를 참조할 수는 없다.
+    ```
+    CaptionTv c = new Tv();
+    ```
+    위의 문장은 불가능하다.
+
+## 참조변수의 형변환
+
+- 참조변수 또한 기본형 변수처럼 **상속관계에 있는 클래스 사이에서만** 형변환이 가능하다.
+
+- 자손타입에서 조상타입으로 변환하는 `Up-casting`은 형변환을 생략 가능하다.
+
+- 조상타입에서 자손타입으로 변환하는 `Down-casting`은 형변환 생략 불가능하다.
+
+- 예를 들어, 조상 타입 `Car`과 그의 자손 `FireEngine`, `Ambulance`가 있다고 하자.
+
+  - ```
+    FireEngine f;
+    Ambulance a;
+      a = (Ambulance)f;
+    ```
+
+    위의 코드는 `FireEngine`과 `Ambulance`가 상속관계가 아니기에 불가능하다.
+
+  - ```
+    Car car = null;
+    FireEngine fe = new FireEngine();
+    FireEngine fe2 = null;
+
+    car = fe;
+    fe2 = (FireEngine)car;
+    ```
+
+    위의 예시에서 `FireEngine`을 `Car`로 형변환하는 Up-casting은 형변환이 생략 가능하고, `Car`을 `FireEngine`으로 형변환하는 Down-casting은 형변환이 생략 불가능하다.
+
+- 아까 예시로 든 `Tv = new CaptionTv();`도 사실은 `Tv t = (Tv)new CaptionTv();`의 생략된 형태이다.
+
+## instance of연산자
+
+- 참조변수가 참조하고 있는 인스턴스의 실제 타입을 알아보기 위해 `instanceof`연산자를 사용할 수 있다.
+
+  - `c instanceof FireEngine`와 같이 사용할 수 있고, `c`가 참조하고 있는 인스턴스의 실제 타입이 `FireEngine`이라면 `true`를, 아니라면 `false`를 리턴한다.
+
+- 정확하게 같은 타입 외에도, 조상타입의 인스턴스에도 `true`를 리턴한다. 따라서 모든 참조변수에 `instanceof Object`를 하면 `true`를 리턴한다.
+
+- 어떤 타입에 대해 `instanceof`연산의 결과가 `true`라는 것은 검사한 타입으로 형변환이 가능하다는 것을 뜻한다.
+
+## 참조변수와 인스턴스의 연결
+
+- 메서드의 경우 조상 클래스의 메서드를 자손의 클래스에서 오버라이딩한 경우, 참조 변수의 타입에 관계없이 항상 오버라이딩된 메서드가 호출된다.
+
+- 하지만 멤버변수를 오버라이딩하는 경우 참조변수의 타입에 따라서 다르게 호출된다.
+
+  - 즉 멤버변수를 오버라이딩했을 때 조상타입의 참조변수를 사용하면 조상 클래스의 멤버변수가 사용되고, 자손타입의 참조변수를 사용하면 자손 클래스의 멤버변수가 사용된다.
+
+## 매개변수의 다형성
+
+- 다음과 같이 정의된 클래스 `Product`와 이를 상속받은 `Tv, Computer, Audio`클래스가 있다고 가정하자. 또 위의 클래스들을 구매하는 구매자 `Buyer`클래스가 있다고 가정하자.
+
+  ```
+  class Product{
+    int price, bonusPoint;
+  }
+  class Buyer{
+    int money = 100, bonusPoint = 0;
+  }
+  ```
+
+  `Buyer`클래스에 물건을 구입하는 기능의 메서드를 추가해보자. 그럼 구매하는 물품이 `Tv`, `Computer`, `Audio` 중 무엇인지 모르기에 다음과 같이 매개변수를 `Tv`, `Computer`, `Audio`를 매개변수로 사용하는 메서드를 생성해야만 한다.
+
+  ```
+  void buy(Tv t){
+    money = money - t.price;
+    bonusPoint = bonusPoint + t.bonusPoint;
+  }
+  void buy(Computer c){
+    money = money - t.price;
+    bonusPoint = bonusPoint + t.bonusPoint;
+  }
+  void buy(Audio a){
+    money = money - t.price;
+    bonusPoint = bonusPoint + t.bonusPoint;
+  }
+  ```
+
+  이렇게 되면, 제품의 종류가 늘어날 때마다 `Buyer`클래스에 새로운 `buy`메서드를 추가해야 한다.
+
+- 그러나 메서드의 매개변수에도 **다형성을 적용할 수 있다.**
+  ```
+  void buy(Product p){
+    money = money - p.price;
+    bonusPoint = bonusPoint + p.bonusPoint;
+  }
+  ```
+  위와같이 **매개변수의 다형성**을 이용하여 메서드를 만들면 `Product`클래스를 상속받기만 하면, 그 클래스에 대해 `buy`를 사용할 수 있다.
+  ```
+  Buyer = new Buyer();
+  Tv t = new Tv();
+  b.buy(t);
+  b.buy(new Computer());
+  ```
+  위의 예시에서 `Tv t = new Tv(); b.buy(t);`를 `b.buy(new Tv());`와 같이 사용할 수 있음을 알아두자.
+
+## 여러 종류의 객체를 배열로 다루기
+
+- 조상타입의 참조변수로 자손타입의 객체를 참조하는 것이 가능하다는 것을 배웠다.
+
+  ```
+  Product p1 = new Tv();
+  Product p2 = new Computer();
+  Product p3 = new Audio();
+  ```
+
+- 위의 코드를 `Product`타입의 참조변수 배열로 처리할 수 있다.
+  ```
+  Product p[] = new Product[3];
+  p[0] = new Tv();
+  p[1] = new Computer();
+  p[2] = new Audio();
+  ```
+
+## 추상클래스
+
+- 추상 클래스란, 미완성된 클래스를 뜻하며 미완성된 메서드를 포함하는 클래스라는 뜻이다.
+
+- 추상 클래스는 새로운 클래스를 작성할 때 바탕이 되는 조상클래스로서 중요한 의미를 갖는다.
+
+- `abstract`키워드를 클래스 선언부 앞에 붙여서 사용할 수 있다.
+
+  ```
+  abstract class 클래스이름{
+    ...
+  }
+  ```
+
+- 추상클래스도 생성자, 멤버변수, 메서드 모두를 가질 수 있다.
+
+## 추상메서드
+
+- 메서드의 선언부만 작성하고 구현부는 작성하지 않은 채 남겨둔 메서드를 추상메서드라한다.
+
+- 메서드의 내용이 상속받는 클래스에 따라 달라지는 경우 주로 사용하며, 자손 클래스가 조상 클래스의 추상 메서드를 상속받아 오버라이딩하여 사용한다.
+
+- 추상메서드 역시 `abstract`키워드를 앞에 붙여주고 구현부 없이 바로 `;`를 적어주면 된다.
+  ```
+  abstract 리턴타입 메서드이름();
+  ```
