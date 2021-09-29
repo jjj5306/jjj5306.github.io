@@ -1247,3 +1247,66 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
   이 문제를 해결하기 위해 **디폴트 메서드**를 고안해 내었다. 디폴트 메서드는 추상 메서드의 기본적인 구현을 제공하는 메서드로, 추상 메서드가 아니다.
 
 - `default`키워드를 붙여서 메서드를 선언하면 되며, 일반 메서드처럼 몸통이 있어야한다. 또 접근 제어자가 `public`이며 생략 가능하다.
+
+## 내부 클래스
+
+- 내부 클래스는 서로 긴밀한 관계에 있는 두 클래스 사이에서, 클래스 내에 선언된 클래스이다.
+
+- **내부 클래스의 장점**
+
+  - 내부 클래스에서 외부 클래스의 멤버들을 쉽게 접근할 수 있다.
+
+  - 코드의 복잡성을 줄일 수 있다.
+
+- 내부 클래스는 외부 클래스를 제외하고는 다른 클래스에서 잘 사용되지 않는 것이 좋다.
+
+- 내부 클래스의 선언 위치에 따라 다음과 같이 구분되어 진다.
+
+  - **인스턴스 클래스** : 외부 클래스의 멤버변수 선언위치에 선언하며, 외부 클래스의 인스턴스 멤버처럼 다루어진다.
+
+  - **스태틱 클래스** ㅤ: 외부 클래스의 멤버변수 선언위치에 선언하며, 외부 클래스의 static 멤버처럼 다루어진다.
+
+  - **지역 클래스** ㅤㅤ: 외부 클래스의 메서드나 초기화블럭 안에 선언하며, 선언된 영역 내부에서만 사용될 수 있다.
+
+  - **익명 클래스** ㅤㅤ: 클래스의 선언과 객체의 생성을 동시에 하는 이름없는 일회용 클래스이다.
+
+- 내부 클래스와 외부 클래스의 변수 이름이 같을 때, 내부 클래스의 메서드에서 변수 앞에 `this`를 붙이면 내부 클래스의 변수를, `외부 클래스명.this`를 붙이면 외부 클래스의 변수를 가리킨다.
+
+## 익명 클래스
+
+- 익명 클래스는 이름이 없고, 클래스의 선언과 객체의 생성을 동시에 하기 때문에 단 한번만 사용될 수 있고 오직 하나의 객체만을 생성할 수 있다.
+
+- 생성자도 가질 수 없으며, 오로지 단 하나의 클래스를 상속받거나 단 하나의 인터페이스를 구현할 수 있다.
+
+- 익명클래스로 변환하는 예를 살펴보자.
+  ```
+  class Inner{
+    public static void main(String args[]){
+      Button b = new Button("Start");
+      b.addActionListener(new EventHandler());
+    }
+  }
+  class EventHandler implements ActionListener{
+    public void actionPerformed(ActionEvent e){
+      System.out.println("ActionEvent occurred!!");
+    }
+  }
+  ```
+  위의 `EventHandler`를 익명클래스로 변경해보자.
+  ```
+  class Inner{
+    public static void main(String args[]){
+      Button b = new Button("Start");
+      b.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+           System.out.println("ActionEvent occurred!!");
+         }
+        } //익명 클래스의 끝
+     }; //
+    } //main의 끝
+  } //class의 끝
+  ```
+
+# 예외처리
+
+##
