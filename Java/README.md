@@ -702,6 +702,8 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   - **기본값 -> 명시적초기화 -> 인스턴스 초기화 블럭 -> 생성자**와 같은 순서로 이루어진다.
 
+---
+
 # 객체지향 프로그래밍 Ⅱ
 
 ## 클래스 상속
@@ -1307,6 +1309,150 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
   } //class의 끝
   ```
 
+---
+
 # 예외처리
 
-##
+## 프로그램 오류
+
+- 자바는 런타임에 발생할 수 있는 오류를 `에러`와 `오류`로 구분하였다. 메모리 부족이나 스택오버플로우같이 일단 발생하면 복구할 수 없는 비교적 심각한 오류를 **에러**라 하고, 발생하더라도 수습될 수 있는 비교적 덜 심각한 오류를 **예외**라고 한다.
+
+- 자바에서는 이 에러와 예외를 클래스로 정의하였다. 모든 예외의 최고 조상은 `Exception`클래스이다.
+
+  - 예외 클래스는 두 그룹으로 나누어 질 수 있다.  
+    **Exception클래스와 그 자손들**(RuntimeException과 자손들 제외)을 `Exception클래스들`이라 하고,  
+    **RuntimeException클래스와 그 자손들**을 `RuntimeException클래스들`이라 하자.
+
+  - RuntimeException클래스들은 주로 프로그래머의 실수에 의해 발생될 수 있는 예외들로 자바의 프로그래밍 요소들과 관계가 싶다.
+
+  - Exception클래스들은 주로 외부의 영향으로 발생할 수 있는, 프로그램의 사용자들의 동작에 의해 발생하는 경우가 많다.
+
+## 예외처리하기 - try-catch문
+
+- 예외처리를 통해서 **프로그램의 비정상 종료를 막고, 정상적인 실행상태를 유지할 수 있다.**
+
+- 예외를 처리하기 위해서는 `try-catch`문을 사용한다.
+
+  ```
+  try{
+    // 예외가 발생할 가능성이 있는 문장들을 넣는다.
+  } catch (Exceptiona1 e1){
+    // Exception1이 발생했을 경우, 이를 처리하기 위한 문장을 적는다.
+  } catch (Exception2 e2){
+    ...
+  } catch (ExceptionN eN){
+    ...
+  }
+  ```
+
+  `try-catch`문은 메서드 내에서도 사용할 수 있고, `try`블럭 안에서, `catch`블럭 안에서 모두 사용 가능하다.
+
+- 실제 사용 예시를 한 번 보자.
+
+  ```
+  class ExceptionEx2 {
+    public static void main(String args[]){
+      int number = 100;
+      int result = 0;
+
+      for(int i=0; i < 10; i++){
+        result = number / (int)(Math.random() * 10);
+        System.out.println(result);
+      }
+    }
+  }
+  ```
+
+  위의 예제는 변수 `number`에 저장되어 있는 값 100을 0 ~ 9사이의 임의의 정수로 나눈 결과를 출력한다. `random()`을 사용했기에 0이 나올 수 있고, 0으로 나누면 **ArithmeticException** 예외가 발생한다. 이 예외를 처리해보자.
+
+  ```
+  class ExceptionEx2 {
+    public static void main(String args[]){
+      int number = 100;
+      int result = 0;
+
+      for(int i=0; i < 10; i++){
+        try{
+            result = number / (int)(Math.random() * 10);
+            System.out.println(result);
+        } catch(ArithmeticException e){
+            System.out.println("0");
+        }
+      }
+    }
+  }
+  ```
+
+## try-catch문에서의 흐름
+
+- **try블럭 내에서 예외가 발생하는 경우**
+
+  1. 발생한 예외와 일치하는 catch블럭이 있는지 확인한다.
+
+  2. 일치하는 catch블럭을 찾으면, 그 catch블럭 내의 문장들을 수행하고 전체 try-catch문을 빠져나가서 그 다음 문장을 계속 수행한다. 만약 일치하는 catch블럭이 없으면 예외는 처리되지 못한다.
+
+- **try블럭 내에서 예외가 발생하지 않은 경우**
+
+  1. catch블럭을 거치지 않고 전체 try-catch문을 빠져나가서 수행을 계속한다.
+
+- 아래의 예시와 함께 이해하자.
+
+  ```
+  class Exception5 {
+    public static void main(String args[]){
+      System.out.println(1);
+      System.out.println(2);
+      try{
+        System.out.println(3);
+        System.out.println(0/0);
+        System.out.println(4);
+      } catch (ArithmeticException ae) {
+        System.out.println(5);
+      }
+
+      System.out.println(6);
+    }
+  }
+  ```
+
+  위 예시의 결과는 1, 2, 3을 출력하고 다음 try블럭에서 예외가 발생해서 try블럭을 벗어난다. **따라서 4는 출력하지 않고** 5와 6을 출력한다.
+
+## 예외의 발생과 catch블럭
+
+- catch블럭의 `()`내에는 처리하고자 하는 예외와 같은 타입의 참조변수를 선언해야한다. 예외가 발생하면, 발생한 예외에 해당하는 클래스의 인스턴스가 만들어진다. 그리고 이 예외가 발생한 문장이 try블럭 내에 있다면, 이 예외를 처리할 수 있는 catch블럭이 있는지 찾게 된다.
+
+  - 이 때 찾는 과정에서 catch블럭의 괄호내에 선언된 참조변수의 종류와 생성된 예외클래스의 인스턴스에 `instanceof`연산자를 이용하여 `true`가 나올 때 까지 검사는 계속된다. 따라서 `Exception`클래스 타입의 참조변수를 이용하면 어떤 종류의 예외가 발생하더라도 이 catch블럭에 의해 처리된다.
+
+## printStackTrace()와 getMessage()
+
+- **printStackTrace()** : 예외발생 당시의 호출스택에 있었던 메서드의 정보와 예외 메세지를 출력한다.  
+  **getMessage()** : 발생한 예외클래스의 인스턴스에 저장된 메세지를 얻을 수 있다.
+  ```
+  class ExceptionEx8 {
+    public static void main(String args[]) {
+      System.out.println(1);
+      System.out.println(2);
+      try {
+        System.out.println(3);
+        System.out.println(0/0);
+        System.out.println(4);
+      } catch (ArithmeticException ae) {
+        as.printStackTrace();
+        System.out.println("예외메세지 : " + ae.getMessage());
+      }
+      System.out.println(6);
+    }
+  }
+  ```
+
+## 멀티 catch블럭
+
+- 여러 catch블럭을 하나의 catch블럭으로 합칠 수 있다. `|`기호로 연결하면 된다.
+  ```
+  try{
+    ...
+  }catch(ExceptionA | ExceptionB a){
+    ...
+  }
+  ```
+  이 때 `|`로 연결한 예외 클래스가 조상과 자손 관계에 있어서는 안된다.
