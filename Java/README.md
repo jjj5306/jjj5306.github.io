@@ -1283,12 +1283,12 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 - 익명클래스로 변환하는 예를 살펴보자.
   ```
   class Inner{
-    public static void main(String args[]){
+    public static void main(String[] args){
       Button b = new Button("Start");
       b.addActionListener(new EventHandler());
     }
   }
-  class EventHandler implements ActionListener{
+  class EventHandler implements ActionListene
     public void actionPerformed(ActionEvent e){
       System.out.println("ActionEvent occurred!!");
     }
@@ -1297,7 +1297,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
   위의 `EventHandler`를 익명클래스로 변경해보자.
   ```
   class Inner{
-    public static void main(String args[]){
+    public static void main(String[] args){
       Button b = new Button("Start");
       b.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
@@ -1351,7 +1351,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   ```
   class ExceptionEx2 {
-    public static void main(String args[]){
+    public static void main(String[] args){
       int number = 100;
       int result = 0;
 
@@ -1367,7 +1367,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   ```
   class ExceptionEx2 {
-    public static void main(String args[]){
+    public static void main(String[] args){
       int number = 100;
       int result = 0;
 
@@ -1399,7 +1399,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   ```
   class Exception5 {
-    public static void main(String args[]){
+    public static void main(String[] args){
       System.out.println(1);
       System.out.println(2);
       try{
@@ -1429,7 +1429,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
   **getMessage()** : 발생한 예외클래스의 인스턴스에 저장된 메세지를 얻을 수 있다.
   ```
   class ExceptionEx8 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
       System.out.println(1);
       System.out.println(2);
       try {
@@ -1456,3 +1456,224 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
   }
   ```
   이 때 `|`로 연결한 예외 클래스가 조상과 자손 관계에 있어서는 안된다.
+
+## 예외 발생시키기
+
+- 키워드 `throw`를 이용해 발생시킬 수 있다. 아래의 예시와 같이 발생시키면 된다.
+
+  ```
+  Exception e = new Exception("고의로 발생시킴");
+  throw e;
+  ```
+
+- Exception인스턴스를 생성할 때, 생성자에 String을 넣어 `getMessage()`로 출력할 수 있다.
+  ```
+  class Exception{
+    public static void main(String[] args){
+      try{
+        Exception e = new Exception("테스트용 에러");
+        throw e;
+        //위의 두 문장을 `throw new Exception("테스트용 에러");`와 같이 사용할 수 있다.
+      } catch(Exception e){
+        System.out.println("에러 메세지 : " + e.getMessage());
+      }
+    }
+  }
+  ```
+  위의 예시의 출력은 `에러 메세지 : 테스트용 에러`이다.
+
+## 메서드에 예외 선언하기
+
+- 예외를 처리하는 방법에는 지금까지 배운 try-catch문 외에 예외를 메서드에 선언하는 방법이 있다. 메서드의 선언부에 키워드 `throws`를 사용해서 메서드 내에서 발생할 수 있는 예외를 적기만하면 된다. 예외들은 쉼표로 구분한다.
+
+  ```
+  void method() throws Exception1, Exception2, ... {
+    ..
+  }
+  ```
+
+  만일 아래와 같이 모든 예외의 최고조상인 `Exception`클래스를 메서드에 선언하면 모든 예외에 대해 예외처리를 해준다.
+
+  ```
+  void method() throws Exception{
+    ...
+  }
+  ```
+
+  - 예외를 메서드에 선언하면, 예외가 발생하면 자신을 호출한 메서드에게 예외를 전달하여 예외처리를 맡기는 것이다. 즉, 어느 한 곳에서는 반드시 try-catch문으로 예외처리를 해주어야 한다.
+
+- 메서드에 예외처리를 하면 호출스택에 있는 메서드들을 따라 전달되면서 예외를 처리한다.
+
+  ```
+  class Exception{
+    public static void main(String[] args){
+      method1();
+    }
+
+    static void method1() throws Exception{
+      method2();
+    }
+
+    static void method2() throws Exception{
+      throw new Exception();
+    }
+  }
+  ```
+
+  위의 소스코드를 실행하면 발생한 예외와 호출스택의 내용이 출력되면서 종료된다. 실행결과는 다음과 같다.
+
+  ```
+  java.lang.Exception
+      at Exception.method2(Exception.java:11)
+      at Exception.method1(Exception.java:7)
+      at Exception.main(Exception.java:3)
+  ```
+
+  위의 결과에서, 예외가 발생했을 때 `method2`, `method1`, `main` 순으로 호출스택에 있었고 가장 위에있는 `method2`에서 예외가 발생했다는 것을 알 수 있다.
+
+- Java API문서를 통해 사용하고자 하는 메서드의 선언부와 `Throws"`를 보고, 이 메서드에서 발생할 수 있는 예외들에 대해 알아두는 것이 좋다.
+
+## finally블럭
+
+- finally블럭은 try - catch문의 끝에 선택적으로 덧붙여 사용할 수 있으며, 예외의 발생여부에 관계없이 실행되어야할 코드를 포함시켜 사용한다.
+  ```
+  try {
+    ...
+  } catch(Exception e){
+    ...
+  } finally{
+    ...
+  }
+  ```
+
+## 자동 자원 반환 - try-with-resources문
+
+- try-catch문의 변형 형태로, `try-with-resources`가 추가되었다. 주로 입출력과 관련된 클래스를 사용할 때 유용하다.
+
+- 사용 예시를 보자.
+
+  ```
+  try{
+    fis = new FileInputStream("score.dat");
+    dis = new DataInputStream(fis);
+      ...
+  } catch (IOException ie){
+    ie.printStackTrace();
+  } finally{
+    dis.close();
+  }
+  ```
+
+  위의 코드는 `DataInputStream`을 사용해서 파일로부터 데이터를 읽는 코드인데, 데이터를 읽는 도중 예외가 발생하더라도 `dis`를 닫도록 구성하였다. **하지만 `close()`가 예외를 발생시키는 경우는 문제가 생긴다.** 따라서 아래와 같이 해야한다.
+
+  ```
+  try{
+    fis = new FileInputStream("score.dat");
+    dis = new DataInputStream(fis);
+      ...
+  } catch (IOException ie){
+    ie.printStackTrace();
+  } finally{
+    try{
+      if(dis != null)
+        dis.close();
+    } catch(IOException ie){
+      ie.printStackTrace();
+    }
+  }
+  ```
+
+  위와 같이 `close()`에서 발생할 수 있는 예외를 처리하도록 변경했는데, 코드의 가독성이 너무 떨어지고 try블럭과 finally블럭에서 모두 예외가 발생하면, try블럭의 예외는 무시된다는 것이다. 따라서 위의 코드를 `try-with-resources`문으로 바꿔보자.
+
+  ```
+  try(FileInputStream fis = new FileInputStream("score.dat");
+      DataInputStream dis = new DataInputStream(fis)){
+
+    while(true){
+          score = dis.readInt();
+          System.out.println(score)l;
+          sum += score;
+    }
+  } catch (EOFException e){
+    System.out.prinln("점수의 총합은 " + sum + "입니다.");
+  } catch (IOException ie){
+    ie.printStackTrace();
+  }
+  ```
+
+  위와같이 사용할 수 있고, `try-with-resources`문의 괄호안에 객체를 생성하는 문장을 넣으면, 이 객체는 따로 `close()`를 호출하지 않아도 try블럭을 벗어나면 자동으로 닫아준다. 그 다음에 catch블럭 또는 finally블럭이 수행된다.
+
+- try-with-resources문에 의해 자동으로 객체를 닫아주려면, **클래스가 `AutoCloseable`이라는 인터페이스를 구현한 것이어야만 한다.**
+
+## 사용자정의 예외 만들기
+
+- 기존의 정의된 예외 클래스 외에 프로그래머가 새로운 예외 클래스를 정의하여 사용할 수 있다. 하지만 가능한 기존의 예외클래스를 활용하는 것이 좋다.
+
+- ```
+  class MyException extends Exception{
+    MyException(String msg){
+      super(msg); //조상클래스의 생성자 호출
+    }
+  }
+  ```
+
+  Exception클래스로부터 상속받아 MyException클래스를 만들었다. 필요에 따라 멤버 변수나 메서드를 추가할 수 있다. 내가 만들 예외클래스도 메세지를 저장하려면 생성자를 정의할 때 String을 매개변수로 받아서 저장해주면 된다.
+
+  ```
+  class MyException extends Exception{
+    private final int ERR_CODE;
+
+    MyException(String msg, int errCode){
+      super(msg);
+      ERR_CODE = errCode;
+    }
+
+    MyException(String msg){
+      this(msg, 100);
+    }
+
+    public int getErrCode(){
+      return ERR_CODE;
+    }
+  }
+  ```
+
+## 예외 되던지기
+
+- 한 메서드에서 발생할 수 있는 예외가 여럿인 경우, 몇 개는 try-catch문을 통해 메서드 내에서 자체적으로 처리하고, 나머지는 선언부에 지정하여 호출한 메서드에서 처리하도록 할 수 있다. 이는 **예외를 처리한 후에 인위적으로 다시 발생시키면 된다.**
+
+- ```
+  class Exception{
+    public static void main(String[] agrs){
+      try {
+        method1();
+      } catch(Exception e){
+        System.out.println("main에서 처리되었습니다.");
+      }
+    }
+
+    static void method1() throws Exception{
+      try {
+        throw new Exception();
+      } catch(Exception e){
+        System.out.println("method1에서 처리되었습니다.");
+        throw e;
+      }
+    }
+  }
+  ```
+
+  위의 코드의 실행 결과는 다음과 같다.
+
+  ```
+  method1에서 처리되었습니다.
+  main에서 처리되었습니다.
+  ```
+
+  결과에서 알 수 있듯이 `method1()`과 `main()`의 catch블럭이 모드 수행되었다.
+
+- 반환값이 있는 return문의 경우, catch블럭에도 return문이 있어야 한다. 하지만 catch블럭에서 예외 되던지기를 해서 호출한 메서드로 예외를 전달하면, return문이 없어도 된다.
+
+## 연결된 예외
+
+- 한 예외가 다른 예외를 발생시킬 수 있다. 예를 들어 예외 A가 예외 B를 발생시켰다면, A를 B의 `원인 예외`라 한다. `initCause`를 통해 원인 예외로 등록할 수 있고 `getCause()`를 통해 원인 예외를 반환할 수 있다. Exception클래스의 조상인 Throwable클래스에 정의되어 있기 때문에 모든 예외에서 사용가능하다.
