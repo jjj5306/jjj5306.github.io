@@ -10,7 +10,9 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 [조건문과 반복문](#조건문과-반복문)  
 [배열](#배열-Array)  
 [객체지향 프로그래밍Ⅰ](#객체지향-프로그래밍Ⅰ)  
-[객체지향 프로그래밍 Ⅱ](#객체지향-프로그래밍-Ⅱ)
+[객체지향 프로그래밍 Ⅱ](#객체지향-프로그래밍-Ⅱ)  
+[예외처리](#예외처리)  
+[java.lang패키지와 유용한 클래스](#java.lang패키지와-유용한-클래스)
 
 # 자바를 시작하기 전에
 
@@ -1677,3 +1679,348 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 ## 연결된 예외
 
 - 한 예외가 다른 예외를 발생시킬 수 있다. 예를 들어 예외 A가 예외 B를 발생시켰다면, A를 B의 `원인 예외`라 한다. `initCause`를 통해 원인 예외로 등록할 수 있고 `getCause()`를 통해 원인 예외를 반환할 수 있다. Exception클래스의 조상인 Throwable클래스에 정의되어 있기 때문에 모든 예외에서 사용가능하다.
+
+# java.lang패키지와 유용한 클래스
+
+## Object클래스
+
+- `public boolean equals(Object obj)`
+
+  - 객체 자신과 객체 `obj`가 같은 객체이면 true를 리턴한다.
+
+  - 두 개의 참조변수가 같은 객체를 참조하고 있는지, 즉 참조변수에 저장된 주소값이 같은지를 판단하는 기능을 한다. 따라서 참조변수가 가리키는 객체의 값이 같은지를 판단하려면 `equals`를 재정의해야 한다.
+
+  ```
+  class Person{
+    long id;
+
+    public boolean equals(Object obj){
+      if(obj instanceof Person)
+        return id == ((Person)obj).id;
+      else
+        return false;
+    }
+  }
+  ```
+
+  - 위의 예시처럼 재정의해주면, 참조변수가 같은 객체를 참조하고, 그 값까지 같을 경우에만 true를 리턴한다.
+
+  - `String`클래스 역시 `Object`클래스의 `equals`메서드를 재정의하여 참조하는 `String`이 갖는 문자열 값을 비교하도록 되어있다.
+
+- `public int hashCode()`
+
+  - 해시함수를 구현한 메소드이다. 찾고자하는 값을 입력하면, 그 값이 저장된 위치를 알려주는 해시코드를 반환한다.
+
+  - `hashCode`메소드는 객체의 주소값으로 해시코드를 만들어 반환한다. 따라서 32bit-JVM에서는 서로 다른 두 객체는 결코 같은 해시코드를 가질 수 없지만, **64bit-JVM에서는 해시코드가 중복될 수 있다.**
+
+  - 앞의 예시처럼 클래스의 인스턴스변수 값으로 객체의 같고 다름을 판단해야 한다면 `equals`처럼 `hashCode`메서드도 오버라이딩해야 한다.
+
+  - `String`클래스의 `hashCode`메서드는 오버라이딩되어 문자열의 내용이 같으면 항상 동일한 해시코드를 리턴한다.
+
+  - `System.identityHashCode(Object x)`는 객체의 주소값을 이용하기에 모든 객체에 대해 항상 다른 해시코드값을 반환한다. 따라서
+    ```
+    String str1 = new String("abc");
+    String str2 = new String("abc");
+    ```
+    위와 같이 사용해도 `System`클래스의 `HashCode`를 사용하면 다른 해시코드를 리턴한다.
+
+- `public String toString()`
+
+  - 인스턴스의 정보를 문자열로 제공한다. `Object`클래스에 정의된 `toString`메서드를 보자.
+
+  ```
+  public String toString(){
+    return getClass().getName()+"@"+Integer.toHexString(hashCode());
+  }
+  ```
+
+  클래스를 작성하고 그냥 `toString`을 사용한다면 클래스이름에 16진수의 해시코드를 얻게 된다.
+
+  - ```
+    class Card{
+      String kind;
+      int number;
+
+      Card(){
+        this("SPADE", 1);
+      }
+      Card(String kind, int number){
+        this.kind = kind;
+        this.number = number;
+      }
+    }
+
+    class CardToString{
+      public static void main(String[] args){
+        Card c1 = new Card();
+        Card c2 = new Card();
+
+        System.out.println(c1.toString());
+        System.out.println(c2.toString());
+      }
+    }
+    ```
+
+    위의 예시의 실행 결과를 보자.
+
+    ```
+    Card@19e0bfd
+    Card@139a55
+    ```
+
+    두 인스턴스는 같은 내용의 객체를 가리키지만, 참조변수가 다른 주소를 가리키기에 다른 해시코드를 가진다. 하지만 `String`클래스와 `Date`클래스의 `toString`메서드를 사용하면 다른 결과가 출력된다.
+
+    ```
+    class ToStringTest{
+      public static void main(String[] args){
+        String str = new String("JAVA");
+        java.util.Date today = new java.util.Date();
+
+        System.out.println(str.toString);
+        System.out.println(today);
+        System.out.println(today.toString());
+      }
+    }
+    ```
+
+    위 예시의 실행 결과를 보자.
+
+    ```
+    KOREA
+    Fri Oct 23 21:48:29 KST 2015
+    Fri Oct 23 21:48:29 KST 2015
+    ```
+
+    `String`클래스와 `Date`클래스는 `toString`메서드를 오버라이딩하여 사용하기에 다른 결과가 나타난다. 이처럼 위에서 정의한 `Card`클래스에서도 `toString`의 결과가 쓸모있는 정보를 제공하기 위해 오버라이딩해보자.
+
+    ```
+    class Card{
+      String kind;
+      int number;
+
+      Card(){
+        this("SPADE", 1);
+      }
+      Card(String kind, int number){
+        this.kind = kind;
+        this.number = number;
+      }
+
+      public String toString(){
+        return "kind : " + kind + ", number : " + number;
+      }
+    }
+
+    class CardToString{
+      public static void main(String[] args){
+        Card c1 = new Card();
+        Card c2 = new Card("HEART", 10);
+
+        System.out.println(c1.toString());
+        System.out.println(c2.toString());
+      }
+    }
+    ```
+
+    위 예시의 실행 결과를 보자.
+
+    ```
+    kind : SPADE, number : 1
+    kind : HEART, number : 10
+    ```
+
+    이제 더 쓸모있는 정보를 제공하게끔 오버라이딩 하였다. 이 때 주의할 점은 `Object`클래스의 `toString`이 `public`이므로 `Card`클래스의 `toString`의 접근제어자 또한 `public`으로 하였다는 것이다.  
+    조상에 정의된 메서드를 자손에서 오버라이딩 할 때는 조상에 정의된 접근범위보다 같거나 더 넓어야 하기 때문이다.
+
+- `protected Object clone()`
+
+  - 이 메서드는 자신을 복제하여 새로운 인스턴스를 생성하는 일을 한다. 어떤 인스턴스에 대해 작업을 할 때, 원래의 인스턴스는 보존하고 `clone`메서드를 이용해서 새로운 인스턴스를 생성하여 작업을 할 때 주로 사용한다.
+
+  - `Object`클래스의 `clone`은 단순히 인스턴스변수의 값만 복사하기에 **참조타입의 인스턴스 변수가 있는 경우, 클래스는 완전한 인스턴스 복제가 이루어지지 않는다.**
+
+    - 예를 들어 배열의 경우, 복제된 인스턴스도 같은 배열의 주소를 갖기에 복제된 인스턴스의 작업이 원래의 인스턴스에 영향을 미친다. 따라서 이런 경우에는 꼭 오버라이딩하여 사용해야 한다.
+
+  - `clone`을 사용하려면 복제할 클래스가 `Cloneable`인터페이스를 구현해야 하고, `clone`을 오버라이딩하면서 접근 제어자를 `protected`에서 `public`으로 변경해야 한다. 그래야만 상속관계가 없는 다른 클래스에서 `clone`을 호출할 수 있다. 또 반드시 예외처리를 해줘야 한다.
+
+    ```
+    class Point implements Cloneable{
+      ...
+      public Object clone{
+        Object obj = null;
+        try{
+          obj = super.colne();
+        } catch(CloneNotSupportedException e) { }
+        return obj;
+      }
+    }
+    ```
+
+  - JDK 1.5부터 오버라이딩할 때 조상 메서드의 반환타입을 자손 클래스의 타입으로 변경을 허용하는 공변 반환타입이 추가되었다. 사용 예시를 보자.
+    ```
+    public Object clone{
+      Object obj = null;
+      try{
+        obj = super.colne();
+      } catch(CloneNotSupportedException e) { }
+      return (Point)obj;
+    }
+    ```
+    이처럼 공변 반환타입을 이용하면 실제 반환되는 자손 객체의 타입으로 반환할 수 있어 번거로운 형변환이 줄어든다는 장점이 있다.
+
+  ```
+  Point copy = (Point)original.clone();
+  ```
+
+  =>
+
+  ```
+  Point copy = original.clone();
+  ```
+
+  - `clone()`을 이용해서 배열을 복사할 수 있다.
+
+  ```
+  int[] arr ={1, 2, 3};
+  int[] arrClone = arr.clone();
+  ```
+
+  배열 분 아니라, `java.util`패키지의 `Vector`, `ArrayList`, `LinkedList`, `HashSet`, `TreeSet`, `HashMap`, `TreeMap`, `Calendar`, `Date`와 같은 클래스들이 이와 같은 방식으로 복제가 가능하다.
+
+  ```
+  ArrayList list = new ArrayList();
+      ...
+  ArrayList list2 = (ArrayList)list.clone();
+  ```
+
+  - `clone`는 단순히 객체에 저장된 값을 그대로 복제할 뿐, 객체가 참조하고 있는 객체까지 복제하지는 않는다. 기본형 배열인 경우 문제가 없지만, 객체배열을 `clone`로 복제하는 경우에는 원본과 복제본이 같은 객체를 공유하므로 완전한 복제라고 보기 어렵다. 이러한 복제를 **얕은 복사**라고 한다. 얕은 복사에서는 **원본의 변경이 복사본에도 영향을 미친다.**  
+    반면에 원본이 참조하고 있는 객체까지 복제하는 것을 **깊은 복사**라고 한다. 깊은 복사에서는 **원본의 변경이 복사본에 영향을 미치지 않는다.** 예를 들어 살펴보자.
+
+  ```
+  class Circle implements Cloneable{
+    Point p;
+    double r;
+
+    Circle(Point p, double r){
+      this.p = p;
+      this.r = r;
+    }
+
+    public Circle clone(){ //얕은 복사
+      Object obj = null;
+
+      try{
+        obj = super.clone(); //조상인 Object의 clone()를 호출한다.
+      } catch(CloneNotSupportedException e){ }
+
+      return (Circle)obj;
+    }
+  }
+  ```
+
+  `Circle`인스턴스 `c1`을 생성하고, `clone`으로 복제해서 `c2`를 생성하자.
+
+  ```
+  Circle c1 = new Circle(new Point(1, 1), 2.0);
+  Circle c2 = c1.clone();
+  ```
+
+  얕은 복사이기때문에 `c1`과 `c2`는 같은 주소의 `Point`인스턴스를 가리키게 된다. 따라서 `c2`의 원 중심 위치를 변경하면 `c1`의 원 중심 위치 또한 변경된다. 깊은 복사 또한 구현해보자.
+
+  ```
+  class Circle implements Cloneable{
+    Point p;
+    double r;
+
+    Circle(Point p, double r){
+      this.p = p;
+      this.r = r;
+    }
+
+    public Circle shallowCopy(){ //얕은 복사
+      Object obj = null;
+
+      try{
+        obj = super.clone(); //조상인 Object의 clone()를 호출한다.
+      } catch(CloneNotSupportedException e){ }
+
+      return (Circle)obj;
+    }
+
+    public Circle deepCopy(){
+      object obj = null;
+
+      try{
+        obj = super.clone();
+      } catch(CloneNotSupportedException e){ }
+    }
+
+    Circle c = (Circle)obj;
+    c.p = new Point(this.p.x, this.p.y);
+
+    return c;
+  }
+  ```
+
+  위와 같이 구현하면 복제된 객체가 원본이 **참조하고 있는 객체까지 복사하였다.** 따라서 복제된 객체는 원본과는 다른 주소의 `Point`객체를 가리키고 있다.
+
+- `public final class Class implements...`
+
+  - 이 메서드는 자신이 속한 클래스의 객체를 반환하는 메서드이다. `Class`객체는 이름이 `Class`인 클래스의 객체이다. `Class`객체는 클래스의 모든 정보를 담고 있으며, 클래스당 1개만 존재한다. 그리고 클래스 파일이 `클래스 로더`에 의해 메모리에 올라갈 때, 자동으로 생성된다.
+
+    - 클래스 로더는 실행 시에 필요한 클래스를 동적으로 메모리에 로드한다. 먼저 기존에 생성된 클래스 객체가 메모리에 존재하면 객체의 참조를 반환하고 아니라면 클래스 패스에 지정된 경로를 따라서 클래스 파일을 찾는다. 못 찾으면 `ClassNotFoundException`이 발생하고 찾으면 해당 클래스 파일을 읽어서 `Class`객체로 변환한다.
+
+  - 클래스의 정보가 필요할 때 `Class`객체에 대한 참조를 얻어야하는데, 해당 Class객체에 대한 참조를 얻는 방법은 여러 가지가 있다.
+
+    ```
+    Class cObj = new Card().getClass;
+    Class cObj2 = Card.class;
+    Class cObj3 = Class.forName("Card");
+    ```
+
+    특히 `forName`은 특정 클래스 파일을 메모리에 올릴때 주로 사용한다. `Class`객체를 통해 동적으로 객체를 생성할 수 있다.
+
+    ```
+    final class Card{
+      String kind;
+      int num;
+
+      Card(){
+        this("SPADE", 1);
+      }
+
+      Card(String kind, int num){
+        this.kind = kind;
+        this.num = num;
+      }
+
+      public String toString(){
+        return kind + ":" + num;
+      }
+    }
+
+    class ClassEx1{
+      public static void main(String args[]){
+        Card c = new Card("HEART", 3);
+        Card c2 = Card.class.newInstance();
+        //Card객체의 class객체를 받아서 인스턴스를 생성한다.
+
+        Class cObj = c.getClass();
+
+        System.out.println(c2.toString());
+        System.out.println(cObj.getName());
+        System.out.println(cObj.toGenericString());
+        System.out.println(cObj.toString());
+      }
+    }
+    ```
+
+    위 예시의 실행결과를 보자.
+
+    ```
+    SAPDE:1
+    Card
+    final class Card
+    class Card
+    ```
+
+## String클래스
