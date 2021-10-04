@@ -2022,5 +2022,3 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
     final class Card
     class Card
     ```
-
-## String클래스

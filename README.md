@@ -4,6 +4,8 @@
 천천히 차근차근 내가 배운것들을 정리한다.  
 윈도우로 작성중이라 서툴고 테마 적용법, latex적용법 또한 공부중이다.
 
+[전공 공부](./Major/README.md)
+
 [C++](./C++/README.md)
 
 [Java](./Java/README.md)
