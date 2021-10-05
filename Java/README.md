@@ -2022,3 +2022,152 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
     final class Card
     class Card
     ```
+
+## String클래스
+
+- String클래스에는 문자열을 저장하기 위해 문자형 배열 참조변수 `value`를 인스턴스 변수로 정의해놓고 있다. 한 번 생성된 String인스턴스가 갖고 있는 문자열은 읽어올 수만 있고 변경할 수는 없다.
+
+  - ```
+    String a = "a";
+    String b = "b";
+    a = a + b;
+    ```
+    위의 예시처럼 문자열 결합을 통해 새로운 문자열을 만들어도 기존에 "a"의 주소의 값이 변경되는게 아닌, 새로운 주소에 문자열 "ab"가 생성되어 그 문자열을 가리키는 것이다.
+
+- 문자열의 비교
+
+  - 문자열을 만들 때 주로 사용하는 두 가지 방법이 있다.
+
+    1. `String str1 = "abc";`
+
+    2. `String str2 = new String("abc");`
+
+    1번 방법은 문자열 리터럴 "abc"의 주소가 `str1`에 저장된다.  
+    2번 방법은 새로운 "abc"라는 String 인스턴스를 생성하고 그것을 참조변수 str2에게 가르키게 한다.  
+    1번 방법을 사용하면 이미 존재하는 문자열 리터럴을 재사용하는 것이고, 2번 방법은 `new`에 의해 항상 새로운 String인스턴스를 생성하는 것이다.  
+    여기서 주목해야할 점은 **1번 방법을 사용하면, "abc"를 가리키는 모든 String 참조변수는 같은 주소를 가리킨다** 는 점이다. 따라서 이 경우에는 같은 문자열을 가리키는 String 참조 변수를 `str1 == str2`와 같이 비교하면 true를 리턴한다. 하지만 **2번 방법을 사용하면 같은 문자열을 가지고 있더라도 참조변수가 다른 주소를 가리킨다.** 따라서 같은 문자열을 가리키는 String 참조 변수를 `str3 == str4`와 같이 해도 false를 리턴한다.  
+    따라서 **equals()를 사용하여 두 문자열의 내용을 비교해야 한다.**
+
+- 자바 소스파일에 포함된 모든 문자열 리터럴은 **컴파일 타임에 클래스 파일에 저장된다.** 이 때 같은 내용의 문자열은 한 번만 같은 주소로 저장된다.
+
+- 길이가 0인 문자열도 존재할 수 있다. `String s = "";`과 같이 사용하며 이 때 참조변수 s가 참조하고 있는 String인스턴스는 내부에 길이가 0인 char형 배열을 저장하고 있는 것이다. 단, `char c = '';`처럼 빈 문자열은 불가능하다.
+
+  - 일반적으로 String은 빈 문자열로, char은 기본값인 `\u0000`으로 초기화한다.
+
+- **String클래스의 자주 사용되는 메서드**
+
+  - `String(String s)` : 문자열 `s`를 갖는 String인스턴스를 생성하는 생성자이다.
+
+  - `String(char[] value)` : char형 배열로도 생성할 수 있다.
+
+  - `String(StringBuffer buf)` : `StringBuffer`인스턴스가 갖고 있는 문자열과 같은 내용의 String인스턴스를 생성하는 생성자이다.
+
+  - `char charAt(int index)` : `index`에 있는 문자를 리턴한다.
+
+  - `int compareTo(String str)` : `str`과 사전순으로 비교한다. 같으면 0, 이전이면 음수, 이후면 양수를 리턴한다.
+
+  - `String concat(String str)` : `str`을 뒤에 덧붙인다.
+
+  - `boolean contains(CharSequance s)` : 문자열 `s`가 포함되었는지 검사한다.
+
+  - `boolean endsWith(String suffix)` : 문자열 `suffix`로 끝나는지 검사한다.
+
+  - `boolean equals(Object obj)` : 문자열 `obj`와 String인스턴스의 문자열을 비교한다. `obj`가 String이 아니면 false를 리턴한다.
+
+  - `boolean equalsIgnoreCase(String str)` : `str`을 대소문자 구분없이 비교한다.
+
+  - `int indexOf(int ch)` : 문자 `ch`가 문자열에 존재하는지 확인하여 존재한다면 그 index를 리턴하고, 없다면 -1을 리턴한다.
+
+  - `int indexOf(int ch, int pos)` : 문자 `ch`가 문자열의 `pos`부터 확인하여 수행한다.
+
+  - `int indexOf(String str)` : 문자열 `str`이 있는지 확인하여 그 index를 리턴하고, 없으면 -1을 리턴한다.
+
+  - `String intern()` : 문자열을 상수풀에 등록한다. 이미 상수풀에 그 문자열이 있을 경우, 그 문자열의 주소값을 반환한다.
+
+    - ex
+      ```
+      String s = new String("abc");
+      String s2 = new String("abc");
+      boolean b = (s==s2);
+      boolean b2 = (s.equals(s2));
+      boolean b3 = (s.intern() == s2.intern());
+      ```
+      `s`, `s2`를 `new`를 이용해서 생성하였기에, 상수풀에 "abc"를 등록해서 사용하지 않고, 새로운 인스턴스를 생성하였다. 따라서 `s == s2`는 false를 리턴한다. `s.equals(s2)`는 문자열의 내용으로 판단하기에 true를 리턴한다. `s.intern()`을 하면 "abc"를 상수풀에 추가하고 상수풀에 있는 "abc"를 `s`가 가리키게 한다, 그리고 그 주소값을 리턴한다. `s2.intern()`을 하면 상수풀에 이미 "abc"가 있어서 그 주소를 `s2`가 가리키게 하고 리턴한다. 따라서 true이다.
+
+  - `int lastIndexOf(int ch)` : 문자 `ch`를 문자열의 끝부터 찾는다. 못 찾으면 -1을 리턴한다.
+
+  - `int lastIndexOf(String str)` : 문자열 `str`을 문자열의 끝부터 찾는다. 못 찾으면 -1을 리턴한다.
+
+  - `int length()` : 문자열의 길이를 리턴한다.
+
+  - `String replace(char old, char nw)` : 문자열의 `old`문자를 모두 `nw`문자로 바꾸고 리턴한다.
+
+  - `String replace(CharSequence old, CharSequance nw)` : 문자열의 `old`문자열을 모두 `nw`문자열로 바꾸고 리턴한다.
+
+  - `String replaceAll(String regex, String replacement)` : 문자열 중 `regex`와 일치하는 것을 `replacement`로 모두 변경한다. 이 때 `replace`와의 차이점은 `replaceAll`의 `regex`는 정규식을 사용한다는 점이다. 나중에 정규식을 배우면 차이점을 이용할 수 있다. 지금은 그냥 똑같다고 생각하고 써도 될 것 같다.
+
+  - `String replaceFirst(String regex, String replacement)` : 문자열 중 `regex`와 일치하는 것들 중 첫 번째 것만 `replacement`로 변경한다.
+
+  - `String[] split(String regex)` : 문자열을 `regex`로 나누어 문자열 배열에 담아 반환한다.
+
+  - `String[] split(String regex, int limit)` : 문자열을 `regex`로 나누어 문자열 배열에 담아 반환하되, 문자열 배열의 수를 `limit`로 정한다. `regex`로 나누어질 수 있지만, `limit`때문에 새로운 문자열 배열을 생성할 수 없는 경우 그냥 다 넣는다.
+
+    - ```
+      String animals = "dog, cat, bear";
+      String[] arr = animals.split(",", 2);
+      ```
+      위 예제의 실행 결과는 아래와 같다.
+      ```
+      arr[0] = "dog"
+      arr[1] = "cat, bear"
+      ```
+
+  - `boolean startsWith(String prefix)` : `prefix`로 시작하는지 검사한다.
+
+  - `String substring(int begin)`  
+    `String substring(int begin, int end)` : `begin`부터 `end`까지 문자열을 리턴한다. 단, `end` index의 문자는 포함되지 않으며, `end`를 지정하지 않으면 끝까지 포함한다.
+
+  - `String toLowerCase()` : 문자열을 소문자로 변환하여 반환한다.
+
+  - `String toString()` : 문자열을 반환한다.
+
+  - `String toUpperCase()` : 문자열을 대문자로 변환하여 반환한다.
+
+  - `String trim()` : 문자열의 왼쪽 끝과 오른쪽 끝에 있는 공백을 제거하여 반환한다.
+
+  - `static String valueOf(boolean b)` : `b`를 문자열로 변환하여 반환한다, `boolean`외에도 `char`, `int`, `long`, `float`, `double`, `Object` 들이 가능하다.
+
+  - `static String join(CharSequence delimiter, CharSequence elements)` : 문자열 `delimiter`로 구분해서 문자열 `elements`를 결합한다.
+
+  - `static String format(String format, Object... args)` : `printf`와 같은 형식으로 출력을 위한 String 포맷을 만들어 리턴한다. 사용법은 `printf`와 같다.
+
+    - ```
+      String str = String.format("%d 더하기 "%d는 %d입니다.", 3, 5, 3 + 5);
+      System.out.print(str)
+      ```
+      위 코드의 실행 결과는 `3 더하기 5는 8입니다.` 이다.
+
+- **기본형 값을 String으로 변환하기**
+
+  1. `valueOf()` 사용
+
+     - ```
+       int i = 100;
+       String str1 = String.valueOf(i);
+       ```
+
+  2. 빈 문자열 더하기
+     - ```
+       int i = 100;
+       String str2 = i + "";
+       ```
+
+  2의 방법이 더 간편하지만, 1의 방법의 성능이 더 좋다.
+
+- **String을 기본형 값으로 변환하기**
+
+  - `valueOf()` 사용
+    ```
+    int i = Integer.valueOf("100");
+    ```
+    반환 타입은 `int`가 아니라 `Integer`인데, 오토박싱에 의해 `int`로 자동 변환된다. 다른 자료형 값으로 변환하고 싶으면 `Float.value("~")`와 같이 사용하면 된다.
