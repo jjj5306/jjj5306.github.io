@@ -108,3 +108,56 @@
   5. 집합 s에 속한 순서쌍의 왼쪽에 있는 모든 숫자를 더한다.
 
      위의 알고리즘을 수학적 귀납법으로 증명하면 올바르게 작동한다는 것을 알 수 있다.
+
+---
+
+# Recurrence Formula and Algorithm Analysis
+
+## Recurrence formula
+
+- 점화식(Recurrence formula)는 수열의 항 사이에 성립하는 관계식이다.
+
+- 점화식은 자기 호출을 사용하는 함수의 복잡도를 구하는데 유용하다. 점화식의 해가 곧 알고리즘의 시간 복잡도이다.
+
+## Divide-and-conquer
+
+- 재귀 호출을 다룰 때 분할 정복(Divide-and-conquer)을 이용하여 문제를 푼다.
+
+- **분할** : 현재의 문제를 작은 단위(subproblem)으로 쪼갠다. subproblem은 본 문제와 같지만 입력 값이 더 작다.
+
+- **정복** : 부분 문제를 재귀적으로 풀어 정복한다.
+
+- **결합** : 부분 문제의 해를 결합해(combine, merge) 원래 문제의 해가 되도록 만든다.
+
+- **Example : Merge sort**
+
+  - **Problem** : Array `A = [3, 7, 2, 8, 6, 5, 9]`를 increasing order로 merge sort 하시오.
+
+    **Subproblem**으로 쪼개기  
+    A를 merge sort하시오. -> A1과 A2를 merge sort하시오. ->  
+     ... -> array의 size가 1이 될 때 까지(Base case) 쪼개서 merge sort하시오.
+
+    ![recursion_tree_img](./recursion_tree_img.png)
+
+    위의 그림과 같이 recursion을 통해 subproblem이 파생되는 모양을 그린 tree를 **recursion tree**라 한다.
+
+    recrusion tree의 root는 원래 문제의 input이고, leaf node들은 base case의 input이며 크기가 1이다.
+
+    **Subproblem의 답들을 merge하여 원래 input의 문제 해결**
+
+    subproblem의 답을 이용하여 leaf-node에서부터 **recursion-tree를 거꾸로 올라가면서 답을 구한다.**
+
+  - 수행시간 점화식 : $`T(n) = 2T(\frac T 2) + cn`$  
+    => 크기가 `n`인 병합 정렬을 할 때 크기를 `n/2`인 병합 정렬을 두 번 수행하고 그 외에 상수시간만큼 후처리 시간이 든다.
+
+## Algorithm Analysis
+
+1. 점화식의 점근적 분석방법 - **반복대치**
+
+- 반복적으로 치환해서 점근적 복잡도를 구한다. 간단하게 치환을 점차적으로 해서 구할 수 있다면 상관없지만, 대부분 **한계를 추측한 후 그 추측식이 옳음을 증명하기 위해 수학적 귀납법을 이용한다.**
+
+- merge sort를 반복대치로 분석해보자.
+  ```math
+  T(n) = 2T(\frac n 2) + n\\
+  = 2(2T(\frac n {2^2}) + \frac n 2) + n = 2^2T(\frac n {2^2}) + 2n
+  ```
