@@ -6,7 +6,9 @@
 
 # 목차
 
-[Algorithm Analysis](#Algorithm-Analysis)
+[Algorithm Analysis](#Algorithm-Analysis)  
+[Recurrence Formula and Algorithm Analysis](#Recurrence-Formula-and-Algorithm-Analysis)  
+[Sorting](#Sorting)
 
 # Algorithm Analysis
 
@@ -214,3 +216,111 @@
   2. f(n)이 더 무거우면 f(n)이 수행 시간을 결정한다.
 
   3. h(n)과 f(n)이 같은 무게이면, h(n)과 log n의 곱이 수행 시간이 된다.
+
+---
+
+# Sorting
+
+## 정렬 알고리즘
+
+- | 알고리즘  | 최악의 경우 수행시간 | 평균 수행시간       |
+  | --------- | -------------------- | ------------------- |
+  | 삽입 정렬 | $\Theta(n^2)$        | $\Theta(n^2)$       |
+  | 병합 정렬 | $\Theta(n \log n)$   | $\Theta(n \log n)$  |
+  | 힙 정렬   | $O(n \log n)$        | ----                |
+  | 퀵 정렬   | $\Theta(n^2)$        | $\Theta(n \log n)$  |
+  | 계수 정렬 | $\Theta (k + n)$     | $\Theta (k + n)$    |
+  | 기수 정렬 | $\Theta (d(n + k))$  | $\Theta (d(n + k))$ |
+  | 버킷 정렬 | $\Theta(n^2)$        | $\Theta (n)$        |
+
+## Basic Sorting Algorithms
+
+- **선택정렬(Selection Sort)**
+
+  - 가장 간단하다.
+
+  - 최대 원소를 찾고, 최대 원소를 제일 뒤로 보내는 것을 반복하면서 정렬한다.
+
+  - `for`루프를 $(n-1) + (n-2) + (n-3) + ... + 2 + 1$ 과 같이 반복한다. 따라서 $\frac {n(n-1)} 2 = \Theta (n^2)$ 이다.
+
+- **버블정렬(Bubble Sort)**
+
+  - 최대 원소를 제일 뒤로 보내는 것은 같지만, 이웃한 원소와 계속 비교하면서 순서가 잘못되어있으면 교환한다.
+
+  - 시간복잡도는 선택정렬과 같다.
+
+- **삽입정렬(Insertion Sort)**
+
+  - 이미 정렬된 배열에 정렬되지 않은 배열의 원소를 하나씩 더해서 정렬된 배열 하나로 만든다.
+
+  - `arr = [29, 10, 14, 37, 13]`을 정렬해보자.
+
+    1. 정렬된 배열 `res`에 `29` 삽입  
+       `res = [29, null]`
+
+    2. `res`에 `10` 삽입  
+       `res = [10, 29]`
+
+    3. `res`에 `14` 삽입
+       `res = [10, 14, 29]`
+
+    ... 위의 과정을 반복한다. 실제로는 값이 복사되면서 삽입되는데, 아래의 그림을 참고하자.
+
+    ![insertion_sort_img](insertion_sort_img.png)
+
+  - 시간 복잡도는 배열이 역으로 정렬되어있는  
+    **Worst case**에서 $1 + 2 + ... + (n-2) + (n-1) = \Theta(n^2)$  
+    배열이 이미 정렬되어있는  
+    **Best case**에서 $1 + 1 + ... + 1 = \Theta(n)$  
+    따라서 **Average case**에서 $\frac {n^2 + n} 2 = \Theta (n^2)$
+
+## 병합정렬(Merge Sort)
+
+- merge sort는 위에서 다루었기에 마스터 정리에 의해 시간 복잡도가 $\Theta(n\log n)$ 인 것만 알아두자.
+
+## 퀵정렬(Quick Sort)
+
+- 평균적으로 가장 좋은 성능을 가졌다. 기준 원소를 잡고 기준 원소를 기준으로 양쪽으로 재배치하면서 정렬한다.
+
+- 퀵정렬 또한 **Divide-and-conquer**을 이용한다.
+
+  - **분할** : 배열 `A[p .. r]`을 두 개의 부분 배열 `A[p .. q - 1]` `A[q + 1 .. r]`로 분할한다. 전자는 `A[q]`보다 작거나 같은 원소를, 후자는 `A[q]`보다 크거나 같은 원소를 배치한다.
+
+  - **정복** : 퀵 정렬을 재귀 호출해서 두 부분 배열을 정렬한다.
+
+  - **결합** : 부분 배열이 이미 정렬되어 있으므로 저절로 합쳐져 있다.
+
+- ```
+    QUICKSORT(A, p, r)
+      if(p < r)
+        q = PARTITION(Am p, r)
+        QUICKSORT(A, p, q-1)
+        QUICKSORT(A, q+1, r)
+  ```
+
+  이 때 `PARTITION`은 쉽게 말해 배열 `A`의 원소들을 `A[r]`을 기준으로 양쪽으로 재배치하고 `A[r]`의 위치를 리턴하는 함수이다.
+
+  ```
+  PARTITION(A, p, r)
+    x = A[r]
+    i = p - 1
+    for(j = p; j < r; j++)
+      if(A[j] <= x)
+        i++;
+        SWAP(A[i], A[j])
+    SWAP(A[i+1], A[r])
+    return i + 1
+  ```
+
+  위의 `PARTITION`이 정확하게 작동하는 모습을 한 스텝만 보자.
+
+  ![quick_sort_img1](quick_sort_img1.png)
+  ![quick_sort_img2](quick_sort_img2.png)
+
+- **시간 복잡도**
+
+  - **평균 수행 시간** : 가장 이상적인 경우로, 분할이 항상 반반씩 균등될 때  
+    $T(n) = 2T(\frac n 2) + n => \Theta (n \log n)$
+
+  - **최악의 경우 수행 시간** : 이미 정렬이 되어 한 쪽에 다 몰리도록 분할되는 경우  
+    $T(n) = T(n-1) + \Theta (n) => \Theta(n^2)$
