@@ -2171,3 +2171,143 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
     int i = Integer.valueOf("100");
     ```
     반환 타입은 `int`가 아니라 `Integer`인데, 오토박싱에 의해 `int`로 자동 변환된다. 다른 자료형 값으로 변환하고 싶으면 `Float.value("~")`와 같이 사용하면 된다.
+
+## StringBuffer클래스와 StringBuilder클래스
+
+- String클래스는 인스턴스를 생성할 때 지정된 문자열 변경할 수 없지만 StringBuffer클래스는 변경이 가능하다. 내부적으로 문자열 편집을 위한 버퍼를 가지고있으며, StringBuffer인스턴스를 생성할 때 크기를 지정할 수 있다.
+
+- StringBuffer클래스는 char형 배열의 참조변수를 인스턴스변수로 선언하고 있다. StringBuffer인스턴스가 생성될 때, **char형 배열이 생성되며 이를 인스턴스변수 `value`가 참조한다.**
+
+- StringBuffer클래스의 인스턴스를 생성할 때는 `StringBuffer(int length)`를 사용해서 인스턴스를 생성한다. 버퍼의 크기를 지정해주지 않으면 16개의 문자를 저장할 수 있는 크기의 버퍼를 생성한다.
+
+  ```
+  public StringBuffer(int length){
+    value = new char[length];
+    shared = false;
+  }
+  public StringBuffer(){
+    this(16);
+  }
+  public StringBuffer(String str){
+    this(str.length() + 16);
+    append(str);
+  }
+  ```
+
+- **StringBuffer는 내용을 변경할 수 있다.** 예시를 통해 살펴보자.
+
+  ```
+  StringBuffer sb = new StringBuffer("abc");
+  sb.append("123");
+  ```
+
+  `append()`는 반환타입이 StringBuffer이고 자신의 주소를 반환한다. 따라서 위와 같이 사용하면, `sb`의 내용 뒤에 "123"을 추가한다. 버퍼를 사용하기에 문자열마다 인스턴스를 생성하거나 상수풀에서 문자열을 사용하는 String과는 다르다. `append()`는 자신의 주소를 반환하므로 아래의 방법도 가능하다.
+
+  ```
+  sb.append("123").append("ZZ");
+  ```
+
+- String클래스에서는 `equals`메서드를 오버라이딩해서 문자열의 내용을 비교하도록 구현되어 있다. 하지만 StringBuffer클래스는 `equals`메서드를 오버라이딩 하지 않아서 `==`으로 비교하는 것과 같은 결과를 얻는다. 따라서 **StringBuffer인스턴스간의 비교는 `toString()`를 통해 StringBuffer를 String으로 변환하고 비교해야 한다.**
+
+  ```
+  StringBuffer sb = new StringBuffer("abc");
+  StringBuffer sb2 = new StringBuffer("abc");
+
+  String s = sb.toString();
+  String s2 = sb2.toString();
+
+  s.equals(s2);
+  ```
+
+- **StringBuffer클래스의 자주 사용되는 메서드**
+
+  - `int capacity()` : StringBuffer인스턴스의 버퍼크기를 알려준다.
+
+  - `int length()` : StringBuffer인스턴스의 버퍼에 담긴 문자열의 길이를 알려준다.
+
+  - `char charAt(int index)` : `index`위치의 문자를 알려준다.
+
+  - `StringBuffer delete(int start, int end)` : `start`부터 `end - 1`까지의 문자를 제거한다.
+
+  - `StringBuffer deleteCharAt(int index)` : `index`의 문자를 제거한다.
+
+  - `String insert(int pos, char c)` : `pos`위치에 문자를 추가한다. 두 번째 파라메터로는 `char[]`, `boolean`, `int`, `String`, `Object` 등 다양한 자료형이 가능하다.
+
+  - `StringBuffer replace(int start, int end, String str)` : `start`부터 `end - 1`까지의 문자들을 주어진 문자열로 바꾼다.
+
+    - ```
+      StringBuffer sb = new StringBuffer("0123456");
+      sb.replace(3, 6, "AB")
+      ```
+      위를 실행하면 `sb = "012AB6"`이다.
+
+  - `StrinBuffer reverse()` : StringBuffer인스턴스에 저장되어 있는 문자열의 순서를 거꾸로 나열한다.
+
+  - `void setCharAt(int index, char ch)` : `index`의 문자를 `ch`로 바꾼다.
+
+  - `void setLength(int newLength)` : `newLength`로 문자열의 길이를 변경한다. 길이를 늘리는 경우에는 나머지 빈 공간을 널문자로 채운다.
+
+  - `String toString()` : StringBuffer인스턴스의 문자열을 String로 변환한다.
+
+  - `String substring(int start, int end)` : `start`부터 `end - 1`까지 String를 뽑아서 반환한다. 두 번째 파라메터를 지정하지 않으면 `start`부터 끝까지 뽑아낸다.
+
+- **StringBuilder**
+
+  - StringBuffer는 멀티쓰레드에 `thread safe`하도록 동기화되어있다. 아직 멀티쓰레드에 대해 배우지 않았지만, 동기화가 StringBuffer의 성능을 떨어뜨린다고 이해하면 된다. 따라서 멀티쓰레드로 작성된 프로그램이 아닌 경우, StringBuffer는 불필요하게 성능이 떨어져있는 상태이다.  
+    따라서 StringBuffer에서 쓰레드의 동기화만 뺀 StringBuilder가 새로 추가되었다. StringBuffer대신 StringBuilder를 사용하도록 바꾸기만 하면 된다.
+
+## Math클래스
+
+- Math클래스의 생성자는 접근 제어자가 `private`이기 때문에, 다른 클래스에서 Math클래스의 인스턴스는 생성할 수 없고 메서드만 사용할 수 있다. Math클래스는 클래스 내 멤버 변수가 하나도 없고 상수 `E`와 `PI` 그리고 `static`메서드들로만 이루어져 있다.
+
+- **올림, 버림, 반올림**
+
+  - 소수점 `n`번째 자리에서 반올림을 하기 위해서는 `round()`를 사용하면 된다. 하지만 이 메서드는 항상 소수점 첫째자리에서 반올림을 해서 `long`으로 리턴한다. 따라서 `n`번째 자리에서 반올림을 하기 위해서는 **10의 n - 1제곱을 곱하고 `Math.round()`를 사용하고 다시 10의 n - 1제곱을 나눠주면 된다.** 주의해야 할 점은 10의 n - 1제곱으로 나눌 때 소수형 자료형을 사용해서 나눠야 한다는 점이다.
+
+  - `rint()`메서드는 소수점 첫 째자리에서 반올림하고, 반환값이 `double`이다. 그리고 `round()`는 소수점 첫 째자리가 5일 때 더 큰 값으로 반올림 한다. 따라서 `round(-1.5)`의 값은 `-1`이다. 반면에, `rint()`는 가장 가까운 정수를 반환하므로 `rind(-1.5)`의 값은 `-2.0`이다.
+
+  - `ceil`은 올림, `floor`은 버림이다. `ceil()`은 소수점을 버리면서 큰 정수쪽으로 올림을 하고 `floor`은 소수점을 버리면서 작은 정수쪽으로 버림을 한다. 따라서 `ceil(-1.5) = -1.000`이고 `floor(-1.5) = -2.000`이다.
+
+- 이 외에도 다양한 수학과 관련된 메서드들이 많이 존재한다. 이들은 JAVA API를 살펴보면서 그때그때 익혀서 사용하는 편이 더 좋을 것 같다.
+
+## 래퍼클래스
+
+- 자바에서는 기본형 변수를 객체로 다루지 않는다. 그런데 기본형 변수도 객체로 다뤄야 하는 경우가 있다. 이 때 사용되는 것이 래퍼 클래스이다.
+
+- 래퍼 클래스의 이름은 `char`형은 `Character`, `int`형은 `Integer` 나머지는 자료형 이름의 첫 글자를 대문자로 한 것이다.
+
+- 래퍼 클래스의 생성자는 매개변수로 문자열이나 각 자료형의 값들을 인자로 받는다. 이 때 `new Integer("1.0")`과 같이 자료형에 맞지 않는 문자열을 매개변수로 사용하면 `NumberFormatException`이 발생한다.
+
+- 래퍼 클래스들은 모두 `equals()`가 오버라이딩되어 있어서 주소값이 아닌, 객체가 가지고 있는 값을 비교한다.
+
+- **Number클래스**
+
+  - Number클래스는 추상클래스로 내부적으로 숫자를 멤버변수로 갖는 래퍼 클래스들의 조상이다. 기본형 중에서 숫자와 관련된 래퍼 클래스들은 모두 Number클래스의 자손이다.
+
+- 래퍼 클래스에는 `타입.parse타입(String s)`형식의 메서드와 `타입.valueOf(String s)`메서드가 존재한다. 둘 다 문자를 숫자로 바꾸어준다. 전자는 반환값이 기본형이고 후자는 반환값이 래퍼 클래스 타입이다.
+
+  ```
+  static int parseInt(String s, int radix)
+  static Integer value(String s, int radix)
+  ```
+
+  다른 진법의 숫자도 변환이 가능하도록 위의 메서드들도 정의가 되어있다.
+
+- **오토박싱, 언박싱**
+
+  - JDK1.5이전에는 기본형과 참조형 간의 연산이 불가능했기에 아래와 같이 래퍼 클래스로 기본형을 객체로 만들어야 했다. 그러나 이제는 기본형과 참조형 간의 덧셈이 가능하도록 컴파일러가 자동으로 변환하는 코드를 넣어준다.
+
+    ```
+    int i = 5;
+    Integer iObj = new Integer(7);
+
+    int sum = i + iObj;
+    ```
+
+    | 컴파일 전 코드                   | 컴파일 후 코드                   |
+    | -------------------------------- | -------------------------------- |
+    | `int i = 5;`                     | `int i = 5;`                     |
+    | `Integer iObj = new Integer(7);` | `Integer iObj = new Integer(7);` |
+    | `int sum = i + iObj;`            | `int sum = i + iObj.intValue();` |
+
+    위와 같이 기본형 값을 래퍼 클래스의 객체로 자동 변환해주는 것을 **오토박싱**이라 하고, 반대로 변환하는 것을 **언박싱**이라 한다.
