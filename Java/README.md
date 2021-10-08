@@ -1,6 +1,7 @@
 # Java
 
-Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 어느정도 다루어 봤다는 전제로 자바에서 다른 내용들이나 헷갈릴 수 있을 내용들을 위주로 작성하였다.
+Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 어느정도 다루어 봤다는 전제로 자바에서 다른 내용들이나 헷갈릴 수 있을 내용들을 위주로 작성하였다.  
+[Java 8 Api Docs](https://docs.oracle.com/javase/8/docs/api/)를 참고하여 모르는 api에 대해 공부하자.
 
 # 목차
 
@@ -136,7 +137,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   - 이를 이용해서 `(int)7`을 `7 + ""`과 같이 실행하여 문자열 7로 바꿀 수 있다.
 
-  - ```
+  - ```Java
     String name = "Java";
     String str = name + 16.0;
     ```
@@ -212,7 +213,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 같은 정수형, 실수형 변수더라도 크기가 다른 타입끼리 연산을 하는 경우 꼭 결과를 명시적으로 형변환해주자.
 
-  ```
+  ```Java
   int a = 1_000_000;
   int b = 2_000_000;
 
@@ -226,13 +227,13 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   - 버림 예시
 
-    ```
+    ```Java
     float pi = 3.141592f;
     float shortPi = (int)(pi * 1000) / 1000f;
     ```
 
   - 반올림 예시
-    ```
+    ```Java
     float pi = 3.141592f;
     float shorPi = (int)(pi * 1000 + 0.5) / 1000.0;
     ```
@@ -274,7 +275,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - `for-each`또한 지원한다. C++의 `ranged-for-loop`와 사용법은 같다.
 
-  - ```
+  - ```Java
     for(int i : arr){
 
     }
@@ -283,7 +284,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 ## 이름 붙은 반복문
 
 - 알고리즘을 짜다보면 중첩된 반복문을 한 번에 break하고싶은 상황이 생긴다. 이 때 반복문에 이름을 붙이고 break문이나 continue문에 이름을 붙여서 한 번에 중단할 수 있다.
-  - ```
+  - ```Java
     class named-for{
       public static void main(String[] args){
         Loop1 : for(int i = 2; i <= 9; i++){
@@ -330,14 +331,14 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 기본적으로 배열을 생성할 때 초기화할 수 있다. 하지만 이 경우 `new int[]`는 생략할 수 없다.
 
-  - ```
+  - ```Java
     int[] score;
     score = new int[]{50, 60, 70};
     ```
 
 - 배열의 선언과 생성을 동시에 할 때는 `new int[]`를 생략할 수 있다.
 
-  - ```
+  - ```Java
     int []score = new int[]{50, 60, 70};
     int []score2 = {50, 60, 70};
     ```
@@ -358,7 +359,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - `Arrays.toString(배열이름)` 메서드는 배열의 요소들을 `[arr[1], arr[2], ...]`과 같이 만들어서 리턴하므로 출력할 때 이용하기 편하다.
 
-  - ```
+  - ```Java
     int[] Arr = {10, 20, 30, 40};
     System.out.println(Arrays.toString(Arr));
     ```
@@ -366,7 +367,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 ## 배열의 복사
 
-- ```
+- ```Java
   int[] arr = new int[5];
   int[] tmp = new int[arr.length*2];
   for(int i=0;i < arr.length;i++)
@@ -385,7 +386,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 문자배열로도 초기화할 수 있다.
 
-  - ```
+  - ```Java
     char[] chArr = {'A', 'B'};
     String str = new String(chArr);
     ```
@@ -410,14 +411,14 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - String은 클래스이므로 `String[] name = new String[2]`만 수행하면 `name`이라는 참조변수 배열(사이즈 2)만 생성 되었다. 따라서
 
-  ```
+  ```Java
   String[] name = new String[2];
   name[0] = new String("Kim");
   ```
 
   과 같이 초기화해야하지만 간략하게 초기화하는 방법이 허용된다.
 
-  ```
+  ```Java
   String[] name = new String[2];
   name[0] = "Kim";
   ```
@@ -452,7 +453,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 ## 향상된 for문을 통한 2차원 배열 접근
 
-- ```
+- ```Java
   for(int[] i : score)
     for(int j : i)
       ...
@@ -463,7 +464,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 자바에서는 다차원 배열을 **배열의 배열**의 형태로 처리한다. 따라서 각 행마다 열의 길이를 다르게 선언할 수 있다.
 
-  - ```
+  - ```Java
     int[][] score = new int[2][];
     score[0] = new int[3];
     score[1] = new int[5];
@@ -471,7 +472,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
     더 간략하게도 생성할 수 있다.
 
-  - ```
+  - ```Java
     int[][] score = {
       {100, 100, 100}
     , {1, 2, 3, 4, 5}
@@ -484,7 +485,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 ## 인스턴스의 생성과 사용
 
-- ```
+- ```Java
   클래스명 변수명;
   변수명 = new 클래스명();
   ```
@@ -495,7 +496,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   - `t = new Tv();`를 수행하면 `Tv`클래스의 인스턴스를 메모리의 빈 공간에 생성하고 참조변수 `t`가 그 메모리를 가리킨다.
 
-  - ```
+  - ```Java
     Tv t1 = new Tv();
     Tv t2 = new Tv();
     ```
@@ -505,13 +506,13 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - `Tv[] tvArr = new Tv[3];`과 같이 객체 배열을 생성할 수 있다. 이 때 `tvArr`은 아직 참조변수 배열만 생성 된 것이다. 따라서 각 원소는 **참조변수의 기본값인 null**로 초기화된다.
 
-- ```
+- ```Java
   Tv[] tvArr = new Tv[3];
   for(int i=0;i<tvArr.length;i++)
     tvArr[i] = new Tv();
   ```
   혹은
-  ```
+  ```Java
   Tv[] tvArr = new Tv[3];
   Tv tvArr = {new Tv(),
               new Tv(),
@@ -573,12 +574,12 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - `MenberCall`이라는 클래스를 생성하고 그 인스턴스 메소드 `instanceMethod`를 사용해보자.
 
-  - ```
+  - ```Java
     MemberCall c = new MemberCall();
     int result = c.instanceMethod();
     ```
     위의 방법 말고도 익명의 객체를 생성해서 바로 대입할 수 있다.
-    ```
+    ```Java
     int result = new MemberCall().instanceMethod();
     ```
     단 위의 방법은 참조변수를 선언하지 않았기 때문에 생성된 `MemberCall`객체는 더 이상 사용할 수 없다.
@@ -619,7 +620,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
    위의 두 조건을 만족하면 생성자 간에도 서로 호출이 가능하다.
 
-- ```
+- ```Java
   class Car{
     String color;
     String gearType;
@@ -638,7 +639,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
   ```
 
   - 원래 클래스의 멤버 변수들을 초기화할 때는
-    ```
+    ```Java
     Car(String c, String g, int d){
       color = c;
       gearType = g;
@@ -651,7 +652,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 ## 생성자를 이용한 인스턴스의 복사
 
-- ```
+- ```Java
   Car(Car c){
     color = c.color;
     gearType = c.gearType;
@@ -666,7 +667,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 ## 초기화 블럭
 
-- ```
+- ```Java
   Car(){
     count++;
     serialNo = count;
@@ -681,7 +682,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   위와 같은 상황에서 `count++`과 `serialNo = count`의 경우 다른 생성자인데도 같은 문장이 중복되었다. 이런 상황에서 인스턴스 블럭에 초기화 블럭을 넣어주면 생성자 호출 전에 공통된 초기화를 먼저 진행한다.
 
-  - ```
+  - ```Java
     {
       count++;
       serialNo = count;
@@ -712,7 +713,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 부모 클래스를 `Parent`라 하고 상속받으려는 자식 클래스를 `Child`라 하면 아래와 같이 사용한다.
 
-  ```
+  ```Java
   class Child extends Parent{
     ...
   }
@@ -730,7 +731,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 원을 표현하는 `Circle`클래스를 정의하자.
 
-  ```
+  ```Java
   calss Circle {
     int x;
     int y;
@@ -740,7 +741,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   그리고 좌표상의 점을 다루는 `Point`클래스가 다음과 같이 있다고 하자.
 
-  ```
+  ```Java
   class Point{
     int x;
     int y;
@@ -749,7 +750,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   `Point`클래스를 사용해서 `Circle`클래스를 다음과 같이 바꿀 수 있다.
 
-  ```
+  ```Java
   class Circle{
     Point c = new Point();
     int r;
@@ -758,12 +759,12 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - Circle **has-a** Point라 한다.
 
-- ```
+- ```Java
   Point p = new Point(150, 150);
   Circle c = new Circle(p, 50);
   ```
   위와 같은 문장을 줄여서 아래와 같이 사용할 수 있다.
-  ```
+  ```Java
   Circle c = new Circle(new Point(150, 150), 50);
   ```
 
@@ -927,7 +928,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 아래의 예시로 살펴보자.
 
-  ```
+  ```Java
   class Tv{
     boolean power;
     int channel;
@@ -945,7 +946,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   위의 상황에서 조상 클래스 타입의 참조변수로 자손 클래스의 인스턴스를 참조하도록 하는 것이 가능하다.
 
-  ```
+  ```Java
   CaptionTv c = new CaptionTv();
   Tv        t = new CaptionTv();
   ```
@@ -955,7 +956,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
   - 즉 `t`와 `c` **둘 다 같은 타입의 인스턴스지만 참조변수의 타입에 따라 사용할 수 있는 멤버의 종류가 달라진다.**
 
   - 반대로 자손타입의 참조변수로 조상타입의 인스턴스를 참조할 수는 없다.
-    ```
+    ```Java
     CaptionTv c = new Tv();
     ```
     위의 문장은 불가능하다.
@@ -970,7 +971,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 예를 들어, 조상 타입 `Car`과 그의 자손 `FireEngine`, `Ambulance`가 있다고 하자.
 
-  - ```
+  - ```Java
     FireEngine f;
     Ambulance a;
       a = (Ambulance)f;
@@ -978,7 +979,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
     위의 코드는 `FireEngine`과 `Ambulance`가 상속관계가 아니기에 불가능하다.
 
-  - ```
+  - ```Java
     Car car = null;
     FireEngine fe = new FireEngine();
     FireEngine fe2 = null;
@@ -1013,7 +1014,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 다음과 같이 정의된 클래스 `Product`와 이를 상속받은 `Tv, Computer, Audio`클래스가 있다고 가정하자. 또 위의 클래스들을 구매하는 구매자 `Buyer`클래스가 있다고 가정하자.
 
-  ```
+  ```Java
   class Product{
     int price, bonusPoint;
   }
@@ -1024,7 +1025,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   `Buyer`클래스에 물건을 구입하는 기능의 메서드를 추가해보자. 그럼 구매하는 물품이 `Tv`, `Computer`, `Audio` 중 무엇인지 모르기에 다음과 같이 매개변수를 `Tv`, `Computer`, `Audio`를 매개변수로 사용하는 메서드를 생성해야만 한다.
 
-  ```
+  ```Java
   void buy(Tv t){
     money = money - t.price;
     bonusPoint = bonusPoint + t.bonusPoint;
@@ -1042,14 +1043,14 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
   이렇게 되면, 제품의 종류가 늘어날 때마다 `Buyer`클래스에 새로운 `buy`메서드를 추가해야 한다.
 
 - 그러나 메서드의 매개변수에도 **다형성을 적용할 수 있다.**
-  ```
+  ```Java
   void buy(Product p){
     money = money - p.price;
     bonusPoint = bonusPoint + p.bonusPoint;
   }
   ```
   위와같이 **매개변수의 다형성**을 이용하여 메서드를 만들면 `Product`클래스를 상속받기만 하면, 그 클래스에 대해 `buy`를 사용할 수 있다.
-  ```
+  ```Java
   Buyer = new Buyer();
   Tv t = new Tv();
   b.buy(t);
@@ -1061,14 +1062,14 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 조상타입의 참조변수로 자손타입의 객체를 참조하는 것이 가능하다는 것을 배웠다.
 
-  ```
+  ```Java
   Product p1 = new Tv();
   Product p2 = new Computer();
   Product p3 = new Audio();
   ```
 
 - 위의 코드를 `Product`타입의 참조변수 배열로 처리할 수 있다.
-  ```
+  ```Java
   Product p[] = new Product[3];
   p[0] = new Tv();
   p[1] = new Computer();
@@ -1083,7 +1084,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - `abstract`키워드를 클래스 선언부 앞에 붙여서 사용할 수 있다.
 
-  ```
+  ```Java
   abstract class 클래스이름{
     ...
   }
@@ -1098,7 +1099,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 - 메서드의 내용이 상속받는 클래스에 따라 달라지는 경우 주로 사용하며, 자손 클래스가 조상 클래스의 추상 메서드를 상속받아 오버라이딩하여 사용한다.
 
 - 추상메서드 역시 `abstract`키워드를 앞에 붙여주고 구현부 없이 바로 `;`를 적어주면 된다.
-  ```
+  ```Java
   abstract 리턴타입 메서드이름();
   ```
 
@@ -1110,7 +1111,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 추상클래스보다 추상도가 높아서 몸통을 갖춘 일반 메서드 또는 멤버변수를 가질 수 없다. 오직 추상메서드와 상수만을 멤버로 가질 수 있다.
 
-- ```
+- ```Java
   interface 인터페이스이름 {
     public static final 타입 상수이름 = 값;
     public abstract 메서드이름(매개변수목록);
@@ -1133,7 +1134,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 인터페이스도 추상클래스처럼 인스턴스를 생성할 수 없으며, 반드시 **클래스에 상속하여 사용해야 한다.**
 
-- ```
+- ```Java
   class 클래스이름 implements 인터페이스이름{
 
   }
@@ -1143,14 +1144,14 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 구현하는 인터페이스의 메서드 중 일부만 구현한다면, `abstract`를 붙여 추상클래스로 구현해야 한다.
 
-  ```
+  ```Java
   abstract class Fighter implements Fightable{
     public void move(int x, int y){...}
   }
   ```
 
 - 상속과 구현을 동시에 할 수 있다.
-  ```
+  ```Java
   class Fighter extends Unit implements Fightable{
     public void move(int x, int y){...}
     public void attack(Unit u)    {...}
@@ -1161,7 +1162,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 인터페이스 타입의 참조변수로 **이를 구현한 클래스의 인스턴스를 참조, 형변환 할 수 있다.**
 
-  ```
+  ```Java
   Fightable f = (Fightable)new Fighter();
   ```
 
@@ -1195,7 +1196,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
     ㅤㅤ -> AirUnit ㅤㅤ ㅤ-> Dropship  
     위와 같이 표현할 수 있다. 이 때 `SCV`에게 `Tank`와 `Dropship`과 같은 기계화 유닛을 수리할 수 있는 기능을 제공하기 위해 `repair`메서드를 정의하면 다음과 같을 것이다.
 
-    ```
+    ```Java
     void repair(Tank t){
       ...
     }
@@ -1206,7 +1207,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
     이런 식으로 수리가 가능한 유닛의 개수만큼 오버로딩된 메서드를 정의해야 할 것이다. 이를 피하기위해 공통조상의 타입으로 다형성을 이용해서 정의하자.
 
-    ```
+    ```Java
     void repair(GroundUnit g){
       ...
     }
@@ -1217,7 +1218,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
     이렇게 해도 최소한 2개의 메서드는 필요하다. 또 `GroundUnit`의 자손 중에서도 수리할 수 없는 유닛이 있기때문에 부적절하다. 가장 좋은 방법은 `Repairable`이라는 인터페이스를 정의하고 수리가 가능한 유닛에게만 구현하도록 하면 된다.
 
-    ```
+    ```Java
     interface Repairable{
       ...
     }
@@ -1237,7 +1238,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
     이제 이 3개의 클래스에는 같은 인터페이스를 구현했다는 공통점이 생겼다. 따라서 이제 `repair`메서드의 매개변수 타입을 `Repairable`로 선언하면 손쉽게 구현할 수 있다.
 
-    ```
+    ```Java
     void repair(Repairable r){
       ...
     }
@@ -1283,7 +1284,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 - 생성자도 가질 수 없으며, 오로지 단 하나의 클래스를 상속받거나 단 하나의 인터페이스를 구현할 수 있다.
 
 - 익명클래스로 변환하는 예를 살펴보자.
-  ```
+  ```Java
   class Inner{
     public static void main(String[] args){
       Button b = new Button("Start");
@@ -1297,7 +1298,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
   }
   ```
   위의 `EventHandler`를 익명클래스로 변경해보자.
-  ```
+  ```Java
   class Inner{
     public static void main(String[] args){
       Button b = new Button("Start");
@@ -1335,7 +1336,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 예외를 처리하기 위해서는 `try-catch`문을 사용한다.
 
-  ```
+  ```Java
   try{
     // 예외가 발생할 가능성이 있는 문장들을 넣는다.
   } catch (Exceptiona1 e1){
@@ -1351,7 +1352,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 실제 사용 예시를 한 번 보자.
 
-  ```
+  ```Java
   class ExceptionEx2 {
     public static void main(String[] args){
       int number = 100;
@@ -1367,7 +1368,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   위의 예제는 변수 `number`에 저장되어 있는 값 100을 0 ~ 9사이의 임의의 정수로 나눈 결과를 출력한다. `random()`을 사용했기에 0이 나올 수 있고, 0으로 나누면 **ArithmeticException** 예외가 발생한다. 이 예외를 처리해보자.
 
-  ```
+  ```Java
   class ExceptionEx2 {
     public static void main(String[] args){
       int number = 100;
@@ -1399,7 +1400,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 아래의 예시와 함께 이해하자.
 
-  ```
+  ```Java
   class Exception5 {
     public static void main(String[] args){
       System.out.println(1);
@@ -1429,7 +1430,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - **printStackTrace()** : 예외발생 당시의 호출스택에 있었던 메서드의 정보와 예외 메세지를 출력한다.  
   **getMessage()** : 발생한 예외클래스의 인스턴스에 저장된 메세지를 얻을 수 있다.
-  ```
+  ```Java
   class ExceptionEx8 {
     public static void main(String[] args) {
       System.out.println(1);
@@ -1450,7 +1451,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 ## 멀티 catch블럭
 
 - 여러 catch블럭을 하나의 catch블럭으로 합칠 수 있다. `|`기호로 연결하면 된다.
-  ```
+  ```Java
   try{
     ...
   }catch(ExceptionA | ExceptionB a){
@@ -1463,13 +1464,13 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 키워드 `throw`를 이용해 발생시킬 수 있다. 아래의 예시와 같이 발생시키면 된다.
 
-  ```
+  ```Java
   Exception e = new Exception("고의로 발생시킴");
   throw e;
   ```
 
 - Exception인스턴스를 생성할 때, 생성자에 String을 넣어 `getMessage()`로 출력할 수 있다.
-  ```
+  ```Java
   class Exception{
     public static void main(String[] args){
       try{
@@ -1488,7 +1489,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 예외를 처리하는 방법에는 지금까지 배운 try-catch문 외에 예외를 메서드에 선언하는 방법이 있다. 메서드의 선언부에 키워드 `throws`를 사용해서 메서드 내에서 발생할 수 있는 예외를 적기만하면 된다. 예외들은 쉼표로 구분한다.
 
-  ```
+  ```Java
   void method() throws Exception1, Exception2, ... {
     ..
   }
@@ -1496,7 +1497,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   만일 아래와 같이 모든 예외의 최고조상인 `Exception`클래스를 메서드에 선언하면 모든 예외에 대해 예외처리를 해준다.
 
-  ```
+  ```Java
   void method() throws Exception{
     ...
   }
@@ -1506,7 +1507,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 메서드에 예외처리를 하면 호출스택에 있는 메서드들을 따라 전달되면서 예외를 처리한다.
 
-  ```
+  ```Java
   class Exception{
     public static void main(String[] args){
       method1();
@@ -1524,7 +1525,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   위의 소스코드를 실행하면 발생한 예외와 호출스택의 내용이 출력되면서 종료된다. 실행결과는 다음과 같다.
 
-  ```
+  ```Java
   java.lang.Exception
       at Exception.method2(Exception.java:11)
       at Exception.method1(Exception.java:7)
@@ -1538,7 +1539,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 ## finally블럭
 
 - finally블럭은 try - catch문의 끝에 선택적으로 덧붙여 사용할 수 있으며, 예외의 발생여부에 관계없이 실행되어야할 코드를 포함시켜 사용한다.
-  ```
+  ```Java
   try {
     ...
   } catch(Exception e){
@@ -1554,7 +1555,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 사용 예시를 보자.
 
-  ```
+  ```Java
   try{
     fis = new FileInputStream("score.dat");
     dis = new DataInputStream(fis);
@@ -1568,7 +1569,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   위의 코드는 `DataInputStream`을 사용해서 파일로부터 데이터를 읽는 코드인데, 데이터를 읽는 도중 예외가 발생하더라도 `dis`를 닫도록 구성하였다. **하지만 `close()`가 예외를 발생시키는 경우는 문제가 생긴다.** 따라서 아래와 같이 해야한다.
 
-  ```
+  ```Java
   try{
     fis = new FileInputStream("score.dat");
     dis = new DataInputStream(fis);
@@ -1587,7 +1588,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   위와 같이 `close()`에서 발생할 수 있는 예외를 처리하도록 변경했는데, 코드의 가독성이 너무 떨어지고 try블럭과 finally블럭에서 모두 예외가 발생하면, try블럭의 예외는 무시된다는 것이다. 따라서 위의 코드를 `try-with-resources`문으로 바꿔보자.
 
-  ```
+  ```Java
   try(FileInputStream fis = new FileInputStream("score.dat");
       DataInputStream dis = new DataInputStream(fis)){
 
@@ -1611,7 +1612,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 기존의 정의된 예외 클래스 외에 프로그래머가 새로운 예외 클래스를 정의하여 사용할 수 있다. 하지만 가능한 기존의 예외클래스를 활용하는 것이 좋다.
 
-- ```
+- ```Java
   class MyException extends Exception{
     MyException(String msg){
       super(msg); //조상클래스의 생성자 호출
@@ -1621,7 +1622,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   Exception클래스로부터 상속받아 MyException클래스를 만들었다. 필요에 따라 멤버 변수나 메서드를 추가할 수 있다. 내가 만들 예외클래스도 메세지를 저장하려면 생성자를 정의할 때 String을 매개변수로 받아서 저장해주면 된다.
 
-  ```
+  ```Java
   class MyException extends Exception{
     private final int ERR_CODE;
 
@@ -1644,7 +1645,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 한 메서드에서 발생할 수 있는 예외가 여럿인 경우, 몇 개는 try-catch문을 통해 메서드 내에서 자체적으로 처리하고, 나머지는 선언부에 지정하여 호출한 메서드에서 처리하도록 할 수 있다. 이는 **예외를 처리한 후에 인위적으로 다시 발생시키면 된다.**
 
-- ```
+- ```Java
   class Exception{
     public static void main(String[] agrs){
       try {
@@ -1667,7 +1668,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   위의 코드의 실행 결과는 다음과 같다.
 
-  ```
+  ```Java
   method1에서 처리되었습니다.
   main에서 처리되었습니다.
   ```
@@ -1690,7 +1691,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   - 두 개의 참조변수가 같은 객체를 참조하고 있는지, 즉 참조변수에 저장된 주소값이 같은지를 판단하는 기능을 한다. 따라서 참조변수가 가리키는 객체의 값이 같은지를 판단하려면 `equals`를 재정의해야 한다.
 
-  ```
+  ```Java
   class Person{
     long id;
 
@@ -1718,7 +1719,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
   - `String`클래스의 `hashCode`메서드는 오버라이딩되어 문자열의 내용이 같으면 항상 동일한 해시코드를 리턴한다.
 
   - `System.identityHashCode(Object x)`는 객체의 주소값을 이용하기에 모든 객체에 대해 항상 다른 해시코드값을 반환한다. 따라서
-    ```
+    ```Java
     String str1 = new String("abc");
     String str2 = new String("abc");
     ```
@@ -1728,7 +1729,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   - 인스턴스의 정보를 문자열로 제공한다. `Object`클래스에 정의된 `toString`메서드를 보자.
 
-  ```
+  ```Java
   public String toString(){
     return getClass().getName()+"@"+Integer.toHexString(hashCode());
   }
@@ -1736,7 +1737,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   클래스를 작성하고 그냥 `toString`을 사용한다면 클래스이름에 16진수의 해시코드를 얻게 된다.
 
-  - ```
+  - ```Java
     class Card{
       String kind;
       int number;
@@ -1770,7 +1771,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
     두 인스턴스는 같은 내용의 객체를 가리키지만, 참조변수가 다른 주소를 가리키기에 다른 해시코드를 가진다. 하지만 `String`클래스와 `Date`클래스의 `toString`메서드를 사용하면 다른 결과가 출력된다.
 
-    ```
+    ```Java
     class ToStringTest{
       public static void main(String[] args){
         String str = new String("JAVA");
@@ -1793,7 +1794,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
     `String`클래스와 `Date`클래스는 `toString`메서드를 오버라이딩하여 사용하기에 다른 결과가 나타난다. 이처럼 위에서 정의한 `Card`클래스에서도 `toString`의 결과가 쓸모있는 정보를 제공하기 위해 오버라이딩해보자.
 
-    ```
+    ```Java
     class Card{
       String kind;
       int number;
@@ -1842,7 +1843,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   - `clone`을 사용하려면 복제할 클래스가 `Cloneable`인터페이스를 구현해야 하고, `clone`을 오버라이딩하면서 접근 제어자를 `protected`에서 `public`으로 변경해야 한다. 그래야만 상속관계가 없는 다른 클래스에서 `clone`을 호출할 수 있다. 또 반드시 예외처리를 해줘야 한다.
 
-    ```
+    ```Java
     class Point implements Cloneable{
       ...
       public Object clone{
@@ -1856,7 +1857,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
     ```
 
   - JDK 1.5부터 오버라이딩할 때 조상 메서드의 반환타입을 자손 클래스의 타입으로 변경을 허용하는 공변 반환타입이 추가되었다. 사용 예시를 보자.
-    ```
+    ```Java
     public Object clone{
       Object obj = null;
       try{
@@ -1867,26 +1868,26 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
     ```
     이처럼 공변 반환타입을 이용하면 실제 반환되는 자손 객체의 타입으로 반환할 수 있어 번거로운 형변환이 줄어든다는 장점이 있다.
 
-  ```
+  ```Java
   Point copy = (Point)original.clone();
   ```
 
   =>
 
-  ```
+  ```Java
   Point copy = original.clone();
   ```
 
   - `clone()`을 이용해서 배열을 복사할 수 있다.
 
-  ```
+  ```Java
   int[] arr ={1, 2, 3};
   int[] arrClone = arr.clone();
   ```
 
   배열 분 아니라, `java.util`패키지의 `Vector`, `ArrayList`, `LinkedList`, `HashSet`, `TreeSet`, `HashMap`, `TreeMap`, `Calendar`, `Date`와 같은 클래스들이 이와 같은 방식으로 복제가 가능하다.
 
-  ```
+  ```Java
   ArrayList list = new ArrayList();
       ...
   ArrayList list2 = (ArrayList)list.clone();
@@ -1895,7 +1896,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
   - `clone`는 단순히 객체에 저장된 값을 그대로 복제할 뿐, 객체가 참조하고 있는 객체까지 복제하지는 않는다. 기본형 배열인 경우 문제가 없지만, 객체배열을 `clone`로 복제하는 경우에는 원본과 복제본이 같은 객체를 공유하므로 완전한 복제라고 보기 어렵다. 이러한 복제를 **얕은 복사**라고 한다. 얕은 복사에서는 **원본의 변경이 복사본에도 영향을 미친다.**  
     반면에 원본이 참조하고 있는 객체까지 복제하는 것을 **깊은 복사**라고 한다. 깊은 복사에서는 **원본의 변경이 복사본에 영향을 미치지 않는다.** 예를 들어 살펴보자.
 
-  ```
+  ```Java
   class Circle implements Cloneable{
     Point p;
     double r;
@@ -1919,14 +1920,14 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   `Circle`인스턴스 `c1`을 생성하고, `clone`으로 복제해서 `c2`를 생성하자.
 
-  ```
+  ```Java
   Circle c1 = new Circle(new Point(1, 1), 2.0);
   Circle c2 = c1.clone();
   ```
 
   얕은 복사이기때문에 `c1`과 `c2`는 같은 주소의 `Point`인스턴스를 가리키게 된다. 따라서 `c2`의 원 중심 위치를 변경하면 `c1`의 원 중심 위치 또한 변경된다. 깊은 복사 또한 구현해보자.
 
-  ```
+  ```Java
   class Circle implements Cloneable{
     Point p;
     double r;
@@ -1971,7 +1972,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   - 클래스의 정보가 필요할 때 `Class`객체에 대한 참조를 얻어야하는데, 해당 Class객체에 대한 참조를 얻는 방법은 여러 가지가 있다.
 
-    ```
+    ```Java
     Class cObj = new Card().getClass;
     Class cObj2 = Card.class;
     Class cObj3 = Class.forName("Card");
@@ -1979,7 +1980,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
     특히 `forName`은 특정 클래스 파일을 메모리에 올릴때 주로 사용한다. `Class`객체를 통해 동적으로 객체를 생성할 수 있다.
 
-    ```
+    ```Java
     final class Card{
       String kind;
       int num;
@@ -2027,7 +2028,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - String클래스에는 문자열을 저장하기 위해 문자형 배열 참조변수 `value`를 인스턴스 변수로 정의해놓고 있다. 한 번 생성된 String인스턴스가 갖고 있는 문자열은 읽어올 수만 있고 변경할 수는 없다.
 
-  - ```
+  - ```Java
     String a = "a";
     String b = "b";
     a = a + b;
@@ -2085,7 +2086,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
   - `String intern()` : 문자열을 상수풀에 등록한다. 이미 상수풀에 그 문자열이 있을 경우, 그 문자열의 주소값을 반환한다.
 
     - ex
-      ```
+      ```Java
       String s = new String("abc");
       String s2 = new String("abc");
       boolean b = (s==s2);
@@ -2112,11 +2113,13 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   - `String[] split(String regex, int limit)` : 문자열을 `regex`로 나누어 문자열 배열에 담아 반환하되, 문자열 배열의 수를 `limit`로 정한다. `regex`로 나누어질 수 있지만, `limit`때문에 새로운 문자열 배열을 생성할 수 없는 경우 그냥 다 넣는다.
 
-    - ```
+    - ```Java
       String animals = "dog, cat, bear";
       String[] arr = animals.split(",", 2);
       ```
+
       위 예제의 실행 결과는 아래와 같다.
+
       ```
       arr[0] = "dog"
       arr[1] = "cat, bear"
@@ -2141,7 +2144,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   - `static String format(String format, Object... args)` : `printf`와 같은 형식으로 출력을 위한 String 포맷을 만들어 리턴한다. 사용법은 `printf`와 같다.
 
-    - ```
+    - ```Java
       String str = String.format("%d 더하기 "%d는 %d입니다.", 3, 5, 3 + 5);
       System.out.print(str)
       ```
@@ -2151,13 +2154,13 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   1. `valueOf()` 사용
 
-     - ```
+     - ```Java
        int i = 100;
        String str1 = String.valueOf(i);
        ```
 
   2. 빈 문자열 더하기
-     - ```
+     - ```Java
        int i = 100;
        String str2 = i + "";
        ```
@@ -2167,7 +2170,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 - **String을 기본형 값으로 변환하기**
 
   - `valueOf()` 사용
-    ```
+    ```Java
     int i = Integer.valueOf("100");
     ```
     반환 타입은 `int`가 아니라 `Integer`인데, 오토박싱에 의해 `int`로 자동 변환된다. 다른 자료형 값으로 변환하고 싶으면 `Float.value("~")`와 같이 사용하면 된다.
@@ -2180,7 +2183,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - StringBuffer클래스의 인스턴스를 생성할 때는 `StringBuffer(int length)`를 사용해서 인스턴스를 생성한다. 버퍼의 크기를 지정해주지 않으면 16개의 문자를 저장할 수 있는 크기의 버퍼를 생성한다.
 
-  ```
+  ```Java
   public StringBuffer(int length){
     value = new char[length];
     shared = false;
@@ -2196,20 +2199,20 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - **StringBuffer는 내용을 변경할 수 있다.** 예시를 통해 살펴보자.
 
-  ```
+  ```Java
   StringBuffer sb = new StringBuffer("abc");
   sb.append("123");
   ```
 
   `append()`는 반환타입이 StringBuffer이고 자신의 주소를 반환한다. 따라서 위와 같이 사용하면, `sb`의 내용 뒤에 "123"을 추가한다. 버퍼를 사용하기에 문자열마다 인스턴스를 생성하거나 상수풀에서 문자열을 사용하는 String과는 다르다. `append()`는 자신의 주소를 반환하므로 아래의 방법도 가능하다.
 
-  ```
+  ```Java
   sb.append("123").append("ZZ");
   ```
 
 - String클래스에서는 `equals`메서드를 오버라이딩해서 문자열의 내용을 비교하도록 구현되어 있다. 하지만 StringBuffer클래스는 `equals`메서드를 오버라이딩 하지 않아서 `==`으로 비교하는 것과 같은 결과를 얻는다. 따라서 **StringBuffer인스턴스간의 비교는 `toString()`를 통해 StringBuffer를 String으로 변환하고 비교해야 한다.**
 
-  ```
+  ```Java
   StringBuffer sb = new StringBuffer("abc");
   StringBuffer sb2 = new StringBuffer("abc");
 
@@ -2235,7 +2238,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   - `StringBuffer replace(int start, int end, String str)` : `start`부터 `end - 1`까지의 문자들을 주어진 문자열로 바꾼다.
 
-    - ```
+    - ```Java
       StringBuffer sb = new StringBuffer("0123456");
       sb.replace(3, 6, "AB")
       ```
@@ -2286,7 +2289,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
 - 래퍼 클래스에는 `타입.parse타입(String s)`형식의 메서드와 `타입.valueOf(String s)`메서드가 존재한다. 둘 다 문자를 숫자로 바꾸어준다. 전자는 반환값이 기본형이고 후자는 반환값이 래퍼 클래스 타입이다.
 
-  ```
+  ```Java
   static int parseInt(String s, int radix)
   static Integer value(String s, int radix)
   ```
@@ -2297,7 +2300,7 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
 
   - JDK1.5이전에는 기본형과 참조형 간의 연산이 불가능했기에 아래와 같이 래퍼 클래스로 기본형을 객체로 만들어야 했다. 그러나 이제는 기본형과 참조형 간의 덧셈이 가능하도록 컴파일러가 자동으로 변환하는 코드를 넣어준다.
 
-    ```
+    ```Java
     int i = 5;
     Integer iObj = new Integer(7);
 
@@ -2311,3 +2314,152 @@ Java의 정석을 바탕으로 공부하였다. 다른 프로그래밍언어를 
     | `int sum = i + iObj;`            | `int sum = i + iObj.intValue();` |
 
     위와 같이 기본형 값을 래퍼 클래스의 객체로 자동 변환해주는 것을 **오토박싱**이라 하고, 반대로 변환하는 것을 **언박싱**이라 한다.
+
+## java.util.Objects 클래스
+
+- Object클래스는 보조 클래스로 모든 메서드가 `static`이다. 객체의 비교나 널 체크에 유용하다.
+
+- **주요 메서드**
+
+  - `boolean isNull(Object obj)` : 해당 객체가 널이면 true를 리턴한다.  
+    `boolean nonNull(Object obj)` : 해당 객체가 널이 아니면 true를 리턴한다.
+
+  - `static <T> T requireNonNull(T obj)` : 해당 객체가 널이 아니어야 하는 경우 사용한다. 해당 객체가 널이면 `NullPointerException`을 발생시키며, 두 번째 매개변수로 `String message`를 예외를 발생시킬 때의 메세지가 된다.
+
+  - `int compare(Object a, Object b, Comparator c)` : 두 객체를 비교한다. `Comparator`을 통해 비교 기준을 설정할 수 있다. 이에 관한 내용은 뒤에서 자세하게 다룰 예정이다.
+
+    - String클래스에 상수로 정의된 `comparator` `c`가 있어서 그걸 사용하면, 문자열을ㄹ 대소문자 구분하지 않고 비교할 수 있다.
+
+  - `boolean equals(Object a, Object b)` : Object클래스의 `equals()`와 같다. 하지만, Object클래스의 경우 `a.equals(b)`와 같이 사용하기에 `a`가 `null`인지 반드시 확인해야 한다. 하지만 Objects클래스의 경우 매개변수의 값이 `null`인지 확인할 필요가 없다.
+
+  - `boolean deepEquals(Object a, Object b)` : 이 메서드는 객체를 **재귀적으로 비교한다.** 따라서 다차원 배열의 비교도 가능하다.
+
+  - `String toString(Object o)` : 내부적으로 널 검사를하고 String으로 변환하여 리턴한다. 두 번째 파라메터로 `String nullDefault`를 넣어서 객체가 널일 때 사용할 문자열을 지정할 수 있다.
+
+- `Objects`클래스를 사용할 때 `static import`문을 사용하더라도 Object클래스의 메서드와 이름이 같은 것들은 컴파일러가 구분을 못한다. 그럴 때는 클래스의 이름을 붙여줄 수밖에 없다.
+
+## java.util.Random클래스
+
+- 기존의 난수를 얻는 방법은 `Math.random()`이 있었다. 사실 이 메소드는 내부적으론 `Random`클래스의 인스턴스를 생성해서 사용하는 것이다. 아래의 두 문장은 동일하다.
+
+  ```Java
+  double randNum = Math.random();
+  double randNum2 = new Random().nextDouble();
+  ```
+
+- **주요 메서드**
+
+  - `Random()` : `this(System.currentTimeMillis())`를 수행한다.  
+    `Random(long seed)` : `seed`를 종자값으로 하는 `Random`인스턴스를 생성한다.
+
+  - `boolean nextBoolean()` : `boolean`타입 난수를 반환한다.
+
+  - `void nextBytes(byte[] bytes)` : `bytes`배열에 `byte`타입 난수를 채워서 반환한다.
+
+  - `double nextDouble()`, `float nextFloat()` : `double` / `float`타입의 난수를 반환한다. 범위는 0.0이상 1.0미만이다.
+
+  - `double nextGaussian()` : 평균은 0.0이고 표준편차는 1.0인 가우시안분포에 따른 `double`형 난수를 반환한다.
+
+  - `int nextInt()`, `long nextLong()` : `int` / `long` 범위 내의 `int` / `long` 타입의 난수를 반환한다.
+
+  - `int nextInt(int n)` : `0 ~ n`범위의 `int`타입의 난수를 반환한다.
+
+  - `void setSeed(long seed)` : 종자값을 `seed`로 변환한다.
+
+## 정규식 - java.util.regex패키지
+
+- **정규식이란** 텍스트 데이터 중 원하는 패턴과 일치하는 문자열을 찾아내기 위해 사용하는 것이다. 원래 `Unix`에서 사용하던 것이고 `Perl`의 강력한 기능이 있는데, 요즘은 다양한 언어에서 지원하고 있다.
+
+- 정규식을 이용하면 텍스트 파일 중에서 원하는 데이터를 쉽게 뽑아낼 수도 있고, 입력된 데이터가 형식에 맞는지 체크할 수 있다.
+
+- API문서에서 `java.util.regex.Pattern`([Java 8 Api Docs](https://docs.oracle.com/javase/8/docs/api/))을 찾아보면 정규식에 사용되는 기호와 작성방법이 모두 설명되어있다. 처음부터 공식문서를 보고 공부하면, 정규식을 어떻게 작성할지 이해하기 쉽지 않다. 따라서 여기서 자주 쓰이는 정규식 작성 예를 보고 응용할 정도로만 학습하고 넘어가자.
+
+- `data`라는 문자열배열에 담긴 문자열 중에서 지정한 정규식과 일치하는 문자열을 출력해보자.
+
+  ```Java
+  import java.util.regex.*;
+
+  class RegularEx{
+    public static void main(String[] args){
+      String[] data {"bat", "baby", "bonus", "cA", "ca", "co", "c.", "c0",
+                     "car", "char", "combat", "count", "date", "disc"};
+      Pattern p = Pattern.compile("c[a-z]*");
+
+      for(int i=0; i < data.length; i++){
+        Mathcer m = p.matcher(data[i]);
+        if(m.matches()) System.out.print(data[i] + ", ");
+      }
+    }
+  }
+  ```
+
+  위 예제의 실행 결과는 아래와 같다.
+
+  ```
+  ca, co, car, combat, count,
+  ```
+
+  정규식을 정의하고 데이터를 비교하는 과정을 살펴보자.
+
+  1. 정규식을 매개변수로 `Pattern`클래스의 `static`메서드인 `Pattern compile(String regex)`을 호출하여 `Pattern` 인스턴스를 생성한다.
+
+     - `Pattern p = Pattern.compile("c[a-z]*");`
+
+  2. 정규식으로 비교할 대상을 매개변수로 `Pattern`클래스의 `Matcher matcher`를 호출해서 `Matcher`인스턴스를 얻는다.
+
+     - `Mathcer m = p.matcher(data[i]);`
+
+  3. `Matcher`인스턴스에 `boolean matches()`를 호출해서 정규식에 부합한지 확인한다.
+
+     - `if(m.matches())`
+
+- **자주 쓰이는 패턴**
+
+| 정규식 패턴   | 설명                                                | 결과                 |
+| ------------- | --------------------------------------------------- | -------------------- |
+| c[a-z]        | c 뒤에 a~z사이의 문자 하나                          | ca, cb, ...          |
+| c[a-zA-z]     | c 뒤에 a~z 또는 A~Z 문자 하나                       | ca, cA, ...          |
+| .             | 모든 문자 하나                                      | a, b, #, 1, ...      |
+| \*            | 모든 문자열                                         | abc, c1223, c#, ...  |
+| +             | 하나 이상의 모든 문자열                             | a, #as2, ...         |
+| a\*           | a뒤에 모든 문자열 a도 된다.                         | a, ab, a#            |
+| a+            | a뒤에 모든 문자열 최소 하나는 와야하므로 a는 불가능 | ab, a3, ...          |
+| c.            | c 뒤에 모든 문자                                    | c12d, c#a1, ...      |
+| \w            | 단어, [a~zA~Z0~9]와 같다.                           | abc, a3, 12, A3, ... |
+| [bc], [b-c]   | b또는 c                                             | b, c                 |
+| [^bc], [^b-c] | b, c 제외                                           | d, a ...             |
+| [bc].{2}      | b또는 c뒤에 아무 문자 2자리                         | bat, car, ...        |
+
+- 정규식의 일부를 괄호로 나누어 묶어서 **그룹화**할 수 있다.
+
+  ```Java
+  import java.util.regex.*;
+
+  class RegularEx{
+    public static void main(String[] args){
+      String source = "HP:011-1111-1111, HOME:02-999-9999";
+      String pattern = "(0\\d{1, 2})-(\\d{3, 4})-(\\d{4})";
+
+      Pattern p = Pattern.compile(pattern);
+      Matcher m = p.matcher(source);
+
+      int i = 0;
+      while(m.find()){
+        System.out.println(++i + ":" + m.group() + " -> " + m.group(1)
+                           + ", " + m.group(2) + ", " + m.group(3));
+      }
+    }
+  }
+  ```
+
+  위 예제의 실행 결과는 아래와 같다.
+
+  ```
+  1: 011-1111-1111 -> 011, 1111, 1111
+  2: 02-999-9999 -> 02, 999, 9999
+  ```
+
+  위의 예제에서 `(0\\d{1, 2})-(\\d{3, 4})-(\\d{4})`은 괄호를 이용해서 정규식을 세 부분으로 나누었다. `0\\d{1, 2}`는 0으로 시작하는 최소 2자리 최대 3자리 숫자이고 `\\d{3, 4}`는 최소 3자리 최대 4자리 숫자이다.  
+  그룹화된 부분은 `group(i)`와 같이 `i`번째 그룹을 호출할 수 있다.  
+  `find()`는 주어진 소스 내에서 패턴과 일치하는 부분을 찾아내면 `true`를 리턴한다.  
+   `find`를 이용해서 패턴과 일치하는 부분을 찾은 다음, 또 `find()`를 호출하면 이전에 발견한 패턴과 일치하는 부분의 다음부터 다시 패턴매칭을 시작한다.
