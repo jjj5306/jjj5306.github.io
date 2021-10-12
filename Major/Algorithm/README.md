@@ -8,8 +8,8 @@
 
 [Algorithm Analysis](#Algorithm-Analysis)  
 [Recurrence Formula and Algorithm Analysis](#Recurrence-Formula-and-Algorithm-Analysis)  
-[Sorting](#Sorting)
-[search Tree Ⅰ](#Search-Tree-Ⅰ)
+[Sorting](#Sorting)  
+[search Tree Ⅰ](#Search-Tree-Ⅰ)  
 [Search Tree Ⅱ](#Search-Tree-Ⅱ)
 
 # Algorithm Analysis
@@ -666,7 +666,7 @@
      왼쪽의 경우 `w.p`에 대해 `left-roation`을  
      오른쪽의 경우 `w.p`에 대해 `right-rotation`을 수행하면 된다.
 
-## Red-Balck Tree
+## Red-Balck Tree 분석
 
 - 키가 총 `n`개인 레드블랙 트리의 최대 깊이는 **O(log n)**이다.
 
@@ -678,8 +678,6 @@
 # Search Tree Ⅱ
 
 ## B-tree
-
-## B-트리
 
 - B-트리는 디스크나 다른 보조 기억 장치에서 잘 동작하도록 설계된 균형 잡힌 검색 트리이다.
 
@@ -799,7 +797,7 @@
   ![B_tree_delete_img2](B_tree_delete_img2.png)
   ![B_tree_delete_img3](B_tree_delete_img3.png)
 
-## B-tree
+## B-tree 분석
 
 - d진 검색 트리가 균형을 아주 잘 맞추면 높이가 $\log _d n$에 근접한다.
 
