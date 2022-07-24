@@ -99,19 +99,19 @@
  	
 	- 배열 `A`에 대해 `i`번째 원소를 최대힙의 루트가 되게한다. *아래는 퍼수도 코드이다.*
 	```
-		heapify(A, i){
-			l = A[i].left
-			r = A[i].right
-			if(l < A.size && A[l] > A[i])
-				max = l
-			else max = i
-			if(r < A.size && A[r] > A[max])
-				max = r
-			if(largest != i){
-				swap(A[i], A[max])
-				heapify(A, max)
-				}
-		}
+	heapify(A, i){
+		l = A[i].left
+		r = A[i].right
+		if(l < A.size && A[l] > A[i])
+			max = l
+		else max = i
+		if(r < A.size && A[r] > A[max])
+			max = r
+		if(largest != i){
+			swap(A[i], A[max])
+			heapify(A, max)
+			}
+	}
 	```
 	
 	- `heapify`는 상수시간이 걸리고 최악의 경우에도 힙의 높이인 `log n`만큼 호출하므로 시간복잡도는 **log n**이다.
@@ -120,10 +120,10 @@
 	
 	- `heapify`를 리프를 제외한 노드들에 대해 수행하면 된다.
 	```
-		buildHeap{
-			for(i = A.size/2; i > 0; i--)
-				heapify(A, i)
-		}
+	buildHeap{
+		for(i = A.size/2; i > 0; i--)
+			heapify(A, i)
+	}
 	```
 	
 	- `heapify`를 `n/2`번 호출하므로 시간복잡도는 **nlog n**이다.
@@ -134,14 +134,14 @@
 
 	- 삽입할 노드를 가장 마지막에 삽입하고, 부모와 교환하면서 힙 특성을 맞춰주면 된다.
 	```
-		insert(A, x){
-			//n은 현재 힙 사이즈+1 (0번째는 사용 x)
-			A[++n] = x;
-			for(i = n; i > 0; i /= 2){
-				if(A[i] > A[i/2]) swap(A[i], A[i/2])
-				else break
-			}
-		 }
+	insert(A, x){
+		//n은 현재 힙 사이즈+1 (0번째는 사용 x)
+		A[++n] = x;
+		for(i = n; i > 0; i /= 2){
+			if(A[i] > A[i/2]) swap(A[i], A[i/2])
+			else break
+		}
+	 }
 	```
 	
 	- 시간 복잡도는 **nlog n**이다.
@@ -150,21 +150,21 @@
 
 	- 루트를 삭제하고, 마지막 원소를 루트 위치로 이동시킨 뒤 다시 특성을 유지시킨다.
 	```
-		delete(A){
-			A[1] = A[n]
-			A[n--] = 0
-			for(i = 1; i <= n;){
-				if(A[i] > A[i*2] && A[i] > A[i*2+1])
-					break;
-				else if(A[i] > A[i*2]){
-					swap(A[i], A[i*2])
-					i *= 2
-				}else{
-					swap(A[i], A[i*2])
-					i = i*2 + 1
-				}
+	delete(A){
+		A[1] = A[n]
+		A[n--] = 0
+		for(i = 1; i <= n;){
+			if(A[i] > A[i*2] && A[i] > A[i*2+1])
+				break;
+			else if(A[i] > A[i*2]){
+				swap(A[i], A[i*2])
+				i *= 2
+			}else{
+				swap(A[i], A[i*2])
+				i = i*2 + 1
 			}
 		}
+	}
 	```
 	
 	- 시간 복잡도는 **nlog n**이다.
