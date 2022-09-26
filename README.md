@@ -14,6 +14,6 @@
 
 [Algorithm](./Algorithm/README.md)
 
-[BOJ](./Algorithm/BOJ/README.md)
+[문제풀이](./Algorithm/Solving/README.md)
 
 [TIL](./TIL/README.md)
