@@ -62,7 +62,7 @@
  새로운 버전을 생성하는 것이므로 커밋 메시지를 작성해줘야한다. 단, **한 단계씩 되돌아가야 한다.**
  
   - Example  
-    **git log**  
+  **git log**  
   ```
   commit 4(commit id) message R4
   commit 3(commit id) message R3
