@@ -209,11 +209,11 @@
 - `git checkout 1`처럼 커밋아이디를 HEAD가 바로 가리킬 수 있다. 그 상태를 브랜치로부터 떨어져 있는 **detached**상태라고 한다.
 
 - 위에서 든 예시의 상태일 때 `checkout master`는 아래와 같이 작동한다.  
-  ![checkout](./img/checkout)    
+  ![checkout](./img/checkout.png)    
   ###  
   `reset master`는 현재 브랜치가 master가 가리키는 commit과 같은 것을 가리키게 하므로 아래와 같이 작동한다.  
-  ![reset1](./img/reset1)  
+  ![reset1](./img/reset1.png)  
   ###  
   보통은 `reset 1`과 같이 커밋아이디를 직접 지정하는 방식으로 사용한다. 이 때 google브랜치는 1번 커밋을 가리키고  
   나머지 2, 3번 커밋은 자신과는 관계가 없는 커밋이므로 링크를 끊으면서 커밋을 삭제하는 것처럼 작동한다.  
-  ![reset2](./img/reset2)    
+  ![reset2](./img/reset2.png)    
