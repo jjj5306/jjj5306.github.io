@@ -176,4 +176,44 @@
 | C              	| C               	| T               	|        ?        	| T               	|
 | H              	| D               	| T               	|        ?        	|        ?        	|
  
- 
+## 22.10.01
+
+## 외부 도구를 이용해서 병합하는 방법
+
+- `git merge branch name` : 현재 브랜치에 branch name 브랜치를 병합한다. 3-way merge를 이용하며 충돌이 일어나면 수동으로 수정해야 한다.
+
+  - Example  
+  3 way merge의 예시를 이용해보자. 현재 브랜치를 a라고 하고 `git merge b`를 하게되면 해당 파일이 아래와 같이 변한다.
+  ```
+  A
+  H
+  T
+  <<<<<<< HEAD
+  H
+  =======
+  T
+  >>>>>>> b
+  ```
+  위의 충돌이 일어난 부분을 수동으로 해결해줘야한다. 이 때 외부 도구를 이용하면 편하게 병합할 수 있다.
+  
+-  `git mergetool` : mergetool을 실행한다.   
+	P4merge등의 머지툴을 다운받고 git merge tool을 git config를 통해 P4merge로 설정하면 툴을 사용할 수 있다. 
+
+## HEAD BRANCH COMMIT
+
+- 헤드와 브랜치, 커밋의 관계를 더 잘 이해해보자. 구글 브랜치를 2번 커밋일 때 만들고, 구글 브랜치에서 3번 커밋을 하면 아래 그림과 같이 된다.  
+  ![branch1](./img/branch1.png)  
+  ###   
+  이 때 `git checkout`은 HEAD를 제어한다. 그걸 따라 가서 우리는 2번 커밋 상태의 파일을 본다. 따라 따라 들어가면서 브랜치와 커밋을 확인한다고 이해하면 편하다.  
+
+- `git checkout 1`처럼 커밋아이디를 HEAD가 바로 가리킬 수 있다. 그 상태를 브랜치로부터 떨어져 있는 **detached**상태라고 한다.
+
+- 위에서 든 예시의 상태일 때 `checkout master`는 아래와 같이 작동한다.  
+  ![checkout](./img/checkout)    
+  ###  
+  `reset master`는 현재 브랜치가 master가 가리키는 commit과 같은 것을 가리키게 하므로 아래와 같이 작동한다.  
+  ![reset1](./img/reset1)  
+  ###  
+  보통은 `reset 1`과 같이 커밋아이디를 직접 지정하는 방식으로 사용한다. 이 때 google브랜치는 1번 커밋을 가리키고  
+  나머지 2, 3번 커밋은 자신과는 관계가 없는 커밋이므로 링크를 끊으면서 커밋을 삭제하는 것처럼 작동한다.  
+  ![reset2](./img/reset2)    
