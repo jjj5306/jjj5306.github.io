@@ -42,7 +42,7 @@
 
 - git log를 해보면 `(HEAD -> Master)`라는 표시와 버전별 `commit id`가 뜬다. 헤드가 Master노드를 가리키고 있다는 뜻이다.
 
-- `git checkout commit id` : 특정 commit 버전으로 되돌아간다. `git checkout master`로 원래대로 돌아올 수 있다.
+- `git checkout <commit id>` : 특정 commit 버전으로 되돌아간다. `git checkout master`로 원래대로 돌아올 수 있다.
 
 ## 22.09.30
 
@@ -58,7 +58,7 @@
  
 ## 버전 되돌리기
 
-- `git revert commit id` : `commit id`의 수정사항을 모두 제거한 버전을 새로 생성한다. 새로 생성된 버전은 `commit id` 이전 버전의 코드이며  
+- `git revert <commit id>` : \<commit id>의 수정사항을 모두 제거한 버전을 새로 생성한다. 새로 생성된 버전은 \<commit id> 이전 버전의 코드이며  
  새로운 버전을 생성하는 것이므로 커밋 메시지를 작성해줘야한다. 단, **한 단계씩 되돌아가야 한다.**
  
   - Example  
@@ -94,8 +94,8 @@
   `git log -- oneline` : git log를 한 줄로 볼 수 있다.  
   `git log --graph` : git log를 그래프 형태로 볼 수 있다.  
   `git branch` : 현재 만들어진 branch를 볼 수 있다. 현재 브랜치는 앞에 \*이 붙고 기본적으로 master브랜치가 생성되어 있다.  
-  `git branch branch name` : branch name의 이름을 가진 브랜치를 생성한다.  
-  `git checkout branch name` : branch name의 브랜치로 이동한다.
+  `git branch <branch name>` : \<branch name>의 이름을 가진 브랜치를 생성한다.  
+  `git checkout <branch name>` : \<branch name>의 브랜치로 이동한다.
   
   - Example  
   work 1 커밋에서는 빈 파일에 *content 1*이 추가된다.  
@@ -180,7 +180,7 @@
 
 ## 외부 도구를 이용해서 병합하는 방법
 
-- `git merge branch name` : 현재 브랜치에 branch name 브랜치를 병합한다. 3-way merge를 이용하며 충돌이 일어나면 수동으로 수정해야 한다.
+- `git merge <branch name>` : 현재 브랜치에 \<branch name>브랜치를 병합한다. 3-way merge를 이용하며 충돌이 일어나면 수동으로 수정해야 한다.
 
   - Example  
   3 way merge의 예시를 이용해보자. 현재 브랜치를 a라고 하고 `git merge b`를 하게되면 해당 파일이 아래와 같이 변한다.
@@ -217,3 +217,38 @@
   보통은 `reset 1`과 같이 커밋아이디를 직접 지정하는 방식으로 사용한다. 이 때 google브랜치는 1번 커밋을 가리키고  
   나머지 2, 3번 커밋은 자신과는 관계가 없는 커밋이므로 링크를 끊으면서 커밋을 삭제하는 것처럼 작동한다.  
   ![reset2](./img/reset2.png)    
+  
+## 22.10.04
+
+# Backup과 협업
+
+## Remote repasitory
+
+- 우리가 작업을 하면서 소스를 만드는 공간을 지역저장소, 인터넷이나 네트워크 어딘가에 있는 저장소를 원격 저장소라고 한다.  
+ 다른 사람과 작업 혹은 한 프로젝트에 대한 여러 지역저장소 운영을 위해 사용하며 Git hosting을 통해 사용할 수 있다.  
+ 대표적으로 *Github*, *Gitlab*이 있다.
+ 
+- `git remote` : 현재 지역저장소(프로젝트)에 연결된 원격저장소를 확인한다. `-v`옵션을 주어 URL과 원격저장소 이름을 볼 수 있다.  
+ `git remote add <저장소이름> <url>` : \<url>의 원격저장소를 연결한다. 원격저장소 이름은 <저장소이름>으로 설정한다.  
+ `git push <원격저장소 이름> <브랜치 이름>` : \<브랜치이름> 브랜치를 원격저장소에 업로드한다.  
+   
+   - 보통 `git push origin master`와 같이 사용한다.  
+   
+  `git push -u origin master` : `git push`만 입력했을 때 자동으로 `git push origin master`가 실행되게 한다.  
+  `git clone <url>` : \<url>의 원격저장소를 복제한다. 원격저장소 이름의 폴더가 생성되면서 복제되며 폴더 이름을 바꾸려면 명령어 맨 끝에 폴더명을 넣으면 된다. 저장소를 clone하면 `origin`이라는 리모트 저장소가 자동으로 등록된다.
+  `git fetch <원격저장소 이름>` : 원격저장소의 정보를 가져온다. 머지는 해주지 않기 때문에 본인이 직접 확인 후 머지해야 한다.
+  `git pull <원격저장소 이름>` : 원격저장소의 정보를 가져오고 브랜치에 병합까지 해준다.
+  `git remote rename <저장소 이름> <바꿀 저장소 이름>` : 저장소 이름을 변경한다.  
+  `git remote remove <저장소 이름>` : 저장소를 삭제한다.
+  
+## 협업
+
+- 협업을 할 때에는 한 브랜치에서 작업하면 push를 할 때 충돌이 생길 수 있다. 따라서 pull - commit - push와 같은 순서로 작업을 하게 된다.  
+ 이 때 협업자의 수정사항을 확인하면서 pull과 push를 최대한 자주 해줘야 충돌을 줄일 수 있다.
+  
+## 브랜치 워크플로
+
+- Git 개발자가 많이 선호하는 워크플로가 있다. 배포했거나 배포할 코드만 master브랜치에 머지해서 안정 버전 코드만 둔다. 개발을 진행하고 안정화하고 있는 브랜치는 develop브랜치에 둔다. 이 브랜치는 항상 안정화 상태는 아니다.  
+ 토픽 브랜치도 많이 사용한다. 토픽 브랜치는 어떤 주제나 작업을 위해 만든 짧은 호흡의 브랜치이다.  
+ 한 이슈를 해결하기 위해, 새로운 아이디어를 도입하기 위해 등 실험실처럼 브랜치를 사용하고 master브랜치에는 안정화된 코드만 넣는 방식을 많이 사용한다.
+  
