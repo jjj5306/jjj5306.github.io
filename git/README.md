@@ -25,7 +25,7 @@
   - **Working tree**는 작업한 파일들이고 그 중 버전을 만들 파일들을 **Staging Area**에 올린다.  
   그리고 그 파일들을 git이 버전으로 만들어서 **Repasitory**에 올린다.
 
-- `git config --global core.editor "nano"` : git의 기본 에디터를 나노로 변경한다. 익숙치않은 에디터가 나오지 않게하기위해 사용한다.
+- `git config --global core.editor "nano"` : git의 기본 에디터를 나노로 변경한다. 익숙치않은 에디터가 나오지 않게하기위해 사용한다.  
  `git status` : Working tree의 상태를 볼 수 있다.    
  `git add` : Staging Area에 올릴 수 있다.  
  `git commit` : 버전을 생성할 수 있다.  
