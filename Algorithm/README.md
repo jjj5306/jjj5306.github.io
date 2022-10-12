@@ -132,14 +132,14 @@
 	
 	- `insert`를 `n`번 호출해서 힙을 만드는 경우도 있다. 이 방법을 더 자주 쓰는 것 같다. 시간 복잡도는 똑같이 **nlog n**이다.	
 
-- **삽입**(insert)
+- **삽입**(insert)  
 
-	- 삽입할 노드를 가장 마지막에 삽입하고, 부모와 교환하면서 힙 특성을 맞춰주면 된다.
+	- 삽입할 노드를 가장 마지막에 삽입하고, 부모와 교환하면서 힙 특성을 맞춰주면 된다.  
 	```
 	insert(A, x){
 		//n은 현재 힙 사이즈+1 (0번째는 사용 x)
 		A[++n] = x;
-		for(i = n; i > 0; i /= 2){
+		for(i = n; i > 1; i /= 2){
 			if(A[i] > A[i/2]) swap(A[i], A[i/2])
 			else break
 		}
@@ -202,31 +202,49 @@
 
 - | 알고리즘  | 최악의 경우 수행시간 | 평균 수행시간       |
   | --------- | -------------------- | ------------------- |
-  | 삽입 정렬 | $\Theta(n^2)$        | $\Theta(n^2)$       |
-  | 병합 정렬 | $\Theta(n \log n)$   | $\Theta(n \log n)$  |
-  | 힙 정렬   | $O(n \log n)$        | ----                |
-  | 퀵 정렬   | $\Theta(n^2)$        | $\Theta(n \log n)$  |
-  | 계수 정렬 | $\Theta (k + n)$     | $\Theta (k + n)$    |
-  | 기수 정렬 | $\Theta (d(n + k))$  | $\Theta (d(n + k))$ |
-  | 버킷 정렬 | $\Theta(n^2)$        | $\Theta (n)$        |
+  | 삽입 정렬 | Theta(n^2)        | Theta(n^2)       |
+  | 병합 정렬 | Theta(n \log n)   | Theta(n \log n)  |
+  | 힙 정렬   | O(n \log n)       | ----             |
+  | 퀵 정렬   | Theta(n^2)        | Theta(n \log n)  |
+  | 계수 정렬 | Theta (k + n)     | Theta (k + n)    |
+  | 기수 정렬 | Theta (d(n + k))  | Theta (d(n + k)) |
+  | 버킷 정렬 | Theta(n^2)        | Theta (n)        |
 
 ## Basic Sorting Algorithms
 
-- **선택정렬(Selection Sort)**
+### 선택정렬(Selection Sort)
 
-  - 가장 간단하다.
+  - 최소 원소를 찾고, 최소 원소를 제일 앞으로 보내는 것을 반복하면서 정렬한다.
 
-  - 최대 원소를 찾고, 최대 원소를 제일 뒤로 보내는 것을 반복하면서 정렬한다.
+  - `for`루프를 `(n-1) + (n-2) + (n-3) + ... + 2 + 1` 과 같이 반복하므로 시간복잡도는 O(n^2)이다.
+  
+  - c++로 구현  
+  ```
+  for(int i=0; i<arr.size()-1; i++){
+  	int min_index = i;
+  	for(int j=i+1; j<arr.sieze(); j++)
+		if(arr[max_index] < arr[j]) min_index = j;
+	swap(max_index, i);
+  }
+  ```
 
-  - `for`루프를 $(n-1) + (n-2) + (n-3) + ... + 2 + 1$ 과 같이 반복한다. 따라서 $\frac {n(n-1)} 2 = \Theta (n^2)$ 이다.
+### 버블정렬(Bubble Sort)
 
-- **버블정렬(Bubble Sort)**
-
-  - 최대 원소를 제일 뒤로 보내는 것은 같지만, 이웃한 원소와 계속 비교하면서 순서가 잘못되어있으면 교환한다.
+  - 배열을 탐색하면서 이웃한 원소와 계속 비교하면서 순서가 잘못되어있으면 교환한다. 가장 큰 원소를 뒤로 보낸다.
 
   - 시간복잡도는 선택정렬과 같다.
+  
+  - c++로 구현  
+  ```
+  for(int i=0; i<arr.size()-1; i++){
+  	for(int j=0; j<arr.sieze()-i-1; j++){
+		if(arr[j] > arr[j+1]) swap(j ,j+1);
+		swap(j, j+1);
+		}
+  }
+  ```
 
-- **삽입정렬(Insertion Sort)**
+### 삽입정렬(Insertion Sort)  
 
   - 이미 정렬된 배열에 정렬되지 않은 배열의 원소를 하나씩 더해서 정렬된 배열 하나로 만든다.
 
@@ -238,24 +256,44 @@
     2. `res`에 `10` 삽입  
        `res = [10, 29]`
 
-    3. `res`에 `14` 삽입
+    3. `res`에 `14` 삽입   
        `res = [10, 14, 29]`
 
-    ... 위의 과정을 반복한다. 실제로는 값이 복사되면서 삽입되는데, 아래의 그림을 참고하자.
+    ... 위의 과정을 반복한다. 실제로는 값이 복사되면서 삽입된다.
 
-    ![insertion_sort_img](insertion_sort_img.png)
+  - 시간 복잡도는 배열이 역으로 정렬되어있는 Worst case에서 1 + 2 + ... + (n-2) + (n-1) = Theta(n^2), 배열이 이미 정렬되어있는 Best case에서 1 + 1 + ... + 1 = Theta(n), 따라서 Average case에서는 (n^2 + n)/2 = n^2이다.
 
-  - 시간 복잡도는 배열이 역으로 정렬되어있는  
-    **Worst case**에서 $1 + 2 + ... + (n-2) + (n-1) = \Theta(n^2)$  
-    배열이 이미 정렬되어있는  
-    **Best case**에서 $1 + 1 + ... + 1 = \Theta(n)$  
-    따라서 **Average case**에서 $\frac {n^2 + n} 2 = \Theta (n^2)$
+  - c++로 구현  
+  ```
+  for(int i=1; i<arr.size();i++){
+    //i-1번째 배열까지는 정렬된 배열이다.
+  	int temp = arr[i]; //i번째 원소를 정렬된 배열에 삽입한다.
+	for(int j=i-1; j>=0; j--){
+		if(arr[j] > temp) a[j+1] = a[j]; //삽입할곳이 더 앞에 있으면 j번째 원소를 한칸 뒤로 민다.
+		else break; //삽입할 곳을 찾으면 j 다음칸에 삽입하면 된다.
+	}
+	arr[j+1] = temp;
+  }
+  ```
 
-## 병합정렬(Merge Sort)
+### 힙정렬(Heap Sort)
 
-- merge sort는 위에서 다루었기에 마스터 정리에 의해 시간 복잡도가 $\Theta(n\log n)$ 인 것만 알아두자.
+- 최대힙을 구성하고, 루트를 힙의 마지막 원소와 교환한다. 마지막 원소를 제외하고 나머지 원소에 대해 다시 힙을 만들고 교환하는 과정을 반복한다.
 
-## 퀵정렬(Quick Sort)
+- 퍼수도코드로 구현  
+ ```
+ Build_Max_Heap(A) //최대힙 구성
+ for(int i=A.size; i>1; i--){
+ 	swap(1, i); //루트와 힙의 마지막 원소 교환
+	A.size--;
+	//루트노트들 제외하고는 모두 힙 특성에 맞으므로 루트만 맞게하면 된다.
+	heapify(A, 1);
+ }
+ ```
+ 
+- log n의 heapify를 최대 n번 호출하므로 시간복잡도는 nlog n이다.
+
+### 퀵정렬(Quick Sort)
 
 - 평균적으로 가장 좋은 성능을 가졌다. 기준 원소를 잡고 기준 원소를 기준으로 양쪽으로 재배치하면서 정렬한다.
 
@@ -267,93 +305,93 @@
 
   - **결합** : 부분 배열이 이미 정렬되어 있으므로 저절로 합쳐져 있다.
 
-- ```C
-    QUICKSORT(A, p, r)
-      if(p < r)
-        q = PARTITION(Am p, r)
-        QUICKSORT(A, p, q-1)
-        QUICKSORT(A, q+1, r)
+- 구현  
   ```
+  QuickSort(A, p, r){
+     if(p < r)
+    	q = Partition(A, p, r)
+    	QUICKSORT(A, p, q-1)
+    	QUICKSORT(A, q+1, r)
+   }
+   ```
 
-  이 때 `PARTITION`은 쉽게 말해 배열 `A`의 원소들을 `A[r]`을 기준으로 양쪽으로 재배치하고 `A[r]`의 위치를 리턴하는 함수이다.
+  이 때 `PARTITION`은 쉽게 말해 배열 `A`의 원소들을 `A[r]`을 기준으로 양쪽으로 재배치하고 `A[r]`의 위치를 리턴하는 함수이다.  
 
-  ```C
-  PARTITION(A, p, r)
+  ```
+  Partition(A, p, r){
     x = A[r]
     i = p - 1
     for(j = p; j < r; j++)
-      if(A[j] <= x)
-        i++;
+      if(A[j] <= x){
+	    //기준원소보다 작으므로 p~i 구간에 들어가야한다. 따라서 기준원소보다 작은 배열이 한 칸 늘었으므로 i를 늘려준다.
+        i++
+		//A[i]는 기준원소보다 작은 배열의 마지막 부분인데, 위에서 ++을 해줬으므로 기준원소보다 큰 배열의 시작 부분이다. 
+		//A[j]는 p~i구간에 넣어야하는 원소이므로 둘이 바꿔준다.
         SWAP(A[i], A[j])
+	   }
+	//마지막으로 기준원소는 기준원소보다 작은 원소의 다음칸, 즉 i+1에 넣어준다.
     SWAP(A[i+1], A[r])
     return i + 1
+  }
   ```
-
-  위의 `PARTITION`이 정확하게 작동하는 모습을 한 스텝만 보자.
-
-  ![quick_sort_img1](quick_sort_img1.png)
-  ![quick_sort_img2](quick_sort_img2.png)
+  
+  x는 기준 원소이다. i는 x보다 작은 원소들을 **분할한 배열의 끝을 가리키는 포인터**이다. 즉, p\~i까지는 x보다 작은 것들로 분할되어있다.  
+  또 j는 x보다 큰 원소들을 분할한 배열의 끝 다음칸을 가리키는 포인터이다. i\~j는 x보다 큰 것들로 분할되어있다. 따라서 j\~r까지는 아직 분할하지 않은 공간이다.
 
 - **시간 복잡도**
 
-  - **평균 수행 시간** : 가장 이상적인 경우로, 분할이 항상 반반씩 균등될 때  
-    $T(n) = 2T(\frac n 2) + n => \Theta (n \log n)$
+  - 시간복잡도는 분할하는 모습을 마치 트리처럼 생각하면 편하다.
 
-  - **최악의 경우 수행 시간** : 이미 정렬이 되어 한 쪽에 다 몰리도록 분할되는 경우  
-    $T(n) = T(n-1) + \Theta (n) => \Theta(n^2)$
+  - **평균 수행 시간** : 가장 이상적인 경우로, 분할이 항상 반반씩 균등될 때 분할되는 모습이 완전 이진트리이므로 Theta(nlog n)이다.
 
-## 힙 정렬(Heap Sort)
+  - **최악의 경우 수행 시간** : 이미 정렬이 되어 한 쪽에 다 몰리도록 분할될 때 한쪽으로 치우쳐진 트리의 모습이므로 heta(n^2)이다.
 
-- 주어진 배열을 힙으로 만들고, 차례로 하나씩 힙에서 제거함으로써 정렬한다.
+### 병합 정렬(Merge Sort)
 
-  - **힙**이란 Complete binary tree로서 각 노드의 값은 자신의 children보다 크지 않다.
+- 배열을 원소를 하나씩만 가진 배열이 될 때 까지 모두 분해하고 차례로 병합시켜나가면서 정렬하는 방법이다.
 
-  - 힙은 배열로 표현될 수 있으며, `A[k]`의 자식은 `A[2k]`, `A[2k+1]`이고 `A[k]`의 부모는 `A[2/k]`의 내림이 된다.
-
-- **힙 정렬 알고리즘**
-
-  - ```C
-    heapSort(A[], n){
-      buildHeap(A, n);
-      for(i=n;i > 1;i--){
-        SWAP(A[1], A[i]);
-        heapify(A, 1, i-1);
-      }
-    }
-    ```
-
-    `buildHeap`을 통해 힙을 만들고, `heapify`를 통해 첫 번째 노드를 삭제한 후 힙 특성을 유지하도록 수정하는 과정을 거친다.
-
-    ```C
-    buildHeap(A[], n){
-      for(i=floor(2/n);i > 0;i--)
-        heapify(A, i, n);
-    }
-    ```
-
-    A[k]를 루트로하는 트리를 힙 성질에 맞도록 수정하는 `heapify`도 보자.
-
-    ```C
-    heapify(A[], r, n){
-      left = 2k, right = 2k - 1;
-      if(right <= n){
-        if(A[left] < A[right]) smaller = left;
-        else smaller = right;
-      }
-      //A[k]가 왼쪽 자식만 가지는 경우
-      else if(left <= n) smaller = left;
-      //A[k]가 리프노드인 경우
-      else return;
-
-      if(A[smaller] < A[k]){
-        SWAP(A[k], A[smaller]);
-        //A[k]의 자식에 대하여 heapify호출
-        heapify(A, smaller, n);
-      }
-    }
-    ```
-
-    => `buildHeap`은 $O(\log n)$이 걸리는 `heapify`를 `floor(n/2)`번 호출하므로 $O(n \log n)$이다.
+- ```
+	mergeSort(A[], p, r){
+		if(p<r){
+			q = (p+r)/2
+			mergeSort(A, p, q)
+			mergeSort(A, q+1, r)
+			//원소가 하나씩으로 잘게 조갠 후 다시 정렬하면서 병합한다.
+			merge(p, r)
+		}
+	}
+	```
+	정렬되어있는 배열 A[p...q]와 A[q+1...r]을 병합하여 A[p...r]을 만든다.
+	```
+	merge(start, end){
+		mid = (start+end)/2
+		i = left
+		j = mid+1
+		res_index = left
+		
+		while(i<=mid && j<=right){
+			if(arr[i] > arr[j])
+				//arr[i]가 더 크면 arr[j]를 먼저 결과에 넣는다.
+				result[res_index++] = arr[j++]
+			else
+				result[res_index++] = arr[i++]
+		}
+		
+		//배열을 일단 탐색후 왼쪽 리스트나 오른쪽 리스트에 남은 값이 있으면 그냥 넣어주면 끝이다.
+		if(i > mid){
+			while(j <= right){
+				result[res_index++] = arr[j++]
+			}
+		}else{
+			while(i <= mid){
+				result[res_index++] = arr[i++]
+			}
+		}
+		
+	}
+	```
+	i부터는 정렬되지않은 왼쪽 배열이고, j부터는 정렬되지않은 오른쪽 배열이다. 그 둘을 병합하면 된다.
+	
 
 ## 비교정렬 시간의 하한
 
