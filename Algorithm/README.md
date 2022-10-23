@@ -667,6 +667,132 @@ deQueue(Q){
 
 # Search Tree Ⅰ
 
+## 이진 트리 순회
+
+### 중위 순회(inorder traversal)
+
+- LVR방식으로 순회가 이루어진다.
+
+1. 왼쪽 끝까지 이동하면서 내려가고 그 노드를 방문한다.
+
+2. 오른쪽 자식 노드로 이동한 뒤 1.을 반복한다. 오른쪽 노드가 없으면 3.으로 간다.
+
+3. 이전 노드로 되돌아가서 실행한다.
+
+- ![binary_tree.png](./img/binary_tree.png)  
+  위의 트리에서 inorder을 한 결과는 `A / B * C * D + E`이다.
+
+- 재귀호출과 스택으로 구현할 수 있다.
+
+- 스택으로 구현  
+  ```
+  inorder(node){
+    if(!node) return;
+	
+    stack<treeNode *> s;
+	s.push(node); //트리노드 스택에 삽입
+	vector<string> res;
+	
+	while(node != null || !s.empty()){
+	  while(node != null){
+	    s.push(node);
+		node = node.left;
+	  }
+	  node = s.pop();
+	  res.push_back(node.key);
+	  node = node.right;
+	}
+  }
+  ```
+  
+- 재귀호출로 구현
+  ```
+  inorder(root){
+    inorder(root.left);
+	res.push_back(root.key);
+	inorder(root.right);
+  }
+  ```
+  
+### 전위 순회(preorder traversal)
+
+- VLR방식으로 순회가 이루어진다.
+
+- 스택으로 구현
+  ```
+  preorder(node){
+    if(!node) return;
+    stack<treeNode *> s;
+	vector<string> res;
+	
+	while(!s.empty() || node != null){
+	  if(!s.empty()) node = s.pop();
+	  while(node != null){
+	    res.push_back(node.key);
+		if(node.right) s.push(node.right);
+		node = node.left;
+	  }
+	}
+  }
+  ```
+
+
+- 재귀호출로 구현
+  ```
+  preorder(root){
+    res.psuh_back(root.key);
+	preorder(root.left);
+	preorder(root.right);
+  }
+  ```
+  
+### 후위 순회(postorer traversal)
+
+- LRV방식으로 순회가 이루어진다.
+
+- 스택으로 구현, 조금 복잡하니 재귀호출로 구현하자.
+  ```
+  postorder(node){
+    if(!node) return;
+    stack<treeNode *> s;
+	vector<string> res;
+	
+	s.push(node); //루트 스택에 삽입
+	treeNode* prev = null;
+	while(!s.empty()){
+	 node = s.top();
+	 if(prev == null || prev.left == node || prev.right == node){ //최초 실행이거나 이전에 아래 코드를 실행했을 때 node를 탐색하지 않은 경우
+	   if(node.left) s.push(node.left);
+	   else if(node.right) s.push(node.right);
+	   //자식이 있으면 왼쪽자식을 우선으로 스택에 넣는다. 자식이 없으면 그 노드를 탐색하면 된다.
+	   else{
+	     s.pop();
+		 res.push_back(node.key);
+	   }
+	 }else if(node.left == prev){ //이전 실행에서 탐색한 노드가 부모의 왼쪽 자식인 경우
+	   if(node.right) s.push(node.right)
+	   else{
+	     s.pop();
+		 res.push_back(node.key);
+	   }
+	 }else if(node.right == prev){ //이전 실행에서 탐색한 노드가 부모의 오른쪽 자식인 경우 현재 노드를 탐색하면 된다.
+	   	 s.pop();
+	     res.push_back(node.key);
+	 }
+	}
+	prev = node;
+  }
+  ```
+  
+- 재귀호출로 구현  
+  ```
+  postorder(root){
+	postorder(root.left);
+	postorder(root.right);
+	res.psuh_back(root.key);
+  }
+  ```
+  
 ## Terms
 
 - **record** : 개체에 대해 수집된 모든 정보를 포함하고 있는 저장 단위
@@ -693,15 +819,15 @@ deQueue(Q){
 
   - 이진 검색 트리의 **서브 트리도 이진 검색 트리를 유지한다.**
 
-## 이진 검색 트리에서의 검색
+### 이진 검색 트리에서의 검색
 
-- `t`는 트리의 루트 노드이고 `x`는 검색하는 key이다.
+- 구현
 
-  ```C
-   treeSearch(t, x){
-     if(t = null || t.key = x) return t;
-     if(x < t.key) return treeSearch(t.left, x);
-     else return treeSearch(t.right, x);
+  ```
+   treeSearch(root, key){
+     if(root = null || root.key = key) return root;
+     if(key < root.key) return treeSearch(root.left, key);
+     else return treeSearch(root.right, key);
    }
   ```
 
@@ -709,56 +835,70 @@ deQueue(Q){
 
 - 삽입 후 루트 노드의 포인터를 리턴한다. `r`노드를 생성하고, 경로를 따라 내려가면서 삽입할 위치를 찾아서 삽입한다.
 
-  ```C
-  treeInsert(t, x){
+- 구현
+  ```
+  treeInsert(root, x){
     //빈 트리일 경우 루트를 r로하고 리턴한다.
-    if(t = null){
+    if(root == null){
       r.key = x;
       r.left = null;
       r.right = null;
       return r;
     }
-    if(x < t.key){
-      t.left = treeInsert(t.left, x);
-      return t;
+    if(x < root.key){
+      root.left = treeInsert(root.left, x);
+      return root;
     }
     else{
-      t.right = treeInsert(t.right, x);
-      return t;
+      root.right = treeInsert(root.right, x);
+      return root;
     }
   }
   ```
 
-- 이진 검색 트리에서의 균형이 이상적으로 잡혀 있으면 최악의 경우에도 **O(log n)**(perfect-binary-tree의 경우)이고,  
-  균형이 맞지 않는 최악의 경우에는 **O(n)** (한 쪽으로만 노드가 삽입된 경우)이다.  
-  평균적으로는 **O(log n)**이다.
+- 이진 검색 트리에서의 균형이 이상적으로 잡혀 있으면 최악의 경우에도 **O(log n)**(perfect-binary-tree의 경우)이고, 균형이 맞지 않는 최악의 경우에는 **O(n)** (한 쪽으로만 노드가 삽입된 경우)이다. 평균적으로는 **O(log n)** 이다.
 
 ## 이진 검색 트리에서의 삭제
 
-1. `r`이 리프 노드이면, `r`의 부모의 자식 노드를 `r`에서 `null`로 바꾸면 된다.
+1. `key`가 리프 노드이면, `key`의 부모의 자식 노드를 `key`에서 `null`로 바꾸면 된다.
 
-2. `r`이 자식 노드를 하나만 가지고 있으면, `r`의 자식 노드를 `r`의 자리로 상승시킨다.
+2. `key`가 자식 노드를 하나만 가지고 있으면, `key`의 자식 노드를 `key`의 자리로 상승시킨다.
 
-3. `r`이 자식 노드를 두 개 가지고 있으면, `r`의 **오른쪽 서브트리의 최소원소 노드** _(왼쪽 서브트리의 최대원소 노드도 가능하다.)_ `s`를 찾고 `s`와 `r`의 위치를 바꾼 뒤 `r`을 삭제한다.
+3. `key`가 자식 노드를 두 개 가지고 있으면, `key`의 **오른쪽 서브트리의 최소원소 노드** _(왼쪽 서브트리의 최대원소 노드도 가능하다.)_ `min`를 찾고 `min`과 `key`의 위치를 바꾼 뒤 `key`를 삭제한다.
 
-- ```C
-  TreeDelete(t, r){
-    if(r이 리프노드)
-      r의 부모의 자식을 null로 바꾼다.
-    else if(r의 자식이 하나)
-      r의 부모가 r의 자식을 가리키게 바꾼다.
-    else{
-      r의 오른쪽 서브트리의 최소 원소s를 찾는다.
-      s를 삭제한다.
-      s의 키를 r의 키에 대입한다.
-    }
+- 구현
+  ```
+  treeDelete(root, key){
+   if(root == null) return root;
+   if(key < root.key) root.left = treeDelete(root.left, x);
+   else if(key > root.key) root.right = treeDelete(root.right, x);
+   else{
+     //리프노드인 경우
+	 if(root.left == null && root.right == null) return null;
+	 else if(root.left == null){
+	   //왼쪽자식이 없으면 오른쪽 자식 올리기
+	   treeNode* temp = root.right;
+	   free(root);
+	   return temp;
+	 }else if(root.right == null){
+	   treeNode* temp = root.left;
+	   free(root);
+	   return temp;
+	 }else{
+	   //자식 둘 다 있는 경우
+	   treeNode* min = root.right;
+	   while(min.left != null) min = min.left;
+	   root.key = min.key; //오른쪽 서브트리의 최소노드를 부모로 만든다. 이 과정은 최소노드를 오른쪽 서브트리에서 삭제하는 것과 같다.
+	   root.right = deleteNode(root.right, min.key);
+	 }
+   }
+   return root;
   }
   ```
 
 - 시간 복잡도는 삽입과 비슷하게 **O(log n)** ~ **O(n)** 이다.
 
-- 이진 검색 트리는 운이 나쁘면 트리의 모양의 균형이 깨져서 노드의 검색, 삽입, 삭제에 $\Theta (n)$이 소요될 수 있다.
-  **이를 해결하기 위해 균형이 잘 맞도록 구성하는 트리를 생각해보자.**
+- 이진 검색 트리는 운이 나쁘면 트리의 모양의 균형이 깨져서 노드의 검색, 삽입, 삭제에 Theta(n)이 소요될 수 있다. **이를 해결하기 위해 균형이 잘 맞도록 구성하는 트리를 생각해보자.**
 
 # Red-Black Tree
 
