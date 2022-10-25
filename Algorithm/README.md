@@ -916,7 +916,7 @@ deQueue(Q){
 
 4. 루트 노드에서 임의의 리프 노드에 이르는 경로들은 모드 같은 수의 블랙노드를 포함한다.
 
-![red_balck_tree](./img/red_balck_tree.PNG)
+![red_balck_tree](./img/red_black_tree.PNG)
 
 ## 레드블랙 트리에서의 삽입
 
