@@ -1106,45 +1106,68 @@ deQueue(Q){
   ![lis_trans](./img/LIS3.PNG)
  
 
-### 이분 탐색을 통한 O(nlogn) DP
+### 가장 긴 증가하는 부분 수열 nlog n으로 풀기
 
-  - 위에서 만든 **길이별 최적 해 배열** $C$는 **단조 증가**하고 원소를 갱신할 때 **하나씩만** 갱신한다는 특성이 있다.
+- 길이별 배열로 변환하여 LIS를 구하면 O(n^2)이 걸린다. 그런데 위 알고리즘에서 배열 C에 원소를 삽입할 때 이분탐색을 이용하면 O(nlog n)으로 해결할 수 있다.  
+  가장 긴 증가하는 부분 수열 2  
+  https://www.acmicpc.net/problem/12015  
+  
+- 기본적인건 길이별 배열로 변환 알고리즘과 같다.  
+  
+    1. 현재 탐색하는 원소 A[i]가 C의 어떤 원소보다 크다면 가장 뒤에 삽입한다.
+	
+	2. 그렇지 않다면 배열C에서 A[i]보다 큰 수가 처음으로 나온 index를 **이분 탐색을 이용하여**찾고 A[i]로 바꾼다.  
+	이 때 c++을 이용한다면 `lower_bound`를 이용할 수 있다.
+	
+- 구현 
 
-  - 위의 두 특성을 이용해서 $A$의 어떤 원소 $x$를 $C$에 배치할 때 **이분 탐색**을 통해 매번 $O(log\,n)$으로 배치할 위치를 결정할 수 있다. 이 작업을 반복하면 $O(n\;log\,n)$만에 LIS를 구할 수 있다.
+  ```
+  lis(){
+    for(int i=0; i<N; i++) cin >> A[i];
+	
+	C.push_back(A[0]);
+	current_index = 0;
+	for(int=1; i<N; i++){
+	  if(C.[current_index] < arr[i]){
+	    C.push_back(arr[i])
+		current_index++;
+	  }else{
+		C[lower_bound(C.begin(), C.end(), arr[i])-C.begin()] = arr[i];
+	  }
+	}
+  }
+  ```
+  
+  lower_bound 구현 실제로는 iterator을 반환한다.
+  ```
+  int lower_bound(vector<int>& arr, int key){
+    int st = 0;
+	int ed = arr.size()-=1;
+	ine mid;
+	
+	while(ed > st){
+	  int mid = (st+ed)/2;
+	  if(key > arr[mid]) st = mid + 1;
+	  else ed = mid;
+	}
+	return ed;
+  }
+  ```
 
-  - $A$의 원소들을 차례로 살펴보면서 판단하자.
-
-    - $C$에 $A[i]$이상인 값이 있다면 $C$에서 그 위치를 $A[i]$로 대체하자.
-
-    - 없다면 $C$의 끝에 $A[i]$를 넣는다.
-
-  - 위의 과정들을 반복한 뒤 $C$의 크기가 LIS의 길이이다.
 
 ## 관련 문제
 
 - 피보나치 수 5  
   https://www.acmicpc.net/problem/10870  
-   소스 코드 : [C++](./BOJ/2747.cpp)
-
-- 피보나치 수  
-  https://www.acmicpc.net/problem/2747  
-   소스 코드 : [C++](./BOJ/2747.cpp)
-
-- 피보나치 수 2  
-  https://www.acmicpc.net/problem/2748  
-   소스 코드 : [C++](./BOJ/2747.cpp)
+   소스 코드 : [C++](./Solving/BOJ/2747.cpp)
 
 - 가장 긴 증가하는 부분 수열  
   https://www.acmicpc.net/problem/11053  
-   소스 코드 : [C++](./BOJ/11053.cpp)
+   소스 코드 : [C++](./Solving/BOJ/11053.cpp)   
 
 - 가장 긴 증가하는 부분 수열 4  
   https://www.acmicpc.net/problem/14002  
-   소스 코드 : [C++](./BOJ/14002.cpp)
-
-- 가장 긴 증가하는 부분 수열 2  
-  https://www.acmicpc.net/problem/12015  
-   소스 코드 : [C++](./BOJ/12015.cpp)
+   소스 코드 : [C++](./Sovling/BOJ/14002.cpp)
 
 - 신나는 함수 실행  
   https://www.acmicpc.net/problem/9184  
