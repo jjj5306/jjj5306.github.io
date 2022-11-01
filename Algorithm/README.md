@@ -1104,7 +1104,8 @@ deQueue(Q){
 
     - `A[6] = 6`. 이는 `C`의 모든 원소들 보다 크다. 따라서 `C[4] = 6`을 추가한다. 그러면 `C = [1, 2, 4, 6]`이고 LIS의 길이는 4이다.
   ![lis_trans](./img/LIS3.PNG)
- 
+
+## 22.11.01
 
 ### 가장 긴 증가하는 부분 수열 nlog n으로 풀기
 
@@ -1165,37 +1166,33 @@ deQueue(Q){
   https://www.acmicpc.net/problem/11053  
    소스 코드 : [C++](./Solving/BOJ/11053.cpp)   
 
-- 가장 긴 증가하는 부분 수열 4  
+- 가장 긴 증가하는 부분 수열 4    
   https://www.acmicpc.net/problem/14002  
    소스 코드 : [C++](./Sovling/BOJ/14002.cpp)
 
 - 신나는 함수 실행  
   https://www.acmicpc.net/problem/9184  
-   소스 코드 : [C++](./BOJ/9184.cpp)
+   소스 코드 : [C++](./Solving/BOJ/9184.cpp)
 
 - 정수 삼각형  
   https://www.acmicpc.net/problem/1932  
-   소스 코드 : [C++](./BOJ/1932.cpp)
+   소스 코드 : [C++](./Solving/BOJ/1932.cpp)
 
 - 연속합  
   https://www.acmicpc.net/problem/1912  
-   소스 코드 : [C++](./BOJ/1912.cpp)
+   소스 코드 : [C++](./Solving/BOJ/1912.cpp)
 
 - 구간 합 구하기 4  
   https://www.acmicpc.net/problem/11659  
-   소스 코드 : [C++](./BOJ/11659.cpp)
+   소스 코드 : [C++](./Solving/BOJ/11659.cpp)
 
 - 구간 합 구하기 5  
   https://www.acmicpc.net/problem/11660  
-   소스 코드 : [C++](./BOJ/11660.cpp)
-
-- 1로 만들기  
-  https://www.acmicpc.net/problem/1463  
-   소스 코드 : [C++](./BOJ/1463.cpp)
+   소스 코드 : [C++](./Solving/BOJ/11660.cpp)
 
 - 1로 만들기 2  
   https://www.acmicpc.net/problem/12852  
-   소스 코드 : [C++](./BOJ/12852.cpp)
+   소스 코드 : [C++](./Solving/BOJ/12852.cpp)
 
 - LCS  
   https://www.acmicpc.net/problem/9251  
