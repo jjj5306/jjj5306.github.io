@@ -1155,6 +1155,37 @@ deQueue(Q){
   }
   ```
 
+### LCS
+
+- Longest Common Subsequence는 최장 공통 부분 문자열이다. Subsequence는 SubString과는 다른 개념이다.  
+  SubString은 연속된 부분 문자열이고 Subsequence는 **연속되지 않은 부분 문자열**이다. 단 연속되지 않아도 될 뿐이지 무조건 증가해야한다.  
+  예를 들어 `A C A Y K P`, `C A P C A K`의 SubString은 `CA`이고 Subsequence는 `ACAK`이다.
+  
+### LCS 특성  
+  
+- string1의 사이즈는 m, string2의 사이즈는 n, lcs의 사이즈는 k이다.  
+  
+  1. string1[m] == string2[n]이면, lcs[k] == string1[m] == string2[n]이고 m-1까지의 string1과 n-1까지의 string2는 k-1까지의 lcs이다.  
+  
+  2. string1[m] != string2[n]이고 lcs[k] != string1[m]이면, lcs가 m-1까지의 string1과 string2의 lcs이다.  
+  
+  3. string1[m] != string2[n]이고 lcs[k] != string2[n]이면, lcs가 string1과 n-1까지의 string2의 lcs이다.  
+  
+  위의 특성들을 가지고 점화식을 도출할 수 있다.
+  
+### LCS 점화식
+
+- lcs[i][j] =  
+  if(i == 0 || j == 0) **0**  
+  else if(i>0 && j>0 && string1[i] == string2[i]) **lcs[i-1][j-1]+1**  
+  else **max(lcs[i][j-1], lcs[i-1][j])**
+
+- 조금 더 풀어서 설명하자면, 먼저 i 혹은 j가 0인경우를 0으로 다 채운다.  
+  그리고 string1[i]와 string2[i]가 같으면 자연스레 i-1까지 탐색했을 때 lcs길이에서 1을 더한 것이다.  
+  다른 경우에는 어차피 다르므로 lcs길이를 늘릴 수 없으므로 더 긴 쪽을 선택하면 된다.
+  
+
+
 
 ## 관련 문제
 
@@ -1193,17 +1224,6 @@ deQueue(Q){
 - 1로 만들기 2  
   https://www.acmicpc.net/problem/12852  
    소스 코드 : [C++](./Solving/BOJ/12852.cpp)
-
-- LCS  
-  https://www.acmicpc.net/problem/9251  
-   소스 코드 : [C++](./BOJ/9251.cpp)
-
-
-
-
-
-
-
 
 
 
