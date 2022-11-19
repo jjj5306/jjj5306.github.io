@@ -1375,9 +1375,6 @@ deQueue(Q){
 
 ![BFS-DFS](./img.BFS-DFS.png)
 
-https://www.acmicpc.net/board/view/41543
-
-https://velog.io/@tsi0521/%EB%AF%B8%EB%A1%9C-%EC%B5%9C%EB%8B%A8-%EA%B2%BD%EB%A1%9C-DFS-%EC%99%80-BFS-%EB%B9%84%EA%B5%90
 
 # 위상정렬
 
@@ -1429,7 +1426,76 @@ https://velog.io/@tsi0521/%EB%AF%B8%EB%A1%9C-%EC%B5%9C%EB%8B%A8-%EA%B2%BD%EB%A1%
 ![topologicalSort-DFS](./img/topologicalSort-DFS.png)
 
 
+# BFS와 최단경로
 
+## BFS로 풀 수 있는 문제
+
+- DFS와 BFS는 그래프 탐색 알고리즘이다. 그 중 BFS는 모든 가중치가 1일 때, 최단 거리를 구할 때 사용할 수 있다.
+
+- DFS를 최단거리에서 사용하면 안되는 이유는 문제를 풀면서 알아보자.
+
+## BOJ 1697 숨바꼭질
+
+- [숨바꼭질](https://www.acmicpc.net/problem/1697)
+
+- 간선의 가중치는 모두 1초이므로 BFS를 사용하여 최단거리를 구할 수 있을 것 같다.
+
+- BFS를 사용하는 경우 모든 노드를 방문하게 된다. 
+
+- 코드  
+```
+/** 그래프 탐색 숨바꼭질 **/
+#include <iostream>
+#include <queue>
+#include <algorithm>
+
+using namespace std;
+const int MAX = 200001; // 수빈이와 동생의 위치는 최대 십만이지만 이동가능한 거리는 최대 이십만이다.
+	
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+	int N, K;
+	cin >> N >> K;
+	
+	if(N == K){
+		cout << "0" << "\n";
+		return 0;
+	}
+	
+	int time[MAX] = {0, };
+	queue<int> q;
+	q.push(N);
+	time[N] = 0;
+
+	while(!q.empty()){
+		//BFS로 탐색을 시작한다.
+		int currunt_location = q.front();
+		q.pop();
+		//갈 수 있는 곳인지 먼저 판단한 후, 방문한 적 있는 노드인지 체크한다. 
+		if(currunt_location-1 >= 0 && time[currunt_location-1] == 0){
+			//갈 수 있고 처음 방문하는 점이라면 큐에 추가하여 탐색한다.
+			q.push(currunt_location-1);
+			time[currunt_location-1] = time[currunt_location] + 1;
+		}
+		if(currunt_location+1 < MAX && time[currunt_location+1] == 0){
+			q.push(currunt_location+1);
+			time[currunt_location+1] = time[currunt_location] + 1;
+		}
+		if(currunt_location*2 < MAX && time[currunt_location*2] == 0){
+			q.push(currunt_location*2);
+			time[currunt_location*2] = time[currunt_location] + 1;
+		}
+		if(time[K] != 0) break; //동생과 만나면 종료
+	}
+	
+	cout << time[K] << "\n";
+}
+```
+
+- 위의 문제에서 DFS를 사용하면 안되는 이유를 생각해보자. DFS는 모든 경로를 탐색해야 어떤 경로가 최단 경로인지 알아낼 수 있다. 스택을 이용하여 경로 끝까지 가야 다시 분기점으로 되돌아오기 때문이다.  
+ 반면에, BFS는 큐를 사용하여 분기점을 왔다갔다하면서 경로를 탐색하므로 목적지에 도달하면 그 경로가 바로 최단경로이며 종료하면 된다.
 
 
 
