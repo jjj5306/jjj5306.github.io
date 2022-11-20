@@ -1271,7 +1271,7 @@ deQueue(Q){
 
 ### 활동 선택 문제 예시
 
-- ![greedy_schduling](./img/greedy_schduling.PNG)  
+- ![greedy_schduling](./img/greedy_scheduling.PNG)  
 
   위의 사진에서 Si는 시작시간, Fi는 종료시간이다. 이 때 가장 많은 수업을 할 수 있는 경우를 찾는 것이다.
   
